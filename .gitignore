@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Photoshop models
+ps_models/
