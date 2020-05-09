@@ -2,6 +2,7 @@ export const primaryColors = {
   islandgreen: "#8ddac1",
   islandyellow: "#ffdf5d",
   white: "#f1f1f1",
+  cream: "#fbffd8",
   darkgreen: "#384e53",
 };
 
@@ -10,8 +11,8 @@ export const secondaryColors = {
   orange: "#e69d6e",
   brown: "#544436",
   purple: "#d19fff",
+  red: "#ec5b5b",
+  green: "#6bae39",
 };
 
-export const fonts = {
-  helvetica: "helvetica",
-};
+export const fonts = {};
