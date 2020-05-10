@@ -12,6 +12,7 @@ import { AppLoading } from "expo";
 
 import PriceArea from "./components/PriceArea.js";
 import DateHeader from "./components/DateHeader.js";
+import ChartBlock from "./components/ChartPanel.js";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -30,6 +31,7 @@ export default function App() {
         <View style={styles.container}>
           <DateHeader />
           <PriceArea />
+          <ChartBlock />
         </View>
       </DismissKeyboard>
     );

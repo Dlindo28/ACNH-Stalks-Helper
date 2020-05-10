@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AppLoading } from "expo";
 
@@ -12,17 +12,17 @@ export default function DateHeader() {
   const [minute, setMinute] = useState();
   const [timeLoaded, setTimeLoaded] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setInterval(() => {
       let d = new Date();
+      let meridianControl = new Date();
+      meridianControl.setHours(12);
       setDay(day[d.toDateString().split(" ")[0]]);
-      setMeridian(
-        d.getTime() < new Date("December 23, 1995 12:00:00") ? "AM" : "PM"
-      );
+      setMeridian(d.getTime() < meridianControl.getTime() ? "AM" : "PM");
       setHour(d.getHours() % 12);
       setMinute(d.getMinutes());
-    }, 1000);
-    setTimeLoaded(true);
+      setTimeLoaded(true);
+    }, 5000);
   });
 
   if (timeLoaded) {
@@ -32,13 +32,14 @@ export default function DateHeader() {
           {weekday} {meridian}
         </Text>
         <Text style={styles.timeText}>
-          {hour}:{minute < 10 ? "0" + minute.toString() : minute}
+          {hour != 0 ? hour : "12"}:
+          {minute < 10 ? "0" + minute.toString() : minute}
           {meridian.toLowerCase()}
         </Text>
       </View>
     );
   } else {
-    return <AppLoafing />;
+    return <AppLoading />;
   }
 }
 
