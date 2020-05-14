@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  AsyncStorage,
+  Button,
+} from "react-native";
 
 import { primaryColors, fonts } from "../models/Styles.js";
-import { day } from "../models/Dates.js";
 
-const Panel = ({ open, togglePanel }) => {
-  if (open) {
+const ChartPanel = ({ setPanelState, panelIsOpen }) => {
+  const togglePanel = () => {
+    setPanelState(!panelIsOpen);
+  };
+
+  if (panelIsOpen) {
     return (
-      <View>
-        <TouchableWithoutFeedback onPress={togglePanel}>
-          <View style={styles.openPanel}></View>
-        </TouchableWithoutFeedback>
+      <View style={styles.openPanel}>
+        <Button onPress={togglePanel} title="Close" />
       </View>
     );
   } else {
@@ -23,14 +31,6 @@ const Panel = ({ open, togglePanel }) => {
     );
   }
 };
-
-export default function DateHeader() {
-  const [panelIsOpen, setPanelIsOpen] = useState(false);
-  const togglePanel = () => {
-    setPanelIsOpen(!panelIsOpen);
-  };
-  return <Panel open={panelIsOpen} togglePanel={togglePanel} />;
-}
 
 const styles = StyleSheet.create({
   closedPanel: {
@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: "absolute",
     marginLeft: -190,
-    marginTop: -150,
+    marginTop: -300,
+    zIndex: 1,
   },
 });
+
+export default ChartPanel;

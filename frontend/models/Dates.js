@@ -1,6 +1,6 @@
 export const day = {
   Sun: "Sunday",
-  Sat: "Monday",
+  Mon: "Monday",
   Tue: "Tuesday",
   Wed: "Wednesday",
   Thu: "Thursday",

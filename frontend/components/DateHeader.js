@@ -1,47 +1,51 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { AppLoading } from "expo";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 
-import { primaryColors, fonts } from "../models/Styles.js";
 import { day } from "../models/Dates.js";
 
-export default function DateHeader() {
-  const [weekday, setDay] = useState("");
-  const [meridian, setMeridian] = useState("");
-  const [hour, setHour] = useState();
-  const [minute, setMinute] = useState();
-  const [timeLoaded, setTimeLoaded] = useState(false);
+const getDay = (date) => {
+  return day[date.toDateString().split(" ")[0]];
+};
 
-  useLayoutEffect(() => {
-    setInterval(() => {
-      let d = new Date();
-      let meridianControl = new Date();
-      meridianControl.setHours(12);
-      setDay(day[d.toDateString().split(" ")[0]]);
-      setMeridian(d.getTime() < meridianControl.getTime() ? "AM" : "PM");
-      setHour(d.getHours() % 12);
-      setMinute(d.getMinutes());
-      setTimeLoaded(true);
-    }, 5000);
+const getMeridian = (date) => {
+  let midday = new Date();
+  midday.setHours(12);
+  return date.getTime() < midday.getTime() ? "AM" : "PM";
+};
+
+const getHours = (date) => {
+  let hour = date.getHours() % 12;
+  return hour != 0 ? hour.toString() : "12";
+};
+
+const getMinutes = (date) => {
+  let minutes = date.getMinutes();
+  return minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+};
+
+const DateHeader = () => {
+  let d = new Date();
+  const [date, setDate] = useState(d);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
   });
 
-  if (timeLoaded) {
-    return (
-      <View>
-        <Text style={styles.dateText}>
-          {weekday} {meridian}
-        </Text>
-        <Text style={styles.timeText}>
-          {hour != 0 ? hour : "12"}:
-          {minute < 10 ? "0" + minute.toString() : minute}
-          {meridian.toLowerCase()}
-        </Text>
-      </View>
-    );
-  } else {
-    return <AppLoading />;
-  }
-}
+  return (
+    <View>
+      <Text style={styles.dateText}>
+        {getDay(date)} {getMeridian(date)}
+      </Text>
+      <Text style={styles.timeText}>
+        {getHours(date)}:{getMinutes(date)}
+        {getMeridian(date).toLowerCase()}
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   dateContainer: {
@@ -58,3 +62,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
+
+export default DateHeader;

@@ -9,6 +9,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
+  AsyncStorage,
 } from "react-native";
 import { primaryColors, fonts } from "../models/Styles.js";
 
@@ -16,6 +17,7 @@ export default function PriceArea() {
   const [price, setPrice] = useState(0);
   const priceInputHandler = (input) => {
     console.log("Price set: " + input);
+    AsyncStorage.setItem("price", input.toString());
     Keyboard.dismiss();
   };
   return (

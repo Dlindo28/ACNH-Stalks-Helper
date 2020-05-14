@@ -1,50 +1,19 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { primaryColors, fonts } from "./models/Styles.js";
+import React, { useState, useEffect } from "react";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
 
-import PriceArea from "./components/PriceArea.js";
-import DateHeader from "./components/DateHeader.js";
-import ChartBlock from "./components/ChartPanel.js";
+import Home from "./components/Home.js";
 
-const DismissKeyboard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-);
-
-export default function App() {
+const App = () => {
   let [fontsLoaded] = useFonts({
     acnh: require("./assets/fonts/nintendoP_Humming-E_002pr.otf"),
   });
 
   if (fontsLoaded) {
-    return (
-      <DismissKeyboard>
-        <View style={styles.container}>
-          <DateHeader />
-          <PriceArea />
-          <ChartBlock />
-        </View>
-      </DismissKeyboard>
-    );
+    return <Home />;
   } else {
     return <AppLoading />;
   }
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: primaryColors.islandgreen,
-    alignItems: "center",
-    paddingTop: 50,
-  },
-});
+export default App;
