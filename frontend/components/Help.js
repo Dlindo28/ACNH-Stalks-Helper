@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 
-const Settings = () => {
+const Help = () => {
   return (
     <View>
-      <Text>Settings</Text>
+      <Text>Help</Text>
     </View>
   );
 };
 
-export default Settings;
+export default Help;

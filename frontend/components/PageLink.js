@@ -3,18 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
   TouchableHighlight,
-  Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
   AsyncStorage,
   Image,
 } from "react-native";
-import { primaryColors, fonts } from "../models/Styles.js";
+import { createStackNavigator } from "@react-navigation/stack";
+import { primaryColors } from "../models/Styles.js";
 
-const PageLink = ({ link }) => {
+const Stack = createStackNavigator();
+
+const PageLink = ({ link, navigation, move }) => {
   let imgPath = "";
   if (link == "Settings") {
     imgPath = require("../assets/images/Fossil.png");
@@ -25,7 +23,7 @@ const PageLink = ({ link }) => {
   }
   return (
     <View style={styles.container}>
-      <TouchableHighlight>
+      <TouchableHighlight onPress={move}>
         <View>
           <View style={styles.tab}>
             <Image source={imgPath} style={styles.tabImg} />

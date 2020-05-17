@@ -4,13 +4,11 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
-  Text,
-  Image,
   AsyncStorage,
   TouchableHighlight,
-  ScrollView,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { primaryColors, fonts } from "../models/Styles.js";
 
@@ -25,7 +23,9 @@ const DismissKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-const Home = () => {
+const Stack = createStackNavigator();
+
+const Home = ({ navigation }) => {
   const [panelIsOpen, setPanel] = useState(false);
   const setPanelState = (panelState) => {
     setPanel(panelState);
@@ -38,8 +38,11 @@ const Home = () => {
           <PriceArea />
           <ChartPanel setPanelState={setPanelState} panelIsOpen={panelIsOpen} />
           <View style={styles.pageButtons}>
-            <PageLink link="Settings" />
-            <PageLink link="Help" />
+            <PageLink
+              link="Settings"
+              move={() => navigation.navigate("Settings")}
+            />
+            <PageLink link="Help" move={() => navigation.navigate("Help")} />
             <PageLink link="Login" />
           </View>
         </View>
