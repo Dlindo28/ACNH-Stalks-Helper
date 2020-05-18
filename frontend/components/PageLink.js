@@ -43,11 +43,18 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 15,
     justifyContent: "center",
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
   },
   tabText: {
     fontFamily: "acnh",
     color: primaryColors.darkgreen,
     alignSelf: "center",
+    marginTop: 2,
   },
   tabImg: {
     alignSelf: "center",

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Settings</Text>
