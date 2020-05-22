@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-native";
 
-import { primaryColors, fonts } from "../models/Styles.js";
+import { primaryColors } from "../models/Styles.js";
 
 const ChartPanel = ({ setPanelState, panelIsOpen }) => {
   const togglePanel = () => {
@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
     width: 380,
     borderRadius: 10,
     marginTop: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
   },
   openPanel: {
     backgroundColor: primaryColors.cream,
@@ -49,6 +55,12 @@ const styles = StyleSheet.create({
     marginLeft: -190,
     marginTop: -300,
     zIndex: 1,
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
   },
 });
 

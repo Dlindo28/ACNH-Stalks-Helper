@@ -34,7 +34,7 @@ import DateSetting from "./DateSetting.js";
 
 import { primaryColors } from "../models/Styles.js";
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
