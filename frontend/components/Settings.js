@@ -16,25 +16,7 @@ import DateSetting from "./DateSetting.js";
 
 import { primaryColors } from "../models/Styles.js";
 
-import DateSetting from "./DateSetting.js";
-// Date
-// Time
-// Notifications (switch)
-// Rate App
-// Reset
-
-import { primaryColors } from "../models/Styles.js";
-
-import DateSetting from "./DateSetting.js";
-// Date
-// Time
-// Notifications (switch)
-// Rate App
-// Reset
-
-import { primaryColors } from "../models/Styles.js";
-
-const Settings = ({ navigation }) => {
+const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
