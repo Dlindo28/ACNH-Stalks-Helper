@@ -1,10 +1,26 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, AsyncStorage } from "react-native";
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  AsyncStorage,
+  TouchableOpacity,
+} from "react-native";
+
+import DateSetting from "./DateSetting.js";
+// Date
+// Time
+// Notifications (switch)
+// Rate App
+// Reset
+
+import { primaryColors } from "../models/Styles.js";
 
 const Settings = () => {
   return (
     <View style={styles.container}>
-      <Text>Settings</Text>
+      <Text style={styles.header}>Settings</Text>
+      <DateSetting />
     </View>
   );
 };
@@ -12,8 +28,17 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: primaryColors.white,
+  },
+  header: {
+    alignSelf: "center",
+    marginTop: 50,
+    fontSize: 30,
+  },
+  line: {
+    height: 1,
+    backgroundColor: primaryColors.darkgreen,
+    marginBottom: 5,
   },
 });
 
