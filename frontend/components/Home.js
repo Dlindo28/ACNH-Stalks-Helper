@@ -10,7 +10,7 @@ import {
 import { BlurView } from "expo-blur";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { primaryColors, fonts } from "../models/Styles.js";
+import { primaryColors } from "../models/Styles.js";
 
 import PriceArea from "./PriceArea.js";
 import DateHeader from "./DateHeader.js";
