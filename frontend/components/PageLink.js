@@ -26,11 +26,10 @@ const PageLink = ({ link }) => {
   return (
     <View style={styles.container}>
       <TouchableHighlight>
-        <View>
-          <View style={styles.tab}>
-            <Image source={imgPath} style={styles.tabImg} />
-          </View>
-          <Text style={styles.tabText}>{link}</Text>
+        <View style={styles.tab}>
+          <View style={styles.line} />
+          <Text>{link}</Text>
+          <View style={styles.line} />
         </View>
       </TouchableHighlight>
     </View>
@@ -38,23 +37,22 @@ const PageLink = ({ link }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: "center", marginTop: 2 },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 2,
+    //borderWidth: 1,
+  },
   tab: {
-    backgroundColor: primaryColors.islandyellow,
-    height: 50,
-    width: 50,
-    borderRadius: 15,
-    justifyContent: "center",
+    width: 300,
+    alignItems: "center",
   },
-  tabText: {
-    fontFamily: "acnh",
-    color: primaryColors.darkgreen,
-    alignSelf: "center",
-  },
-  tabImg: {
-    alignSelf: "center",
-    width: 35,
-    height: 35,
+  line: {
+    backgroundColor: primaryColors.darkgreen,
+    width: "100%",
+    height: 1,
+    opacity: 0.4,
+    marginVertical: 5,
   },
 });
 

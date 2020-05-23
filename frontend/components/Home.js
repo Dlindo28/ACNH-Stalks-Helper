@@ -103,9 +103,8 @@ const styles = StyleSheet.create({
   },
   pageButtons: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
     marginTop: 2,
+    width: "100%",
   },
 });
 
