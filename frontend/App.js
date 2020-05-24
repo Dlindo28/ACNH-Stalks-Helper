@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
+import Swiper from "react-native-swiper";
 
 import { primaryColors } from "./models/Styles.js";
 
@@ -19,7 +20,27 @@ const App = () => {
 
   if (fontsLoaded) {
     return (
-      <ScrollView
+      <Swiper index={1} loop={false}>
+        <View style={{ width, height: "100%" }}>
+          <Help />
+        </View>
+        <View style={{ width, height: "100%" }}>
+          <Home />
+        </View>
+        <View style={{ width, height: "100%" }}>
+          <Settings />
+        </View>
+      </Swiper>
+    );
+  } else {
+    return <AppLoading />;
+  }
+};
+
+export default App;
+
+/* 
+<ScrollView
         horizontal
         pagingEnabled
         style={{ flex: 1 }}
@@ -36,10 +57,4 @@ const App = () => {
           <Settings />
         </View>
       </ScrollView>
-    );
-  } else {
-    return <AppLoading />;
-  }
-};
-
-export default App;
+*/
