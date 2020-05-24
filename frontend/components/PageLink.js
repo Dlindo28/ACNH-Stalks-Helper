@@ -1,35 +1,18 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  AsyncStorage,
-  Image,
-} from "react-native";
-import { primaryColors, fonts } from "../models/Styles.js";
+import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-const PageLink = ({ link }) => {
-  let imgPath = "";
-  if (link == "Settings") {
-    imgPath = require("../assets/images/Fossil.png");
-  } else if (link == "Help") {
-    imgPath = require("../assets/images/Peach.png");
-  } else if (link == "Login") {
-    imgPath = require("../assets/images/Bells.png");
-  }
+import { primaryColors } from "../models/Styles";
+
+const Stack = createStackNavigator();
+
+const PageLink = ({ link, navigation, move }) => {
   return (
     <View style={styles.container}>
-      <TouchableHighlight>
-        <View style={styles.tab}>
-          <View style={styles.line} />
-          <Text>{link}</Text>
-          <View style={styles.line} />
+      <TouchableHighlight onPress={move}>
+        <View>
+          <View style={styles.tab}></View>
+          <Text style={styles.tabText}>{link}</Text>
         </View>
       </TouchableHighlight>
     </View>
@@ -37,15 +20,25 @@ const PageLink = ({ link }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    marginTop: 2,
-    //borderWidth: 1,
-  },
+  container: { flex: 1, alignItems: "center", marginTop: 2 },
   tab: {
-    width: 300,
-    alignItems: "center",
+    backgroundColor: primaryColors.islandyellow,
+    height: 50,
+    width: 50,
+    borderRadius: 15,
+    justifyContent: "center",
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
+  },
+  tabText: {
+    fontFamily: "acnh",
+    color: primaryColors.darkgreen,
+    alignSelf: "center",
+    marginTop: 2,
   },
   line: {
     backgroundColor: primaryColors.darkgreen,

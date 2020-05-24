@@ -4,20 +4,16 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
-  Text,
-  Image,
-  AsyncStorage,
   TouchableHighlight,
-  ScrollView,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import { primaryColors, fonts } from "../models/Styles.js";
+import { primaryColors } from "../models/Styles";
 
-import PriceArea from "./PriceArea.js";
-import DateHeader from "./DateHeader.js";
-import ChartPanel from "./ChartPanel.js";
-import PageLink from "./PageLink.js";
+import PriceArea from "../components/PriceArea";
+import DateHeader from "../components/DateHeader";
+import ChartPanel from "../components/ChartPanel";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,7 +21,9 @@ const DismissKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-const Home = () => {
+const Stack = createStackNavigator();
+
+const Home = ({ navigation }) => {
   const [panelIsOpen, setPanel] = useState(false);
   const setPanelState = (panelState) => {
     setPanel(panelState);
@@ -37,11 +35,6 @@ const Home = () => {
           <DateHeader />
           <PriceArea />
           <ChartPanel setPanelState={setPanelState} panelIsOpen={panelIsOpen} />
-          <View style={styles.pageButtons}>
-            <PageLink link="Settings" />
-            <PageLink link="Help" />
-            <PageLink link="Login" />
-          </View>
         </View>
       </DismissKeyboard>
     );
@@ -54,11 +47,6 @@ const Home = () => {
               <View>
                 <DateHeader />
                 <PriceArea />
-                <View style={styles.pageButtons}>
-                  <PageLink link="Settings" />
-                  <PageLink link="Help" />
-                  <PageLink link="Login" />
-                </View>
               </View>
             </TouchableHighlight>
 
@@ -105,6 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 2,
     width: "100%",
+    flexDirection: "row",
   },
 });
 

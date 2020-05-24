@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 
-import { day } from "../models/Dates.js";
+import { day } from "../models/Dates";
 
 const getDay = (date) => {
   return day[date.toDateString().split(" ")[0]];
@@ -9,7 +9,7 @@ const getDay = (date) => {
 
 const getMeridian = (date) => {
   let midday = new Date();
-  midday.setHours(12);
+  midday.setHours(13);
   return date.getTime() < midday.getTime() ? "AM" : "PM";
 };
 

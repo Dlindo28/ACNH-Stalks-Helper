@@ -4,14 +4,11 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableHighlight,
   Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  AsyncStorage,
 } from "react-native";
-import { primaryColors, fonts } from "../models/Styles.js";
+
+import { primaryColors } from "../models/Styles";
 
 export default function PriceArea() {
   const [price, setPrice] = useState(0);

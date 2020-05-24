@@ -1,10 +1,9 @@
 {
-  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 50649,
   "expoServerNgrokUrl": "https://yb-9ys.dlindo28.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.yb-9ys.dlindo28.frontend.exp.direct",
-  "ngrokPid": 50691,
-  "webpackServerPort": null
+  "ngrokPid": 25999,
+  "devToolsPort": 19002,
+  "packagerPort": 19001,
+  "packagerPid": 25983
 }

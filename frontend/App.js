@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from "react";
+import "react-native-gesture-handler";
+import React from "react";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import Home from "./components/Home.js";
+import Home from "./screen/Home";
+import Settings from "./screen/Settings";
+import Help from "./screen/Help";
+
+const Stack = createStackNavigator();
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -10,7 +17,33 @@ const App = () => {
   });
 
   if (fontsLoaded) {
-    return <Home />;
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Help"
+            component={Help}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
   } else {
     return <AppLoading />;
   }
