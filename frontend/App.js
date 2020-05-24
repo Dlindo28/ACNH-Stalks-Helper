@@ -38,23 +38,3 @@ const App = () => {
 };
 
 export default App;
-
-/* 
-<ScrollView
-        horizontal
-        pagingEnabled
-        style={{ flex: 1 }}
-        contentContainerStyle={{ backgroundColor: primaryColors.white }}
-        showsHorizontalScrollIndicator
-      >
-        <View style={{ width, height: "100%" }}>
-          <Help />
-        </View>
-        <View style={{ width, height: "100%" }}>
-          <Home />
-        </View>
-        <View style={{ width, height: "100%" }}>
-          <Settings />
-        </View>
-      </ScrollView>
-*/
