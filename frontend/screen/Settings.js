@@ -14,7 +14,6 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
-      <DateSetting />
     </View>
   );
 };

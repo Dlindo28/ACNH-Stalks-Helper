@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 500,
     backgroundColor: primaryColors.islandgreen,
-    borderRadius: 30,
   },
   modalContainer: {
     borderRadius: 30,

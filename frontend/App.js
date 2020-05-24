@@ -1,48 +1,41 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useEffect } from "react";
+import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+
+import { primaryColors } from "./models/Styles.js";
 
 import Home from "./screen/Home";
 import Settings from "./screen/Settings";
 import Help from "./screen/Help";
-
-const Stack = createStackNavigator();
 
 const App = () => {
   let [fontsLoaded] = useFonts({
     acnh: require("./assets/fonts/nintendoP_Humming-E_002pr.otf"),
   });
 
+  const { width } = Dimensions.get("window");
+
   if (fontsLoaded) {
     return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={Settings}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Help"
-            component={Help}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        style={{ flex: 1 }}
+        contentContainerStyle={{ backgroundColor: primaryColors.white }}
+        showsHorizontalScrollIndicator
+      >
+        <View style={{ width, height: "100%" }}>
+          <Help />
+        </View>
+        <View style={{ width, height: "100%" }}>
+          <Home />
+        </View>
+        <View style={{ width, height: "100%" }}>
+          <Settings />
+        </View>
+      </ScrollView>
     );
   } else {
     return <AppLoading />;
