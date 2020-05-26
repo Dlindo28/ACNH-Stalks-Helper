@@ -4,7 +4,7 @@ import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
 import { NavigationContainer, TabActions } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import { Entypo } from "@expo/vector-icons";
 //import Swiper from "react-native-swiper";
@@ -14,8 +14,9 @@ import { primaryColors } from "./models/Styles.js";
 import Home from "./screen/Home";
 import Settings from "./screen/Settings";
 import Help from "./screen/Help";
+import DataScreen from "./screen/DataScreen";
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -29,12 +30,18 @@ const App = () => {
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
+            tabBarIcon: ({ focused }) => {
               let iconColor;
+              let iconName;
               switch (route.name) {
                 case "Home":
                   iconName = "home";
+                  iconColor = focused
+                    ? primaryColors.islandgreen
+                    : primaryColors.darkgreen;
+                  break;
+                case "Settings":
+                  iconName = "cog";
                   iconColor = focused
                     ? primaryColors.islandgreen
                     : primaryColors.darkgreen;
@@ -45,8 +52,8 @@ const App = () => {
                     ? primaryColors.islandgreen
                     : primaryColors.darkgreen;
                   break;
-                case "Settings":
-                  iconName = "cog";
+                case "Data":
+                  iconName = "bar-graph";
                   iconColor = focused
                     ? primaryColors.islandgreen
                     : primaryColors.darkgreen;
@@ -58,22 +65,23 @@ const App = () => {
                     : primaryColors.darkgreen;
                   break;
               }
-              return <Entypo name={iconName} color={iconColor} size={size} />;
+              return <Entypo name={iconName} color={iconColor} size={20} />;
             },
           })}
           tabBarOptions={{
             showLabel: false,
-            style: {
+            tabStyle: {
               backgroundColor: primaryColors.cream,
-              shadowOpacity: 0.1,
-              shadowRadius: 5,
-              shadowOffset: {
-                height: -1,
-              },
+              height: 70,
             },
+            showIcon: true,
+            pressOpacity: 1,
           }}
+          tabBarPosition="bottom"
+          swipeEnabled={true}
         >
           <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Data" component={DataScreen} />
           <Tab.Screen name="Help" component={Help} />
           <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
