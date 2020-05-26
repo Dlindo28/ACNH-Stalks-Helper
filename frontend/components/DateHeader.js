@@ -9,7 +9,7 @@ const getDay = (date) => {
 
 const getMeridian = (date) => {
   let midday = new Date();
-  midday.setHours(13);
+  midday.setHours(12);
   return date.getTime() < midday.getTime() ? "AM" : "PM";
 };
 
