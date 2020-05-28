@@ -13,7 +13,7 @@ import { primaryColors } from "./models/Styles.js";
 
 import Home from "./screen/Home";
 import Settings from "./screen/Settings";
-import Community from "./screen/Community";
+import Login from "./screen/Login";
 import DataScreen from "./screen/DataScreen";
 
 import firebase from "firebase";
@@ -70,7 +70,7 @@ const App = () => {
                     ? primaryColors.islandgreen
                     : primaryColors.darkgreen;
                   break;
-                case "Community":
+                case "Login":
                   iconName = "chat";
                   iconColor = focused
                     ? primaryColors.islandgreen
@@ -106,7 +106,7 @@ const App = () => {
         >
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Data" component={DataScreen} />
-          <Tab.Screen name="Community" component={Community} user={user} />
+          <Tab.Screen name="Login" component={Login} user={user} />
           <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
       </NavigationContainer>

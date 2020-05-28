@@ -20,6 +20,11 @@
       "bundleIdentifier": "bundlename",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets."
+      },
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.747370455324-njgotmlc6uns4nacgvlerm81j2g5a3l9"
+        }
       }
     },
     "android": {
