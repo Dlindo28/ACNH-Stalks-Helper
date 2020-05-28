@@ -105,3 +105,6 @@ dist
 
 # Photoshop models
 ps_models/
+
+# Config data
+config.js
