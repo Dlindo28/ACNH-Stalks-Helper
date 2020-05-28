@@ -3,18 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
-import { NavigationContainer, TabActions } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import { Entypo } from "@expo/vector-icons";
-//import Swiper from "react-native-swiper";
 
 import { primaryColors } from "./models/Styles.js";
 
 import Home from "./screen/Home";
 import Settings from "./screen/Settings";
-import Login from "./screen/Login";
 import DataScreen from "./screen/DataScreen";
+import Community from "./screen/Community";
 
 import firebase from "firebase";
 import { firebaseConfig } from "./config.js";
@@ -28,19 +27,19 @@ if (!firebase.apps.length) {
 const Tab = createMaterialTopTabNavigator();
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-  const isLoggedIn = () => {
+  const [firebaseLoggedIn, setFirebaseLoggedIn] = useState(false);
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  const isFirebaseLoggedIn = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setLoggedIn(true);
-        setUser(user);
+        setFirebaseLoggedIn(true);
+        setFirebaseUser(user);
       } else {
       }
     });
   };
   useEffect(() => {
-    isLoggedIn();
+    isFirebaseLoggedIn();
   });
 
   let [fontsLoaded] = useFonts({
@@ -70,7 +69,7 @@ const App = () => {
                     ? primaryColors.islandgreen
                     : primaryColors.darkgreen;
                   break;
-                case "Login":
+                case "Community":
                   iconName = "chat";
                   iconColor = focused
                     ? primaryColors.islandgreen
@@ -106,7 +105,11 @@ const App = () => {
         >
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Data" component={DataScreen} />
-          <Tab.Screen name="Login" component={Login} user={user} />
+          <Tab.Screen
+            name="Community"
+            component={Community}
+            firebaseUser={firebaseUser}
+          />
           <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
       </NavigationContainer>
