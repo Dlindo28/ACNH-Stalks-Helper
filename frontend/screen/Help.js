@@ -24,8 +24,9 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     borderRadius: 30,
+    marginTop: 30,
     backgroundColor: primaryColors.cream,
-    height: 700,
+    height: 750,
     width: 380,
   },
   title: {

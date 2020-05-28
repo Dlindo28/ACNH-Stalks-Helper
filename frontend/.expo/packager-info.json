@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://yb-9ys.dlindo28.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.yb-9ys.dlindo28.frontend.exp.direct",
-  "ngrokPid": 30152,
+  "ngrokPid": 49300,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 30133
+  "packagerPid": 49289
 }
