@@ -11,6 +11,7 @@ import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, firebaseConfig } from "../config";
 const Community = ({ firebaseUser, navigation }) => {
   const [loggedIn, setLoggedIn] = useState();
   const [token, setToken] = useState();
+  const [phoneAuth, setPhoneAuth] = useState(false);
 
   /* Setting up phone verification */
   const recaptchaVerifierRef = useRef();
@@ -57,6 +58,7 @@ const Community = ({ firebaseUser, navigation }) => {
         scopes: ["profile", "email"],
       });
       setLoggedIn(false);
+      setPhoneAuth(false);
       setToken(null);
     } catch (e) {
       console.log("Error with logout");
@@ -72,64 +74,91 @@ const Community = ({ firebaseUser, navigation }) => {
       </View>
     );
   } else {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <FirebaseRecaptchaVerifierModal
-          ref={recaptchaVerifierRef}
-          firebaseConfig={firebaseConfig}
-        />
-        <TextInput
-          placeholder="+1 999 999 9999"
-          autoFocus
-          autoCompleteType="tel"
-          keyboardType="phone-pad"
-          textContentType="telephoneNumber"
-          onChangeText={(text) => setPhoneNumber(text)}
-        />
-        <Button
-          title="Send Verification Code"
-          onPress={async () => {
-            try {
-              const phoneProvider = new firebase.auth.PhoneAuthProvider();
-              phoneProvider
-                .verifyPhoneNumber(phoneNumber, recaptchaVerifierRef.current)
-                .then(setVerificationId);
+    if (phoneAuth) {
+      return (
+        <View style={styles.container}>
+          <FirebaseRecaptchaVerifierModal
+            ref={recaptchaVerifierRef}
+            firebaseConfig={firebaseConfig}
+          />
+          <TextInput
+            placeholder="+1 999 999 9999"
+            autoFocus
+            autoCompleteType="tel"
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            onChangeText={(text) => setPhoneNumber(text)}
+          />
+          <Button
+            title="Send Verification Code"
+            onPress={async () => {
+              try {
+                const phoneProvider = new firebase.auth.PhoneAuthProvider();
+                phoneProvider
+                  .verifyPhoneNumber(phoneNumber, recaptchaVerifierRef.current)
+                  .then(setVerificationId);
 
-              showMessage({
-                text: "Verification code has been sent to your phone.",
-              });
-            } catch (e) {
-              showMessage({ text: `Error: ${e.message}`, color: "red" });
-            }
-          }}
-        />
-        <Text>Enter Verification Code</Text>
-        <TextInput
-          editable={!!verificationId}
-          placeholder="123456"
-          onChangeText={(text) => setVerificationCode(text)}
-        />
-        <Button
-          title="Confirm Code"
-          disabled={!verificationId}
-          onPress={async () => {
-            try {
-              const credential = firebase.auth.PhoneAuthProvider.credential(
-                verificationId,
-                verificationCode
-              );
-              await firebase.auth().signInWithCredential(credential);
-              showMessage({ text: "Logged In" });
-              setLoggedIn(true);
-            } catch (e) {
-              showMessage({ text: `Error: ${e.message}`, color: "red" });
-            }
-          }}
-        />
-        {message ? <Text>{message.text}</Text> : undefined}
-        <Button title="Sign In With Google" onPress={signInWithGoogle} />
-      </View>
-    );
+                showMessage({
+                  text: "Verification code has been sent to your phone.",
+                });
+              } catch (e) {
+                showMessage({ text: `Error: ${e.message}`, color: "red" });
+              }
+            }}
+          />
+          <Text>Enter Verification Code</Text>
+          <TextInput
+            editable={!!verificationId}
+            placeholder="123456"
+            onChangeText={(text) => setVerificationCode(text)}
+          />
+          <Button
+            title="Confirm Code"
+            disabled={!verificationId}
+            onPress={async () => {
+              try {
+                const credential = firebase.auth.PhoneAuthProvider.credential(
+                  verificationId,
+                  verificationCode
+                );
+                await firebase.auth().signInWithCredential(credential);
+                showMessage({ text: "Logged In" });
+                setLoggedIn(true);
+              } catch (e) {
+                showMessage({ text: `Error: ${e.message}`, color: "red" });
+              }
+            }}
+          />
+
+          <View style={styles.buttonView}>
+            <Button
+              title="Cancel"
+              onPress={() => setPhoneAuth(false)}
+              color={primaryColors.white}
+            />
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.buttonView}>
+            <Button
+              title="Sign In With Phone"
+              onPress={() => setPhoneAuth(true)}
+              color={primaryColors.white}
+            />
+          </View>
+          <View style={styles.buttonView}>
+            <Button
+              title="Sign In With Google"
+              onPress={signInWithGoogle}
+              color={primaryColors.white}
+            />
+          </View>
+        </View>
+      );
+    }
   }
 };
 
@@ -139,6 +168,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: primaryColors.islandgreen,
+  },
+  buttonView: {
+    backgroundColor: primaryColors.darkgreen,
+    color: primaryColors.white,
+    borderRadius: 10,
   },
 });
 
