@@ -1,14 +1,24 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React, { useState, useRef } from "react";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import * as Google from "expo-google-app-auth";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import firebase from "firebase";
 
 import { primaryColors } from "../models/Styles";
 
-import * as Google from "expo-google-app-auth";
-import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "../config";
+import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, firebaseConfig } from "../config";
 
 const Community = ({ firebaseUser, navigation }) => {
   const [loggedIn, setLoggedIn] = useState();
   const [token, setToken] = useState();
+
+  /* Setting up phone verification */
+  const recaptchaVerifierRef = useRef();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [verificationId, setVerificationId] = React.useState();
+  const [verificationCode, setVerificationCode] = React.useState();
+  const [message, showMessage] = useState("Default message");
+
   const signInWithGoogle = async () => {
     try {
       const result = await Google.logInAsync({
@@ -64,6 +74,59 @@ const Community = ({ firebaseUser, navigation }) => {
   } else {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifierRef}
+          firebaseConfig={firebaseConfig}
+        />
+        <TextInput
+          placeholder="+1 999 999 9999"
+          autoFocus
+          autoCompleteType="tel"
+          keyboardType="phone-pad"
+          textContentType="telephoneNumber"
+          onChangeText={(text) => setPhoneNumber(text)}
+        />
+        <Button
+          title="Send Verification Code"
+          onPress={async () => {
+            try {
+              const phoneProvider = new firebase.auth.PhoneAuthProvider();
+              phoneProvider
+                .verifyPhoneNumber(phoneNumber, recaptchaVerifierRef.current)
+                .then(setVerificationId);
+
+              showMessage({
+                text: "Verification code has been sent to your phone.",
+              });
+            } catch (e) {
+              showMessage({ text: `Error: ${e.message}`, color: "red" });
+            }
+          }}
+        />
+        <Text>Enter Verification Code</Text>
+        <TextInput
+          editable={!!verificationId}
+          placeholder="123456"
+          onChangeText={(text) => setVerificationCode(text)}
+        />
+        <Button
+          title="Confirm Code"
+          disabled={!verificationId}
+          onPress={async () => {
+            try {
+              const credential = firebase.auth.PhoneAuthProvider.credential(
+                verificationId,
+                verificationCode
+              );
+              await firebase.auth().signInWithCredential(credential);
+              showMessage({ text: "Logged In" });
+              setLoggedIn(true);
+            } catch (e) {
+              showMessage({ text: `Error: ${e.message}`, color: "red" });
+            }
+          }}
+        />
+        {message ? <Text>{message.text}</Text> : undefined}
         <Button title="Sign In With Google" onPress={signInWithGoogle} />
       </View>
     );

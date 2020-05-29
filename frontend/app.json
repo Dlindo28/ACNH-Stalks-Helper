@@ -28,7 +28,7 @@
       }
     },
     "android": {
-      "package": "pckname",
+      "package": "host.exp.exponent",
       "versionCode": 15
     }
   }
