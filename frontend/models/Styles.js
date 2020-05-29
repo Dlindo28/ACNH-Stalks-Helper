@@ -1,7 +1,7 @@
 export const primaryColors = {
   islandgreen: "#8ddac1",
   islandyellow: "#ffdf5d",
-  white: "#f1f1f1",
+  white: "#f0ffff",
   cream: "#fbffd8",
   darkgreen: "#384e53",
 };

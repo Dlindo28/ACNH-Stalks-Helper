@@ -94,7 +94,7 @@ const App = () => {
           tabBarOptions={{
             showLabel: false,
             tabStyle: {
-              backgroundColor: primaryColors.cream,
+              backgroundColor: primaryColors.white,
               height: 70,
             },
             showIcon: true,

@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 
-import DateSetting from "../components/DateSetting";
 // Date
 // Time
 // Notifications (switch)
@@ -10,10 +9,15 @@ import DateSetting from "../components/DateSetting";
 
 import { primaryColors } from "../models/Styles.js";
 
+import DateTimeSetter from "../components/DateTimeSetter";
+
 const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
+      <View style={styles.card}>
+        <DateTimeSetter />
+      </View>
     </View>
   );
 };
@@ -21,7 +25,7 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: primaryColors.islandgreen,
+    backgroundColor: primaryColors.white,
   },
   header: {
     alignSelf: "center",
@@ -32,6 +36,9 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: primaryColors.darkgreen,
     marginBottom: 5,
+  },
+  card: {
+    backgroundColor: primaryColors.islandgreen,
   },
 });
 
