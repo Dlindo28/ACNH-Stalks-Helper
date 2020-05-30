@@ -25,7 +25,6 @@ import store from "./createStore";
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-
 const Tab = createMaterialTopTabNavigator();
 
 const AppBuilder = () => {

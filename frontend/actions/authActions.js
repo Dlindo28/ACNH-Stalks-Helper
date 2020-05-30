@@ -12,16 +12,16 @@ export const logIn = (payload) => (dispatch) => {
 };
 */
 
-export const logIn = () => (dispatch) => {
-  dispatch({
+export const logIn = () => {
+  return {
     type: LOGIN,
     payload: true,
-  });
+  };
 };
 
-export const logIn = () => (dispatch) => {
-  dispatch({
-    type: LOGIN,
+export const logOut = () => {
+  return {
+    type: LOGOUT,
     payload: false,
-  });
+  };
 };

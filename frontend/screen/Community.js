@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import * as Google from "expo-google-app-auth";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
@@ -7,12 +7,15 @@ import firebase from "firebase";
 import { primaryColors } from "../models/Styles";
 
 import { useDispatch, useSelector } from "react-redux";
+import { logIn, logOut } from "../actions/authActions";
 
 import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, firebaseConfig } from "../config";
 
 const Community = ({ firebaseUser, navigation, auth }) => {
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const reduxState = useSelector((state) => state);
+  const loggedIn = reduxState.auth.loggedIn;
+
   const [token, setToken] = useState();
   const [phoneAuth, setPhoneAuth] = useState(false);
 
@@ -32,15 +35,16 @@ const Community = ({ firebaseUser, navigation, auth }) => {
       });
       if (result.type == "success") {
         console.log(result.user.givenName + " logged in");
-        dispatch({ type: "LOGIN" });
+        //setLogIn();
         setToken(result.accessToken);
-        setResult(result);
+        dispatch(logIn());
         return result.accessToken;
       } else {
         return { cancelled: true };
       }
     } catch (e) {
       console.log("Error with login");
+      console.log(e);
       return { error: true };
     }
   };
@@ -53,7 +57,7 @@ const Community = ({ firebaseUser, navigation, auth }) => {
         androidClientId: ANDROID_CLIENT_ID,
         scopes: ["profile", "email"],
       });
-      dispatch({ type: "LOGIN" });
+      dispatch(logOut());
       setPhoneAuth(false);
       setToken(null);
     } catch (e) {
@@ -63,10 +67,23 @@ const Community = ({ firebaseUser, navigation, auth }) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(logIn);
+  }, []);
+
   if (loggedIn) {
     return (
       <View style={styles.container}>
         <Button title="Log out" onPress={logOutOfGoogle} />
+        <Button
+          title="Test"
+          onPress={() =>
+            dispatch({
+              type: "LOGOUT",
+              payload: false,
+            })
+          }
+        />
       </View>
     );
   } else {
@@ -152,6 +169,8 @@ const Community = ({ firebaseUser, navigation, auth }) => {
               color={primaryColors.white}
             />
           </View>
+          <Button title="Test" onPress={() => dispatch(logIn())} />
+          <Text>{JSON.stringify(reduxState)}</Text>
         </View>
       );
     }
