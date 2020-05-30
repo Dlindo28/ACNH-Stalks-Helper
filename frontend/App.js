@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useRef, useState } from "react";
-import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
@@ -17,7 +17,9 @@ import Community from "./screen/Community";
 
 import firebase from "firebase";
 import { firebaseConfig } from "./config.js";
-import { useSafeArea } from "react-native-safe-area-context";
+
+import { Provider, useSelector } from "react-redux";
+import store from "./createStore";
 
 /* If Firebase app not loaded, initialize from config */
 if (!firebase.apps.length) {
@@ -26,7 +28,7 @@ if (!firebase.apps.length) {
 
 const Tab = createMaterialTopTabNavigator();
 
-const App = () => {
+const AppBuilder = () => {
   const [firebaseLoggedIn, setFirebaseLoggedIn] = useState(false);
   const [firebaseUser, setFirebaseUser] = useState(null);
   const isFirebaseLoggedIn = () => {
@@ -38,6 +40,9 @@ const App = () => {
       }
     });
   };
+
+  const s = useSelector((state) => state);
+
   useEffect(() => {
     isFirebaseLoggedIn();
   });
@@ -45,8 +50,6 @@ const App = () => {
   let [fontsLoaded] = useFonts({
     acnh: require("./assets/fonts/nintendoP_Humming-E_002pr.otf"),
   });
-
-  const { width } = Dimensions.get("window");
 
   if (fontsLoaded) {
     return (
@@ -119,4 +122,11 @@ const App = () => {
   }
 };
 
+const App = () => {
+  return (
+    <Provider store={store}>
+      <AppBuilder />
+    </Provider>
+  );
+};
 export default App;

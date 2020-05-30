@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import * as Google from "expo-google-app-auth";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
@@ -6,10 +6,13 @@ import firebase from "firebase";
 
 import { primaryColors } from "../models/Styles";
 
+import { useDispatch, useSelector } from "react-redux";
+
 import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, firebaseConfig } from "../config";
 
-const Community = ({ firebaseUser, navigation }) => {
-  const [loggedIn, setLoggedIn] = useState();
+const Community = ({ firebaseUser, navigation, auth }) => {
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
   const [token, setToken] = useState();
   const [phoneAuth, setPhoneAuth] = useState(false);
 
@@ -18,7 +21,6 @@ const Community = ({ firebaseUser, navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
-  const [message, showMessage] = useState("Default message");
 
   const signInWithGoogle = async () => {
     try {
@@ -30,13 +32,7 @@ const Community = ({ firebaseUser, navigation }) => {
       });
       if (result.type == "success") {
         console.log(result.user.givenName + " logged in");
-        // navigate to community
-        /*
-        navigation.navigate("Community", {
-          user: result.user,
-        });
-        */
-        setLoggedIn(true);
+        dispatch({ type: "LOGIN" });
         setToken(result.accessToken);
         setResult(result);
         return result.accessToken;
@@ -57,7 +53,7 @@ const Community = ({ firebaseUser, navigation }) => {
         androidClientId: ANDROID_CLIENT_ID,
         scopes: ["profile", "email"],
       });
-      setLoggedIn(false);
+      dispatch({ type: "LOGIN" });
       setPhoneAuth(false);
       setToken(null);
     } catch (e) {
@@ -102,7 +98,7 @@ const Community = ({ firebaseUser, navigation }) => {
                   text: "Verification code has been sent to your phone.",
                 });
               } catch (e) {
-                showMessage({ text: `Error: ${e.message}`, color: "red" });
+                console.log(e);
               }
             }}
           />
@@ -125,7 +121,7 @@ const Community = ({ firebaseUser, navigation }) => {
                 showMessage({ text: "Logged In" });
                 setLoggedIn(true);
               } catch (e) {
-                showMessage({ text: `Error: ${e.message}`, color: "red" });
+                console.log(e);
               }
             }}
           />
@@ -175,5 +171,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+/* Connects redux state to component's props */
+const mapStateToProps = (state) => {
+  const { auth } = state;
+  return auth;
+};
 
 export default Community;
