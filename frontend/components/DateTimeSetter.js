@@ -1,24 +1,39 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList, Platform } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Platform,
+  Button,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { primaryColors } from "../models/Styles.js";
+
+import { setDate, setTime } from "../actions/datetimeActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const DateTimeSetter = () => {
-  const [newDate, setNewDate] = useState(new Date());
-  const handleChange = (e, selectedDate) => {
-    setNewDate(selectedDate);
-  };
+  const dispatch = useDispatch();
+  const [tempDate, setTempDate] = useState(new Date());
 
   if (Platform.OS == "ios") {
     return (
       <View>
         <DateTimePicker
           testID="dateTimePicker"
-          value={newDate}
+          value={tempDate}
           mode="datetime"
-          onChange={(e, d) => handleChange(e, d)}
+          onChange={(e, d) => {
+            setTempDate(d);
+          }}
         />
-        <Text>{newDate.toString()}</Text>
+        <Button title="Enter" onPress={() => dispatch(setDate(tempDate))} />
+        <Button
+          title="Reset"
+          onPress={() => dispatch(setDate(new Date()))}
+          color="red"
+        />
+        <Text>{}</Text>
       </View>
     );
   } else {
@@ -29,7 +44,5 @@ const DateTimeSetter = () => {
     );
   }
 };
-
-const styles = StyleSheet.create({});
 
 export default DateTimeSetter;

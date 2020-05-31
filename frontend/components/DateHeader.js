@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setDate } from "../actions/datetimeActions";
+
 import { day } from "../models/Dates";
 
 const getDay = (date) => {
@@ -24,12 +27,13 @@ const getMinutes = (date) => {
 };
 
 const DateHeader = () => {
-  let d = new Date();
-  const [date, setDate] = useState(d);
+  const date = useSelector((state) => state.datetime.date);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDate(new Date());
+      date.setSeconds(date.getSeconds() + 1);
+      dispatch(setDate(date));
     }, 1000);
     return () => clearInterval(interval);
   });

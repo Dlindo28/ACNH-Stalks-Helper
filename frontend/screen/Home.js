@@ -5,7 +5,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   TouchableHighlight,
-  Button,
+  Text,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,6 +15,8 @@ import { primaryColors } from "../models/Styles";
 import PriceArea from "../components/PriceArea";
 import DateHeader from "../components/DateHeader";
 import ChartPanel from "../components/ChartPanel";
+
+import { useSelector } from "react-redux";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -29,6 +31,7 @@ const Home = ({ navigation }) => {
   const setPanelState = (panelState) => {
     setPanel(panelState);
   };
+
   if (!panelIsOpen) {
     return (
       <DismissKeyboard>
