@@ -2,7 +2,7 @@ export const primaryColors = {
   islandgreen: "#8ddac1",
   islandyellow: "#ffdf5d",
   white: "#f0ffff",
-  cream: "#fbffd8",
+  cream: "#fffff2",
   darkgreen: "#384e53",
 };
 

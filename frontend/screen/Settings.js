@@ -1,11 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 
-// Date
-// Time
 // Notifications (switch)
 // Rate App
-// Reset
+// Reset (remove auth, reset time, reset prices)
 
 import { primaryColors } from "../models/Styles.js";
 
@@ -15,8 +13,8 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
-      <View style={styles.card}>
-        <DateTimeSetter />
+      <View>
+        <DateTimeSetter modalOpen={false} />
       </View>
     </View>
   );
@@ -25,7 +23,7 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: primaryColors.white,
+    backgroundColor: primaryColors.islandgreen,
   },
   header: {
     alignSelf: "center",
@@ -36,9 +34,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: primaryColors.darkgreen,
     marginBottom: 5,
-  },
-  card: {
-    backgroundColor: primaryColors.islandgreen,
   },
 });
 
