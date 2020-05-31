@@ -4,27 +4,13 @@ import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "../actions/datetimeActions";
 
-import { day } from "../models/Dates";
-
-const getDay = (date) => {
-  return day[date.toDateString().split(" ")[0]];
-};
-
-const getMeridian = (date) => {
-  let midday = new Date();
-  midday.setHours(12);
-  return date.getTime() < midday.getTime() ? "AM" : "PM";
-};
-
-const getHours = (date) => {
-  let hour = date.getHours() % 12;
-  return hour != 0 ? hour.toString() : "12";
-};
-
-const getMinutes = (date) => {
-  let minutes = date.getMinutes();
-  return minutes < 10 ? "0" + minutes.toString() : minutes.toString();
-};
+import {
+  day,
+  getDay,
+  getHours,
+  getMeridian,
+  getMinutes,
+} from "../models/Dates";
 
 const DateHeader = () => {
   const date = useSelector((state) => state.datetime.date);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,29 +6,79 @@ import {
   TextInput,
   TouchableHighlight,
   Keyboard,
+  AsyncStorage,
 } from "react-native";
+import { getDay, getHours, getMeridian, getMinutes } from "../models/Dates";
+
+import { useSelector, useDispatch } from "react-redux";
+import { setDataSufficiency } from "../actions/dataSufficiencyActions";
 
 import { primaryColors } from "../models/Styles";
 
 export default function PriceArea() {
-  const [price, setPrice] = useState(0);
-  const priceInputHandler = (input) => {
-    console.log("Price set: " + input);
-    AsyncStorage.setItem("price", input.toString());
-    Keyboard.dismiss();
+  const dispatch = useDispatch();
+  const date = useSelector((state) => state.datetime.date);
+  const [price, setPrice] = useState();
+
+  const setAsyncStoragePrice = async (input, date) => {
+    try {
+      const day = getDay(date);
+      const meridian = getMeridian(date);
+      const key = day != "Sunday" ? day + meridian : day;
+      await AsyncStorage.setItem(key, input);
+      if (key == "MondayAM") {
+        setAsyncStorageTypes();
+      }
+      Keyboard.dismiss();
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  const setAsyncStorageTypes = async () => {
+    try {
+      const sundayPrice = await AsyncStorage.getItem("Sunday");
+      const modayPrice = await AsyncStorage.getItem("MondayAM");
+      const ratio = Number(modayPrice) / Number(sundayPrice);
+      console.log(ratio);
+      checkSufficiency();
+    } catch (e) {
+      handleMissingBuyPrice();
+      console.log(e);
+    }
+  };
+
+  const checkSufficiency = async () => {
+    try {
+      const mon = await AsyncStorage.getItem("MondayAM");
+      const sun = await AsyncStorage.getItem("Sunday");
+
+      if (mon != null && sun != null) {
+        dispatch(setDataSufficiency(true));
+      } else {
+        dispatch(setDataSufficiency(false));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    checkSufficiency();
+  });
+
   return (
     <View style={styles.priceAreaContainer}>
       <TextInput
         style={styles.textInput}
         placeholder="Enter Current Price:"
         placeholderTextColor={primaryColors.darkgreen}
-        onChangeText={(text) => setPrice(Number(text))}
+        onChangeText={(text) => setPrice(text)}
         keyboardType="numeric"
       />
       <TouchableHighlight
         style={styles.button}
-        onPress={() => priceInputHandler(price)}
+        onPress={() => setAsyncStoragePrice(price, date)}
       >
         <Text style={styles.buttonText}>Enter</Text>
       </TouchableHighlight>
@@ -51,7 +101,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     fontFamily: "acnh",
-    color: primaryColors.cream,
+    color: primaryColors.darkgreen,
   },
   button: {
     backgroundColor: primaryColors.darkgreen,

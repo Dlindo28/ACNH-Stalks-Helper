@@ -51,6 +51,7 @@ const DateTimeSetter = () => {
               value={tempDate}
               mode="datetime"
               onChange={(e, d) => {
+                e.preventDefault();
                 setTempDate(d);
               }}
               style={{}}
