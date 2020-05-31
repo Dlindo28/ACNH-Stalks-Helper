@@ -21,7 +21,7 @@ import { firebaseConfig } from "./config.js";
 import { Provider, useSelector } from "react-redux";
 import store from "./createStore";
 
-/* If Firebase app not loaded, initialize from config */
+/* Initialize firebase */
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
