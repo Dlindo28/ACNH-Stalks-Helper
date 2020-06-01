@@ -18,7 +18,7 @@ const DateHeader = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      date.setSeconds(date.getSeconds() + 1);
+      date.setSeconds(date.getSeconds() + 60);
       dispatch(setDate(date));
     }, 1000);
     return () => clearInterval(interval);

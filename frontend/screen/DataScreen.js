@@ -5,10 +5,12 @@ import {
   View,
   TouchableOpacity,
   AsyncStorage,
+  TextInput,
+  Dimensions,
 } from "react-native";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
-
+import ChartFull from "../components/ChartFull";
 const DataScreen = () => {
   const resetPrices = async () => {
     try {
@@ -40,10 +42,28 @@ const DataScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Data Screen</Text>
+      <ChartFull />
+      <TouchableOpacity activeOpacity={0.6} onPress={() => editPrices()}>
+        <View
+          style={{
+            ...styles.button,
+            backgroundColor: primaryColors.darkgreen,
+            color: primaryColors.cream,
+          }}
+        >
+          <Text style={styles.buttonText}>Edit Prices</Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity activeOpacity={0.6} onPress={() => resetPrices()}>
         <View style={styles.button}>
-          <Text>Reset Prices</Text>
+          <Text
+            style={{
+              ...styles.buttonText,
+              color: primaryColors.darkgreen,
+            }}
+          >
+            Reset Prices
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -54,6 +74,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: primaryColors.islandgreen,
+    paddingTop: 50,
+    alignItems: "center",
   },
   header: {
     alignSelf: "center",
@@ -71,7 +93,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    width: 380,
+    width: Dimensions.get("window").width / 1.1,
     height: 40,
     borderRadius: 10,
     marginTop: 5,
@@ -81,6 +103,11 @@ const styles = StyleSheet.create({
       height: 2,
       width: 2,
     },
+  },
+  buttonText: {
+    paddingTop: 10,
+    fontFamily: "acnh",
+    color: primaryColors.cream,
   },
 });
 
