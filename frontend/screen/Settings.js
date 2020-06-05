@@ -7,15 +7,10 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 
 import { primaryColors } from "../models/Styles.js";
 
-import DateTimeSetter from "../components/DateTimeSetter";
-
 const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
-      <View>
-        <DateTimeSetter modalOpen={false} />
-      </View>
     </View>
   );
 };

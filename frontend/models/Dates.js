@@ -7,3 +7,21 @@ export const day = {
   Fri: "Friday",
   Sat: "Saturday",
 };
+
+export const getDay = (date) => {
+  return day[date.toDateString().split(" ")[0]];
+};
+
+export const getMeridian = (date) => {
+  return date.getHours() < 12 ? "AM" : "PM";
+};
+
+export const getHours = (date) => {
+  let hour = date.getHours() % 12;
+  return hour != 0 ? hour.toString() : "12";
+};
+
+export const getMinutes = (date) => {
+  let minutes = date.getMinutes();
+  return minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+};

@@ -13,7 +13,6 @@ import { primaryColors } from "./models/Styles.js";
 import Home from "./screen/Home";
 import Settings from "./screen/Settings";
 import DataScreen from "./screen/DataScreen";
-import Community from "./screen/Community";
 
 import firebase from "firebase";
 import { firebaseConfig } from "./config.js";
@@ -21,31 +20,9 @@ import { firebaseConfig } from "./config.js";
 import { Provider, useSelector } from "react-redux";
 import store from "./createStore";
 
-/* Initialize firebase */
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
 const Tab = createMaterialTopTabNavigator();
 
 const AppBuilder = () => {
-  const [firebaseLoggedIn, setFirebaseLoggedIn] = useState(false);
-  const [firebaseUser, setFirebaseUser] = useState(null);
-  const isFirebaseLoggedIn = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setFirebaseLoggedIn(true);
-        setFirebaseUser(user);
-      } else {
-      }
-    });
-  };
-
-  const s = useSelector((state) => state);
-
-  useEffect(() => {
-    isFirebaseLoggedIn();
-  });
-
   let [fontsLoaded] = useFonts({
     acnh: require("./assets/fonts/nintendoP_Humming-E_002pr.otf"),
   });
@@ -71,12 +48,7 @@ const AppBuilder = () => {
                     ? primaryColors.islandgreen
                     : primaryColors.darkgreen;
                   break;
-                case "Community":
-                  iconName = "chat";
-                  iconColor = focused
-                    ? primaryColors.islandgreen
-                    : primaryColors.darkgreen;
-                  break;
+
                 case "Data":
                   iconName = "bar-graph";
                   iconColor = focused
@@ -96,7 +68,7 @@ const AppBuilder = () => {
           tabBarOptions={{
             showLabel: false,
             tabStyle: {
-              backgroundColor: primaryColors.white,
+              backgroundColor: primaryColors.cream,
               height: 70,
             },
             showIcon: true,
@@ -107,11 +79,6 @@ const AppBuilder = () => {
         >
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Data" component={DataScreen} />
-          <Tab.Screen
-            name="Community"
-            component={Community}
-            firebaseUser={firebaseUser}
-          />
           <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
       </NavigationContainer>

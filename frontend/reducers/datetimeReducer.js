@@ -11,7 +11,7 @@ const datetimeReducer = (state = initState, action) => {
     case SET_DATE:
       return {
         ...state,
-        date: action.payload,
+        date: new Date(action.payload),
       };
     default:
       return state;

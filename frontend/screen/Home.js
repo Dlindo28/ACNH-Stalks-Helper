@@ -15,6 +15,7 @@ import { primaryColors } from "../models/Styles";
 import PriceArea from "../components/PriceArea";
 import DateHeader from "../components/DateHeader";
 import ChartPanel from "../components/ChartPanel";
+import ErrorBadge from "../components/ErrorBadge";
 
 import { useSelector } from "react-redux";
 
@@ -26,51 +27,19 @@ const DismissKeyboard = ({ children }) => (
 
 const Stack = createStackNavigator();
 
-const Home = ({ navigation }) => {
-  const [panelIsOpen, setPanel] = useState(false);
-  const setPanelState = (panelState) => {
-    setPanel(panelState);
-  };
-
-  if (!panelIsOpen) {
-    return (
-      <DismissKeyboard>
+const Home = () => {
+  return (
+    <DismissKeyboard>
+      <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <DateHeader />
           <PriceArea />
-          <ChartPanel setPanelState={setPanelState} panelIsOpen={panelIsOpen} />
+          <ChartPanel />
+          <ErrorBadge />
         </View>
-      </DismissKeyboard>
-    );
-  } else {
-    return (
-      <DismissKeyboard>
-        <View style={{ flex: 1 }}>
-          <View style={styles.container}>
-            <TouchableHighlight>
-              <View>
-                <DateHeader />
-                <PriceArea />
-              </View>
-            </TouchableHighlight>
-
-            {/* Adjust the tint and intensity */}
-            <BlurView
-              intensity={90}
-              style={[StyleSheet.absoluteFill, styles.nonBlurredContent]}
-            >
-              <View>
-                <ChartPanel
-                  setPanelState={setPanelState}
-                  panelIsOpen={panelIsOpen}
-                />
-              </View>
-            </BlurView>
-          </View>
-        </View>
-      </DismissKeyboard>
-    );
-  }
+      </View>
+    </DismissKeyboard>
+  );
 };
 
 const styles = StyleSheet.create({
