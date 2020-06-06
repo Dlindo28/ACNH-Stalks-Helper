@@ -7,8 +7,11 @@ import {
   TouchableHighlight,
   Keyboard,
   AsyncStorage,
+  Dimensions,
 } from "react-native";
 import { getDay, getHours, getMeridian, getMinutes } from "../models/Dates";
+
+import TouchableButton from "./TouchableButton";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
@@ -76,12 +79,12 @@ export default function PriceArea() {
         onChangeText={(text) => setPrice(text)}
         keyboardType="numeric"
       />
-      <TouchableHighlight
-        style={styles.button}
+      <TouchableButton
         onPress={() => setAsyncStoragePrice(price, date)}
-      >
-        <Text style={styles.buttonText}>Enter</Text>
-      </TouchableHighlight>
+        backgroundColor={primaryColors.darkgreen}
+        color={primaryColors.cream}
+        text="Enter"
+      />
     </View>
   );
 }
@@ -92,29 +95,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textInput: {
-    width: 380,
+    width: Dimensions.get("window").width / 1.1,
     borderColor: primaryColors.darkgreen,
-    borderBottomWidth: 5,
+    borderBottomWidth: 3,
     padding: 5,
     paddingVertical: 10,
-    marginBottom: 5,
+    marginBottom: 0,
     textAlign: "center",
     alignSelf: "center",
     fontFamily: "acnh",
     color: primaryColors.darkgreen,
-  },
-  button: {
-    backgroundColor: primaryColors.darkgreen,
-    alignSelf: "center",
-    alignItems: "center",
-    width: 380,
-    height: 40,
-    borderRadius: 10,
-  },
-  buttonText: {
-    fontFamily: "acnh",
-    color: primaryColors.cream,
-    fontSize: 20,
-    paddingTop: 9,
   },
 });

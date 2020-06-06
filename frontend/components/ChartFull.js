@@ -16,26 +16,29 @@ import {
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 
 const data = [
-  { date: "Sun", volume: 16197 },
-  { date: "Sun2", volume: 16197 },
-  { date: "Mon", volume: 32010 },
-  { date: "Mon2", volume: 32010 },
-  { date: "Tue", volume: 26518 },
-  { date: "Tue2", volume: 26518 },
-  { date: "Wed", volume: 18606 },
-  { date: "Wed2", volume: 18606 },
-  { date: "Thu", volume: 16795 },
-  { date: "Thu2", volume: 16795 },
-  { date: "Fri", volume: 28607 },
-  { date: "Fri2", volume: 28607 },
-  { date: "Sat", volume: 23621 },
-  { date: "Sat2", volume: 23621 },
+  { date: "Sun", price: 16197 },
+  { date: "Sun2", price: 16197 },
+  { date: "Mon", price: 32010 },
+  { date: "Mon2", price: 32010 },
+  { date: "Tue", price: 26518 },
+  { date: "Tue2", price: 26518 },
+  { date: "Wed", price: 18606 },
+  { date: "Wed2", price: 18606 },
+  { date: "Thu", price: 16795 },
+  { date: "Thu2", price: 16795 },
+  { date: "Fri", price: 28607 },
+  { date: "Fri2", price: 28607 },
+  { date: "Sat", price: 23621 },
+  { date: "Sat2", price: 23621 },
 ];
 
 const RenderChart = () => {
   return (
     <View>
-      <VictoryChart>
+      <VictoryChart
+        height={Dimensions.get("window").height / 3}
+        width={Dimensions.get("window").width / 1.1}
+      >
         <VictoryAxis
           fixLabelOverlap
           style={{
@@ -46,10 +49,8 @@ const RenderChart = () => {
         <VictoryArea
           data={data}
           x="date"
-          y="volume"
+          y="price"
           interpolation="natural"
-          height={Dimensions.get("window").height / 3}
-          width={Dimensions.get("window").width / 1.1}
           style={{
             data: {
               color: primaryColors.darkgreen,
@@ -60,10 +61,8 @@ const RenderChart = () => {
         <VictoryLine
           data={data}
           x="date"
-          y="volume"
+          y="price"
           interpolation="natural"
-          height={Dimensions.get("window").height / 3}
-          width={Dimensions.get("window").width / 1.1}
           style={{
             data: {
               color: primaryColors.darkgreen,
@@ -73,10 +72,8 @@ const RenderChart = () => {
         <VictoryScatter
           data={data}
           x="date"
-          y="volume"
+          y="price"
           interpolation="natural"
-          height={Dimensions.get("window").height / 3}
-          width={Dimensions.get("window").width / 1.1}
           size={5}
           style={{
             data: {

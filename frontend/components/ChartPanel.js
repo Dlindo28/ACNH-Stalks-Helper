@@ -8,10 +8,13 @@ import {
 
 import { primaryColors } from "../models/Styles.js";
 
-const ChartPanel = () => {
+const ChartPanel = ({ navigation }) => {
+  const navigateToChart = () => {
+    navigation.navigate("Data");
+  };
   return (
     <View>
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={navigateToChart}>
         <View style={styles.closedPanel}></View>
       </TouchableWithoutFeedback>
     </View>

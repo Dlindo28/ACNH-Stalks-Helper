@@ -21,14 +21,14 @@ const DismissKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <DismissKeyboard>
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <DateHeader />
           <PriceArea />
-          <ChartPanel />
+          <ChartPanel navigation={navigation} />
           <ErrorBadge />
         </View>
       </View>

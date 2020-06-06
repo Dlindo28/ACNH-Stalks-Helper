@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,11 +7,18 @@ import {
   AsyncStorage,
   TextInput,
   Dimensions,
+  Modal,
+  Alert,
 } from "react-native";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
+
 import ChartFull from "../components/ChartFull";
+import TouchableButton from "../components/TouchableButton";
+
 const DataScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const resetPrices = async () => {
     try {
       const days = [
@@ -35,37 +42,43 @@ const DataScreen = () => {
           await AsyncStorage.removeItem(key);
         }
       }
-      console.log("items removed");
+      Alert.alert("Prices Reset", "Prices reset successfully", [
+        { text: "OK", onPress: () => console.log("items removed") },
+      ]);
     } catch (e) {
       console.log(e);
     }
   };
+
+  const handlePriceSet = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Modal visible={modalVisible} animationType="slide" transparent={false}>
+        <View style={styles.container}>
+          <TouchableButton
+            onPress={handlePriceSet}
+            backgroundColor={primaryColors.darkgreen}
+            color={primaryColors.cream}
+            text="Confirm"
+          />
+        </View>
+      </Modal>
       <ChartFull />
-      <TouchableOpacity activeOpacity={0.6} onPress={() => editPrices()}>
-        <View
-          style={{
-            ...styles.button,
-            backgroundColor: primaryColors.darkgreen,
-            color: primaryColors.cream,
-          }}
-        >
-          <Text style={styles.buttonText}>Edit Prices</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.6} onPress={() => resetPrices()}>
-        <View style={styles.button}>
-          <Text
-            style={{
-              ...styles.buttonText,
-              color: primaryColors.darkgreen,
-            }}
-          >
-            Reset Prices
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <TouchableButton
+        onPress={() => setModalVisible(true)}
+        backgroundColor={primaryColors.darkgreen}
+        color={primaryColors.cream}
+        text="Edit Prices"
+      />
+      <TouchableButton
+        onPress={resetPrices}
+        color={primaryColors.darkgreen}
+        backgroundColor={secondaryColors.rose}
+        text="Reset Prices"
+      />
     </View>
   );
 };
