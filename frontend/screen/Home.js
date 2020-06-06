@@ -7,8 +7,6 @@ import {
   TouchableHighlight,
   Text,
 } from "react-native";
-import { BlurView } from "expo-blur";
-import { createStackNavigator } from "@react-navigation/stack";
 
 import { primaryColors } from "../models/Styles";
 
@@ -17,15 +15,11 @@ import DateHeader from "../components/DateHeader";
 import ChartPanel from "../components/ChartPanel";
 import ErrorBadge from "../components/ErrorBadge";
 
-import { useSelector } from "react-redux";
-
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
-
-const Stack = createStackNavigator();
 
 const Home = () => {
   return (

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
 
 import { primaryColors } from "../models/Styles";
-
-const Stack = createStackNavigator();
 
 const PageLink = ({ link, navigation, move }) => {
   return (

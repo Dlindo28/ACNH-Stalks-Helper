@@ -4,13 +4,7 @@ import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "../actions/datetimeActions";
 
-import {
-  day,
-  getDay,
-  getHours,
-  getMeridian,
-  getMinutes,
-} from "../models/Dates";
+import { getDay, getHours, getMeridian, getMinutes } from "../models/Dates";
 
 const DateHeader = () => {
   const date = useSelector((state) => state.datetime.date);

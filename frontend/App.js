@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { Dimensions } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,9 +12,6 @@ import { primaryColors } from "./models/Styles.js";
 import Home from "./screen/Home";
 import Settings from "./screen/Settings";
 import DataScreen from "./screen/DataScreen";
-
-import firebase from "firebase";
-import { firebaseConfig } from "./config.js";
 
 import { Provider, useSelector } from "react-redux";
 import store from "./createStore";
