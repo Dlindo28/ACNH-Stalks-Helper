@@ -10,49 +10,57 @@ import {
   VictoryChart,
   VictoryScatter,
   VictoryLine,
+  VictoryAxis,
 } from "victory-native";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 
 const data = [
-  { day: "Sun", price: 109 },
-  { day: "Mon", price: 88 },
-  { day: "Tue", price: 90 },
-  { day: "Wed", price: 55 },
-  { day: "Thu", price: 60 },
-  { day: "Fri", price: 114 },
-  { day: "Sat", price: 100 },
+  { date: "Sun", volume: 16197 },
+  { date: "Sun2", volume: 16197 },
+  { date: "Mon", volume: 32010 },
+  { date: "Mon2", volume: 32010 },
+  { date: "Tue", volume: 26518 },
+  { date: "Tue2", volume: 26518 },
+  { date: "Wed", volume: 18606 },
+  { date: "Wed2", volume: 18606 },
+  { date: "Thu", volume: 16795 },
+  { date: "Thu2", volume: 16795 },
+  { date: "Fri", volume: 28607 },
+  { date: "Fri2", volume: 28607 },
+  { date: "Sat", volume: 23621 },
+  { date: "Sat2", volume: 23621 },
 ];
 
 const RenderChart = () => {
   return (
     <View>
-      <VictoryChart
-        maxDomain={{
-          y: 150,
-        }}
-        minDomain={{
-          y: 0,
-        }}
-      >
+      <VictoryChart>
+        <VictoryAxis
+          fixLabelOverlap
+          style={{
+            tickLabels: { padding: 10 },
+          }}
+        />
+        <VictoryAxis dependentAxis />
         <VictoryArea
           data={data}
-          x="day"
-          y="price"
+          x="date"
+          y="volume"
           interpolation="natural"
           height={Dimensions.get("window").height / 3}
           width={Dimensions.get("window").width / 1.1}
           style={{
             data: {
               color: primaryColors.darkgreen,
-              fill: secondaryColors.rose,
+              fill: primaryColors.islandgreen,
             },
           }}
         />
         <VictoryLine
           data={data}
-          x="day"
-          y="price"
+          x="date"
+          y="volume"
           interpolation="natural"
           height={Dimensions.get("window").height / 3}
           width={Dimensions.get("window").width / 1.1}
@@ -64,8 +72,8 @@ const RenderChart = () => {
         />
         <VictoryScatter
           data={data}
-          x="day"
-          y="price"
+          x="date"
+          y="volume"
           interpolation="natural"
           height={Dimensions.get("window").height / 3}
           width={Dimensions.get("window").width / 1.1}
