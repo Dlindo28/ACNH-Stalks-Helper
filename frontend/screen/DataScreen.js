@@ -1,41 +1,19 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  AsyncStorage,
-  TextInput,
-  Dimensions,
-  Modal,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, Dimensions, Modal, Alert } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
+import { days } from "../models/Dates";
 
 import ChartFull from "../components/ChartFull";
 import TouchableButton from "../components/TouchableButton";
+import FullPriceEntry from "../components/FullPriceEntry";
 
 const DataScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const resetPrices = async () => {
     try {
-      const days = [
-        "Sunday",
-        "MondayAM",
-        "MondayPM",
-        "TuesdayAM",
-        "TuesdayPM",
-        "WednesdayAM",
-        "WednesdayPM",
-        "ThursdayAM",
-        "ThursdayPM",
-        "FridayAM",
-        "FridayPM",
-        "SaturdayAM",
-        "SaturdayPM",
-      ];
       const keys = await AsyncStorage.getAllKeys();
       for (const key of keys) {
         if (days.includes(key)) {
@@ -50,21 +28,20 @@ const DataScreen = () => {
     }
   };
 
-  const handlePriceSet = () => {
-    setModalVisible(false);
+  const printStorage = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      const s = await AsyncStorage.multiGet(keys);
+      console.log(s);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Modal visible={modalVisible} animationType="slide" transparent={false}>
-        <View style={styles.container}>
-          <TouchableButton
-            onPress={handlePriceSet}
-            backgroundColor={primaryColors.darkgreen}
-            color={primaryColors.cream}
-            text="Confirm"
-          />
-        </View>
+        <FullPriceEntry setModalVisible={setModalVisible} />
       </Modal>
       <ChartFull />
       <TouchableButton
@@ -78,6 +55,12 @@ const DataScreen = () => {
         color={primaryColors.darkgreen}
         backgroundColor={secondaryColors.rose}
         text="Reset Prices"
+      />
+      <TouchableButton
+        onPress={printStorage}
+        backgroundColor={secondaryColors.purple}
+        color={primaryColors.cream}
+        text="Print Storage"
       />
     </View>
   );

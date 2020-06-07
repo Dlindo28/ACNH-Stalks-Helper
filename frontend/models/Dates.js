@@ -1,14 +1,29 @@
-export const day = {
-  Sun: "Sunday",
-  Mon: "Monday",
-  Tue: "Tuesday",
-  Wed: "Wednesday",
-  Thu: "Thursday",
-  Fri: "Friday",
-  Sat: "Saturday",
-};
+export const days = [
+  "Sunday",
+  "MondayAM",
+  "MondayPM",
+  "TuesdayAM",
+  "TuesdayPM",
+  "WednesdayAM",
+  "WednesdayPM",
+  "ThursdayAM",
+  "ThursdayPM",
+  "FridayAM",
+  "FridayPM",
+  "SaturdayAM",
+  "SaturdayPM",
+];
 
 export const getDay = (date) => {
+  const day = {
+    Sun: "Sunday",
+    Mon: "Monday",
+    Tue: "Tuesday",
+    Wed: "Wednesday",
+    Thu: "Thursday",
+    Fri: "Friday",
+    Sat: "Saturday",
+  };
   return day[date.toDateString().split(" ")[0]];
 };
 
