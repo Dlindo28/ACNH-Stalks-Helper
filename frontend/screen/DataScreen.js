@@ -20,6 +20,7 @@ const DataScreen = () => {
           await AsyncStorage.removeItem(key);
         }
       }
+      await AsyncStorage.removeItem("tree");
       Alert.alert("Prices Reset", "Prices reset successfully", [
         { text: "OK", onPress: () => console.log("items removed") },
       ]);

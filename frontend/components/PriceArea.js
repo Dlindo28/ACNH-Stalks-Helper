@@ -21,12 +21,12 @@ export default function PriceArea() {
         keyboardType="numeric"
         onChangeText={(text) => setPriceIn(text)}
         onSubmitEditing={(e) =>
-          setPrice(e.nativeEvent.text, getDay(date), getMeridian(date))
+          setPrice(priceIn, getDay(date) + getMeridian(date))
         }
         returnKeyType="done"
       />
       <TouchableButton
-        onPress={() => setPrice(priceIn, getDay(date), getMeridian(date))}
+        onPress={() => setPrice(priceIn, getDay(date) + getMeridian(date))}
         backgroundColor={primaryColors.darkgreen}
         color={primaryColors.cream}
         text="Enter"

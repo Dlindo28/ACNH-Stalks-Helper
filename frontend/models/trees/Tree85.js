@@ -11,7 +11,7 @@ const SpikeBranch = {
 };
 
 /* Tree85: */
-const Tree85 = {
+export const Tree85 = {
   types: mainTypes,
   lower: {
     types: mainTypes,
@@ -46,4 +46,3 @@ const Tree85 = {
 };
 
 console.log(Tree85.higher);
-module.exports = Tree85;

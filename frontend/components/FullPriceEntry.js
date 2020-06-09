@@ -1,36 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
 import { useSetPrice } from "../hooks";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import TouchableButton from "./TouchableButton";
 
-import { primaryColors, secondaryColors } from "../models/Styles";
+import { primaryColors } from "../models/Styles";
+
+const buffer = {};
+
+const getPrice = async (day) => {
+  const price = await AsyncStorage.getItem(day);
+  return price != null ? price : "0";
+};
 
 const PriceEntryRow = ({ day }) => {
   const setPrice = useSetPrice();
+
   return (
     <View>
       <Text>{day}</Text>
       <View
         style={{
           flexDirection: "row",
+          marginBottom: 20,
         }}
       >
         <TextInput
           style={{ marginRight: 10, borderBottomWidth: 1 }}
-          placeholder="AM"
+          placeholder={day + "AM"}
           placeholderTextColor={primaryColors.darkgreen}
-          onSubmitEditing={(e) => setPrice(e.nativeEvent.text, day, "AM")}
+          onSubmitEditing={(e) => setPrice(e.nativeEvent.text, day + "AM")}
           keyboardType="numeric"
           returnKeyType="done"
+          onChangeText={(price) => {
+            buffer[day + "AM"] = price;
+          }}
         />
         <TextInput
           style={{ marginRight: 10, borderBottomWidth: 1 }}
-          placeholder="PM"
+          placeholder={day + "PM"}
           placeholderTextColor={primaryColors.darkgreen}
-          onSubmitEditing={(e) => setPrice(e.nativeEvent.text, day, "PM")}
+          onSubmitEditing={(e) => setPrice(e.nativeEvent.text, day + "PM")}
           keyboardType="numeric"
           returnKeyType="done"
+          onChangeText={(price) => {
+            buffer[day + "PM"] = price;
+          }}
         />
       </View>
     </View>
@@ -41,6 +57,9 @@ const FullPriceEntry = ({ setModalVisible }) => {
   const setPrice = useSetPrice();
 
   const handleConfirm = () => {
+    for (let entry in buffer) {
+      setPrice(buffer[entry], entry);
+    }
     setModalVisible(false);
   };
 
@@ -54,6 +73,9 @@ const FullPriceEntry = ({ setModalVisible }) => {
         onSubmitEditing={(e) => setPrice(e.nativeEvent.text, "Sunday")}
         keyboardType="numeric"
         returnKeyType="done"
+        onChangeText={(price) => {
+          buffer["Sunday"] = price;
+        }}
       />
       <PriceEntryRow day="Monday" />
       <PriceEntryRow day="Tuesday" />
@@ -65,7 +87,7 @@ const FullPriceEntry = ({ setModalVisible }) => {
         onPress={handleConfirm}
         backgroundColor={primaryColors.darkgreen}
         color={primaryColors.cream}
-        text="Confirm"
+        text="Close"
       />
     </View>
   );

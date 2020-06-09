@@ -1,4 +1,4 @@
-const Tree91 = {
+export const Tree91 = {
   types: ["R", "BS"],
   lower: {
     types: ["R", "BS"],
@@ -68,5 +68,3 @@ const rsBranch = {
     higher: null,
   },
 };
-
-module.exports = Tree91;
