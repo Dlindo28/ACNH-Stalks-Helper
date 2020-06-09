@@ -99,16 +99,18 @@ const Chart = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // maxPrice =
   return (
     <View>
       <VictoryChart
         height={Dimensions.get("window").height / 3}
         width={Dimensions.get("window").width / 1.1}
         animate={{ easing: "exp" }}
-        maxDomain={{ y: 150 }}
         minDomain={{ y: 0 }}
+        domainPadding={{ y: 10 }}
       >
         <VictoryAxis tickValues={days} tickFormat={tickFormat} />
+        <VictoryAxis dependentAxis />
         <VictoryBar
           data={data}
           x="date"
