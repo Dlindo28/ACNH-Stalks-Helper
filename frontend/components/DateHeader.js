@@ -8,12 +8,13 @@ import { getDay, getHours, getMeridian, getMinutes } from "../models/Dates";
 
 const DateHeader = () => {
   const date = useSelector((state) => state.datetime.date);
+  const [update, setUpdate] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      date.setSeconds(date.getSeconds() + 1);
-      dispatch(setDate(date));
+      dispatch(setDate(new Date()));
+      setUpdate(!update);
     }, 1000);
     return () => clearInterval(interval);
   });
