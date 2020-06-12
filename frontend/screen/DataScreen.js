@@ -22,7 +22,7 @@ const DataScreen = () => {
       }
       await AsyncStorage.removeItem("tree");
       Alert.alert("Prices Reset", "Prices reset successfully", [
-        { text: "OK", onPress: () => console.log("items removed") },
+        { text: "OK" },
       ]);
     } catch (e) {
       console.log(e);
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    width: Dimensions.get("window").width / 1.1,
+    width: Dimensions.get("window").width / 1.05,
     height: 40,
     borderRadius: 10,
     marginTop: 5,

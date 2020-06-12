@@ -13,18 +13,17 @@ export const days = [
   "SaturdayAM",
   "SaturdayPM",
 ];
-
 export const getDay = (date) => {
-  const day = {
-    Sun: "Sunday",
-    Mon: "Monday",
-    Tue: "Tuesday",
-    Wed: "Wednesday",
-    Thu: "Thursday",
-    Fri: "Friday",
-    Sat: "Saturday",
-  };
-  return day[date.toDateString().split(" ")[0]];
+  const day = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return day[date.getDay()];
 };
 
 export const getMeridian = (date) => {

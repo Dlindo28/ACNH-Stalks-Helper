@@ -4,8 +4,10 @@ import {
   View,
   TouchableWithoutFeedback,
   Button,
+  Dimensions,
 } from "react-native";
 
+import Chart from "./Chart";
 import { primaryColors } from "../models/Styles.js";
 
 const ChartPanel = ({ navigation }) => {
@@ -15,7 +17,9 @@ const ChartPanel = ({ navigation }) => {
   return (
     <View>
       <TouchableWithoutFeedback onPress={navigateToChart}>
-        <View style={styles.closedPanel}></View>
+        <View style={styles.closedPanel}>
+          <Chart homeChart />
+        </View>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
   closedPanel: {
     backgroundColor: primaryColors.cream,
     height: 380,
-    width: 380,
+    width: Dimensions.get("window").width / 1.05,
     borderRadius: 10,
     marginTop: 5,
     shadowOpacity: 0.2,

@@ -1,70 +1,61 @@
-export const Tree91 = {
-  types: ["R", "BS"],
-  lower: {
-    types: ["R", "BS"],
-    lower: {
-      types: ["R", "BS"],
-      lower: {
-        types: ["R", "BS"],
-        lower: {
-          types: ["R", "BS"],
-          lower: {
-            types: ["R", "BS"],
-            lower: {
-              types: ["R", "BS"],
-              lower: {
-                types: ["R", "BS"],
-                lower: {
-                  types: ["R"],
-                  lower: null,
-                  higher: null,
-                },
-                higher: null,
-              },
-              higher: null,
-            },
-            higher: null,
-          },
-          higher: null,
-        },
-        higher: rsBranch,
-      },
-      higher: rsBranch,
-    },
-  },
-  higher: {
-    types: ["R"],
-    lower: null,
-    higher: null,
-  },
-};
+const mainTypes = ["R", "BS"];
 
-const rsBranch = {
-  types: ["R", "BS"],
+const spikeBranch = {
+  types: mainTypes,
   lower: {
-    types: ["R", "BS"],
+    types: mainTypes,
     lower: {
       types: ["R"],
-      lower: null,
-      higher: null,
     },
     higher: {
-      types: ["R", "BS*"],
+      types: mainTypes,
+      notes: "sell next interval",
       lower: {
         types: ["R"],
-        lower: null,
-        higher: null,
       },
       higher: {
         types: ["BS"],
-        lower: null,
-        higher: null,
+        notes: "sell now",
       },
     },
   },
   higher: {
     types: ["R"],
-    lower: null,
-    higher: null,
   },
+};
+
+export const Tree91 = {
+  types: mainTypes,
+  lower: {
+    types: mainTypes,
+    lower: {
+      types: mainTypes,
+      lower: {
+        types: mainTypes,
+        lower: {
+          types: mainTypes,
+          lower: {
+            types: mainTypes,
+            lower: {
+              types: mainTypes,
+              lower: {
+                types: mainTypes,
+                lower: {
+                  types: ["R"],
+                },
+                higher: spikeBranch,
+              },
+              higher: spikeBranch,
+            },
+            higher: spikeBranch,
+          },
+          higher: spikeBranch,
+        },
+        higher: spikeBranch,
+      },
+      higher: spikeBranch,
+    },
+    higher: spikeBranch,
+  },
+  higher: spikeBranch,
 };

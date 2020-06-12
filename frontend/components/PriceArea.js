@@ -20,13 +20,17 @@ export default function PriceArea() {
         placeholderTextColor={primaryColors.darkgreen}
         keyboardType="numeric"
         onChangeText={(text) => setPriceIn(text)}
-        onSubmitEditing={(e) =>
-          setPrice(priceIn, getDay(date) + getMeridian(date))
-        }
+        onSubmitEditing={() => {
+          if (priceIn != null)
+            setPrice(priceIn, getDay(date) + getMeridian(date));
+        }}
         returnKeyType="done"
       />
       <TouchableButton
-        onPress={() => setPrice(priceIn, getDay(date) + getMeridian(date))}
+        onPress={() => {
+          if (priceIn != null)
+            setPrice(priceIn, getDay(date) + getMeridian(date));
+        }}
         backgroundColor={primaryColors.darkgreen}
         color={primaryColors.cream}
         text="Enter"
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textInput: {
-    width: Dimensions.get("window").width / 1.1,
+    width: Dimensions.get("window").width / 1.05,
     borderColor: primaryColors.darkgreen,
     borderBottomWidth: 3,
     padding: 5,

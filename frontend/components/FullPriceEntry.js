@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
 import { useSetPrice } from "../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import TouchableButton from "./TouchableButton";
 
-import { primaryColors } from "../models/Styles";
+import { primaryColors, secondaryColors } from "../models/Styles";
 
 const buffer = {};
 
@@ -16,37 +16,46 @@ const getPrice = async (day) => {
 
 const PriceEntryRow = ({ day }) => {
   const setPrice = useSetPrice();
+  const [amPrice, setAmPrice] = useState("0");
+  const [pmPrice, setPmPrice] = useState("0");
+
+  useEffect(() => {
+    (async () => {
+      setAmPrice((await getPrice(day + "AM")).toString());
+      setPmPrice((await getPrice(day + "PM")).toString());
+    })();
+  }, []);
 
   return (
     <View>
-      <Text>{day}</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          marginBottom: 20,
-        }}
-      >
+      <Text style={styles.rowHeader}>{day}</Text>
+      <View style={styles.rowContainer}>
         <TextInput
-          style={{ marginRight: 10, borderBottomWidth: 1 }}
-          placeholder={day + "AM"}
-          placeholderTextColor={primaryColors.darkgreen}
-          onSubmitEditing={(e) => setPrice(e.nativeEvent.text, day + "AM")}
+          style={styles.rowInput}
+          onSubmitEditing={(e) =>
+            e.nativeEvent.text ? setPrice(e.nativeEvent.text, day + "AM") : null
+          }
           keyboardType="numeric"
           returnKeyType="done"
           onChangeText={(price) => {
             buffer[day + "AM"] = price;
+            setAmPrice(price.toString());
           }}
+          placeholder={amPrice}
+          placeholderTextColor={primaryColors.darkgreen}
         />
         <TextInput
-          style={{ marginRight: 10, borderBottomWidth: 1 }}
-          placeholder={day + "PM"}
-          placeholderTextColor={primaryColors.darkgreen}
-          onSubmitEditing={(e) => setPrice(e.nativeEvent.text, day + "PM")}
+          style={styles.rowInput}
+          onSubmitEditing={(e) =>
+            e.nativeEvent.text ? setPrice(e.nativeEvent.text, day + "PM") : null
+          }
           keyboardType="numeric"
           returnKeyType="done"
           onChangeText={(price) => {
             buffer[day + "PM"] = price;
           }}
+          placeholder={pmPrice}
+          placeholderTextColor={primaryColors.darkgreen}
         />
       </View>
     </View>
@@ -55,6 +64,7 @@ const PriceEntryRow = ({ day }) => {
 
 const FullPriceEntry = ({ setModalVisible }) => {
   const setPrice = useSetPrice();
+  const [sundayPrice, setSundayPrice] = useState("0");
 
   const handleConfirm = () => {
     for (let entry in buffer) {
@@ -63,14 +73,25 @@ const FullPriceEntry = ({ setModalVisible }) => {
     setModalVisible(false);
   };
 
+  useEffect(() => {
+    (async () => {
+      setSundayPrice((await getPrice("Sunday")).toString());
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Sunday</Text>
+      <Text style={styles.rowHeader}>Sunday</Text>
       <TextInput
-        style={{}}
-        placeholder="Sunday"
+        style={{
+          ...styles.rowInput,
+          marginBottom: 10,
+        }}
+        placeholder={sundayPrice}
         placeholderTextColor={primaryColors.darkgreen}
-        onSubmitEditing={(e) => setPrice(e.nativeEvent.text, "Sunday")}
+        onSubmitEditing={(e) =>
+          e.nativeEvent.text ? setPrice(e.nativeEvent.text, "Sunday") : null
+        }
         keyboardType="numeric"
         returnKeyType="done"
         onChangeText={(price) => {
@@ -98,6 +119,26 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColors.islandgreen,
     paddingTop: 50,
     alignItems: "center",
+  },
+  rowInput: {
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: primaryColors.darkgreen,
+    borderRadius: 5,
+    backgroundColor: primaryColors.white,
+    height: 30,
+    width: Dimensions.get("window").width / 2.5,
+    paddingLeft: 10,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  rowHeader: {
+    fontSize: 13,
+    fontFamily: "acnh",
+    alignSelf: "center",
+    marginBottom: 10,
   },
 });
 

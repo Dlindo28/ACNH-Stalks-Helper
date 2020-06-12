@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { Keyboard } from "react-native";
+import { Keyboard, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
 
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
+import { days } from "../models/Dates";
 
 export const useSetPrice = () => {
-  /* Setup redux dispatcher */
+  /* Setup redux dispatcher for dataSufficiency */
   const dispatch = useDispatch();
 
   /* setPrice()  */
@@ -20,10 +21,13 @@ export const useSetPrice = () => {
       if (day == "MondayAM") {
         initTree();
       } else if (day != "Sunday") {
-        let tree = await AsyncStorage.getItem("tree");
-
-        tree = JSON.parse(tree);
-        //updateTree(tree);
+        const isSufficient = await checkSufficiency();
+        if (isSufficient) {
+          let lastPrice = await AsyncStorage.getItem(
+            days[days.indexOf(day) - 1]
+          );
+          updateTree(lastPrice > price);
+        }
       }
       Keyboard.dismiss();
     } catch (e) {
@@ -51,27 +55,39 @@ export const useSetPrice = () => {
 
         let tree;
         if (ratio >= 0.91) {
-          console.log("Tree set to 91");
           tree = Tree91;
+          console.log("Tree initialized to Tree91");
         } else if (ratio >= 0.85) {
-          console.log("Tree set to 85");
           tree = Tree85;
+          console.log("Tree initialized to Tree85");
         } else if (ratio >= 0.8) {
-          console.log("Tree set to 80");
           tree = Tree80;
+          console.log("Tree initialized to Tree80");
         } else if (ratio >= 0.6) {
-          console.log("Tree set to 60");
           tree = Tree60;
+          console.log("Tree initialized to Tree60");
         } else {
-          console.log("Tree set to 0");
           tree = Tree0;
+          console.log("Tree initialized to Tree0");
         }
 
         tree = JSON.stringify(tree);
         await AsyncStorage.setItem("tree", tree);
+        //getTreeObject();
       }
     } catch (e) {
       //handleMissingBuyPrice();
+      console.log(e);
+    }
+  };
+
+  const getTreeObject = async () => {
+    try {
+      let tree = await AsyncStorage.getItem("tree");
+      tree = JSON.parse(tree);
+      console.log(tree);
+      return tree;
+    } catch (e) {
       console.log(e);
     }
   };
@@ -100,6 +116,29 @@ export const useSetPrice = () => {
       }
       
       */
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateTree = async (increase) => {
+    try {
+      let tree = await getTreeObject();
+      if (increase) {
+        if (tree.higher) {
+          tree = tree.higher;
+          console.log("tree increased");
+        }
+      } else {
+        if (tree.lower) {
+          tree = tree.lower;
+          console.log("tree decreased");
+        }
+      }
+      if (tree.notes) {
+        Alert.alert("Alert", tree.notes, [{ text: "OK" }]);
+      }
+      await AsyncStorage.setItem("tree", JSON.stringify(tree));
     } catch (e) {
       console.log(e);
     }

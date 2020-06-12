@@ -4,9 +4,11 @@ const SpikeBranch = {
   types: ["BS", "SS"],
   lower: {
     types: ["BS"],
+    notes: "sell in 2 intervals",
   },
   higher: {
     types: ["SS"],
+    notes: "sell next",
   },
 };
 
@@ -27,8 +29,6 @@ export const Tree85 = {
               types: mainTypes,
               lower: {
                 types: ["D"],
-                lower: null,
-                higher: null,
               },
               higher: SpikeBranch,
             },
@@ -42,7 +42,4 @@ export const Tree85 = {
     },
     higher: SpikeBranch,
   },
-  higher: null,
 };
-
-console.log(Tree85.higher);

@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Dimensions, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage, {
+  useAsyncStorage,
+} from "@react-native-community/async-storage";
 import {
   VictoryChart,
   VictoryScatter,
   VictoryLine,
   VictoryAxis,
+  VictoryBar,
 } from "victory-native";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
+import { getTreeObject } from "../hooks";
 
 let tempdata = [
   { date: "Sunday", price: 0 },
@@ -43,8 +47,29 @@ const tickFormat = [
   " ",
 ];
 
-const Chart = ({ removeYAxis }) => {
+const typeNames = {
+  R: "Random",
+  BS: "Big Spike",
+  SS: "Small Spike",
+  D: "Constant Falling",
+};
+
+const Chart = ({ homeChart }) => {
   const [data, setData] = useState(tempdata);
+  const [types, setTypes] = useState([]);
+  const [dataEmpty, setDataEmpty] = useState(true);
+
+  const listTypes =
+    types.length == 0
+      ? undefined
+      : types.map((type) => (
+          <Text key={type} style={styles.typeText}>
+            {typeNames[type]}
+          </Text>
+        ));
+
+  const yAxis =
+    homeChart || dataEmpty ? undefined : <VictoryAxis dependentAxis />;
 
   const getData = async () => {
     try {
@@ -60,6 +85,7 @@ const Chart = ({ removeYAxis }) => {
 
   const updatePrice = async () => {
     const storeData = await getData();
+    setDataEmpty(storeData.length == 0);
 
     let temp = [];
 
@@ -92,62 +118,59 @@ const Chart = ({ removeYAxis }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       updatePrice();
+      (async () => {
+        let tree = JSON.parse(await AsyncStorage.getItem("tree"));
+        setTypes(tree != null ? tree.types : []);
+      })();
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  if (!removeYAxis) {
-    return (
-      <View>
-        <VictoryChart
-          height={Dimensions.get("window").height / 3}
-          width={Dimensions.get("window").width / 1.1}
-          minDomain={{ y: 0 }}
-          domainPadding={{ y: 10 }}
+  return (
+    <View>
+      <VictoryChart
+        height={Dimensions.get("window").height / 3}
+        width={Dimensions.get("window").width / 1.05}
+        minDomain={{ y: 0 }}
+        domainPadding={{ y: 10 }}
+      >
+        <VictoryAxis tickValues={days} tickFormat={tickFormat} />
+        {yAxis}
+        <VictoryBar
+          data={data}
+          x="date"
+          y="price"
+          interpolation="cardinal"
+          style={{
+            data: {
+              color: primaryColors.darkgreen,
+              fill: secondaryColors.rose,
+            },
+          }}
+        />
+      </VictoryChart>
+
+      {homeChart ? undefined : (
+        <Text
+          style={{
+            ...styles.typeText,
+            fontSize: 20,
+          }}
         >
-          <VictoryAxis tickValues={days} tickFormat={tickFormat} />
-          <VictoryAxis dependentAxis />
-          <VictoryLine
-            data={data}
-            x="date"
-            y="price"
-            interpolation="cardinal"
-            style={styles.graph}
-          />
-        </VictoryChart>
-        <Text>{JSON.stringify(data)}</Text>
-      </View>
-    );
-  } else {
-    return (
-      <View>
-        <VictoryChart
-          height={Dimensions.get("window").height / 3}
-          width={Dimensions.get("window").width / 1.1}
-          minDomain={{ y: 0 }}
-          domainPadding={{ y: 10 }}
-        >
-          <VictoryAxis tickValues={days} tickFormat={tickFormat} />
-          <VictoryLine
-            data={data}
-            x="date"
-            y="price"
-            interpolation="cardinal"
-            style={styles.graph}
-          />
-        </VictoryChart>
-      </View>
-    );
-  }
+          Likely Patterns:
+        </Text>
+      )}
+      {listTypes}
+    </View>
+  );
 };
 
-const styles = {
-  graph: {
-    data: {
-      color: primaryColors.darkgreen,
-      fill: secondaryColors.rose,
-    },
+const styles = StyleSheet.create({
+  typeText: {
+    fontFamily: "acnh",
+    color: primaryColors.darkgreen,
+    paddingLeft: 10,
   },
-};
+});
 
 export default Chart;

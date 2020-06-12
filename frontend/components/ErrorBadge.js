@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    width: 380,
+    width: Dimensions.get("window").width / 1.05,
     height: 40,
     borderRadius: 10,
     marginTop: 5,
