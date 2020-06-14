@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, Modal, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
+import { useDispatch } from "react-redux";
+import { clearYield, setCurPrice } from "../actions/yieldActions";
+
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
 
@@ -10,6 +13,7 @@ import TouchableButton from "../components/TouchableButton";
 import FullPriceEntry from "../components/FullPriceEntry";
 
 const DataScreen = () => {
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
 
   const resetPrices = async () => {
@@ -21,6 +25,8 @@ const DataScreen = () => {
         }
       }
       await AsyncStorage.removeItem("tree");
+      dispatch(clearYield());
+      dispatch(setCurPrice(0));
       Alert.alert("Prices Reset", "Prices reset successfully", [
         { text: "OK" },
       ]);
