@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
 import { useSetPrice } from "../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -14,7 +14,7 @@ const getPrice = async (day) => {
   return price != null ? price : "0";
 };
 
-const PriceEntryRow = ({ day }) => {
+const PricedayRow = ({ day }) => {
   const setPrice = useSetPrice();
   const [amPrice, setAmPrice] = useState("0");
   const [pmPrice, setPmPrice] = useState("0");
@@ -33,7 +33,9 @@ const PriceEntryRow = ({ day }) => {
         <TextInput
           style={styles.rowInput}
           onSubmitEditing={(e) =>
-            e.nativeEvent.text ? setPrice(e.nativeEvent.text, day + "AM") : null
+            e.nativeEvent.text != undefined
+              ? setPrice(e.nativeEvent.text, day + "AM")
+              : undefined
           }
           keyboardType="numeric"
           returnKeyType="done"
@@ -47,7 +49,9 @@ const PriceEntryRow = ({ day }) => {
         <TextInput
           style={styles.rowInput}
           onSubmitEditing={(e) =>
-            e.nativeEvent.text ? setPrice(e.nativeEvent.text, day + "PM") : null
+            e.nativeEvent.text != undefined
+              ? setPrice(e.nativeEvent.text, day + "PM")
+              : undefined
           }
           keyboardType="numeric"
           returnKeyType="done"
@@ -62,13 +66,16 @@ const PriceEntryRow = ({ day }) => {
   );
 };
 
-const FullPriceEntry = ({ setModalVisible }) => {
+const FullPriceday = ({ setModalVisible }) => {
   const setPrice = useSetPrice();
   const [sundayPrice, setSundayPrice] = useState("0");
 
   const handleConfirm = () => {
-    for (let entry in buffer) {
-      setPrice(buffer[entry], entry);
+    for (let day in buffer) {
+      if (buffer[day] != "0") {
+        setPrice(buffer[day], day);
+      }
+      buffer[day] = "0";
     }
     setModalVisible(false);
   };
@@ -90,7 +97,9 @@ const FullPriceEntry = ({ setModalVisible }) => {
         placeholder={sundayPrice}
         placeholderTextColor={primaryColors.darkgreen}
         onSubmitEditing={(e) =>
-          e.nativeEvent.text ? setPrice(e.nativeEvent.text, "Sunday") : null
+          e.nativeEvent.text != undefined
+            ? setPrice(e.nativeEvent.text, "Sunday")
+            : undefined
         }
         keyboardType="numeric"
         returnKeyType="done"
@@ -98,12 +107,12 @@ const FullPriceEntry = ({ setModalVisible }) => {
           buffer["Sunday"] = price;
         }}
       />
-      <PriceEntryRow day="Monday" />
-      <PriceEntryRow day="Tuesday" />
-      <PriceEntryRow day="Wednesday" />
-      <PriceEntryRow day="Thursday" />
-      <PriceEntryRow day="Friday" />
-      <PriceEntryRow day="Saturday" />
+      <PricedayRow day="Monday" />
+      <PricedayRow day="Tuesday" />
+      <PricedayRow day="Wednesday" />
+      <PricedayRow day="Thursday" />
+      <PricedayRow day="Friday" />
+      <PricedayRow day="Saturday" />
       <TouchableButton
         onPress={handleConfirm}
         backgroundColor={primaryColors.darkgreen}
@@ -142,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FullPriceEntry;
+export default FullPriceday;

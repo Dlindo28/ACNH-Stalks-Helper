@@ -60,13 +60,23 @@ const Chart = ({ homeChart }) => {
   const [dataEmpty, setDataEmpty] = useState(true);
 
   const listTypes =
-    types.length == 0
-      ? undefined
-      : types.map((type) => (
-          <Text key={type} style={styles.typeText}>
-            {typeNames[type]}
-          </Text>
-        ));
+    types.length == 0 ? (
+      <Text
+        key={"None"}
+        style={{
+          ...styles.typeText,
+          color: secondaryColors.red,
+        }}
+      >
+        Data Insufficient. No trends available.
+      </Text>
+    ) : (
+      types.map((type) => (
+        <Text key={type} style={styles.typeText}>
+          {typeNames[type]}
+        </Text>
+      ))
+    );
 
   const yAxis =
     homeChart || dataEmpty ? undefined : <VictoryAxis dependentAxis />;
@@ -157,10 +167,10 @@ const Chart = ({ homeChart }) => {
             fontSize: 20,
           }}
         >
-          Likely Patterns:
+          Likely Trends:
         </Text>
       )}
-      {listTypes}
+      {homeChart ? undefined : listTypes}
     </View>
   );
 };

@@ -9,7 +9,7 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setYield, setCurPrice } from "../actions/yieldActions";
+import { setYield, setCurPrice, clearYield } from "../actions/yieldActions";
 
 import Chart from "./Chart";
 
@@ -20,6 +20,9 @@ const ChartFull = () => {
   const dispatch = useDispatch();
   const curPrice = useSelector((store) => store.yield.curPrice);
   const _yield = useSelector((store) => store.yield.yield);
+  const isSufficient = useSelector(
+    (store) => store.dataSufficiency.sufficiency
+  );
 
   const getYield = async () => {
     const sundayPrice = await AsyncStorage.getItem("Sunday");
@@ -27,8 +30,12 @@ const ChartFull = () => {
       const thisPrice = await AsyncStorage.getItem(days[i]);
       if (thisPrice != null) {
         dispatch(setCurPrice(thisPrice));
-        const change = ((curPrice - sundayPrice) / sundayPrice) * 100;
-        dispatch(setYield(Math.round(change)));
+        if (isSufficient) {
+          const change = ((curPrice - sundayPrice) / sundayPrice) * 100;
+          dispatch(setYield(Math.round(change)));
+        } else {
+          dispatch(clearYield());
+        }
         break;
       }
     }
