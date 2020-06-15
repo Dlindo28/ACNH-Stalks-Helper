@@ -1,3 +1,8 @@
+/**
+ * @file Builds models for app's style components
+ * @author Daniel Lindo
+ */
+
 export const primaryColors = {
   islandgreen: "#8ddac1",
   islandyellow: "#ffdf5d",
@@ -14,5 +19,3 @@ export const secondaryColors = {
   red: "#ec5b5b",
   green: "#6bae39",
 };
-
-export const fonts = {};

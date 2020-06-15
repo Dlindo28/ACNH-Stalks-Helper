@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from "react";
+/**
+ * @file Builds component for Home screen chart panel
+ * @author Daniel Lindo
+ */
+
+import React from "react";
 import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
-  Button,
   Dimensions,
 } from "react-native";
 
 import Chart from "./Chart";
 import { primaryColors } from "../models/Styles.js";
 
+/**
+ * Home screen chart panel component
+ * @function ChartPanel
+ * @param {*} navigation - Screen navigation handler
+ * @returns {JSX.Element}
+ */
 const ChartPanel = ({ navigation }) => {
   const navigateToChart = () => {
     navigation.navigate("Data");

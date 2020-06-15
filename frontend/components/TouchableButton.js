@@ -1,3 +1,8 @@
+/**
+ * @file Builds component for customizeable buttons
+ * @author Daniel Lindo
+ */
+
 import React from "react";
 import {
   StyleSheet,
@@ -7,6 +12,15 @@ import {
   Dimensions,
 } from "react-native";
 
+/**
+ * Button component with editable colors, onPress function
+ * @function TouchableButton
+ * @param {string} color - text color
+ *  @param {string} backgroundColor - button color
+ * @param {string} text - text value
+ * @param {function} onPress - function to call when button is pressed
+ * @returns {JSX.Element}
+ */
 const TouchableButton = ({ color, backgroundColor, onPress, text }) => {
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={onPress}>

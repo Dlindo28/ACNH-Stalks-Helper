@@ -1,44 +1,50 @@
-const mainTypes = ["R", "SS"];
+/**
+ * @file Builds model for tree of ratio .60+
+ * @author Daniel Lindo
+ */
+
+const mainTrends = ["R", "SS"];
 
 const spikeBranch = {
-  types: mainTypes,
+  trends: mainTrends,
   notes: "sell in two intervals",
   lower: {
-    types: ["R"],
+    trends: ["R"],
   },
   higher: {
-    types: mainTypes,
+    trends: mainTrends,
     notes: "sell next interval",
     lower: {
-      types: ["R"],
+      trends: ["R"],
     },
     higher: {
-      types: ["SS"],
+      trends: ["SS"],
       notes: "sell now",
     },
   },
 };
 
+/** @const {Object.<string, *>} - ratio .60+ Tree */
 export const Tree60 = {
-  types: mainTypes,
+  trends: mainTrends,
   lower: {
-    types: mainTypes,
+    trends: mainTrends,
     lower: {
-      types: mainTypes,
+      trends: mainTrends,
       lower: {
-        types: mainTypes,
+        trends: mainTrends,
         lower: {
-          types: mainTypes,
+          trends: mainTrends,
           lower: {
-            types: mainTypes,
+            trends: mainTrends,
             lower: {
-              types: mainTypes,
+              trends: mainTrends,
               lower: {
-                types: mainTypes,
+                trends: mainTrends,
                 lower: {
-                  types: mainTypes,
+                  trends: mainTrends,
                   lower: {
-                    types: ["R"],
+                    trends: ["R"],
                   },
                   higher: spikeBranch,
                 },

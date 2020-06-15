@@ -1,3 +1,8 @@
+/**
+ * @file Root file for tree models
+ * @author Daniel Lindo
+ */
+
 import { Tree0 } from "./Tree0";
 import { Tree60 } from "./Tree60";
 import { Tree80 } from "./Tree80";

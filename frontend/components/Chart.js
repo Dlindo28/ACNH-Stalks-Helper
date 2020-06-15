@@ -1,21 +1,18 @@
+/**
+ * @file Build chart that represents price data
+ * @author Daniel Lindo
+ */
+
 import React, { useState, useEffect } from "react";
 import { Text, View, Dimensions, StyleSheet } from "react-native";
-import AsyncStorage, {
-  useAsyncStorage,
-} from "@react-native-community/async-storage";
-import {
-  VictoryChart,
-  VictoryScatter,
-  VictoryLine,
-  VictoryAxis,
-  VictoryBar,
-} from "victory-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { VictoryChart, VictoryAxis, VictoryBar } from "victory-native";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
-import { getTreeObject } from "../hooks";
 
-let tempdata = [
+/** @const {Object.<string, number>[]} - initial chart data */
+const tempdata = [
   { date: "Sunday", price: 0 },
   { date: "MondayAM", price: 0 },
   { date: "MondayPM", price: 0 },
@@ -31,6 +28,7 @@ let tempdata = [
   { date: "SaturdayPM", price: 0 },
 ];
 
+/** @const {string[]} - x-axis tick formatting */
 const tickFormat = [
   "S",
   "M",
@@ -47,33 +45,41 @@ const tickFormat = [
   " ",
 ];
 
-const typeNames = {
+/** @const {Object.<string, string>} - decoded names of trend types */
+const decodeTrend = {
   R: "Random",
   BS: "Big Spike",
   SS: "Small Spike",
   D: "Constant Falling",
 };
 
+/**
+ * Builds Chart component
+ * @function Chart
+ * @param {boolean} homeChart - true if chart is on Home screen
+ * @returns {JSX.Element}
+ */
 const Chart = ({ homeChart }) => {
   const [data, setData] = useState(tempdata);
-  const [types, setTypes] = useState([]);
+  const [trends, setTrends] = useState([]);
   const [dataEmpty, setDataEmpty] = useState(true);
 
-  const listTypes =
-    types.length == 0 ? (
+  /** @const {JSX.Element} - text list of each trend */
+  const listTrends =
+    trends.length == 0 ? (
       <Text
         key={"None"}
         style={{
-          ...styles.typeText,
+          ...styles.trendText,
           color: secondaryColors.red,
         }}
       >
         Data Insufficient. No trends available.
       </Text>
     ) : (
-      types.map((type) => (
-        <Text key={type} style={styles.typeText}>
-          {typeNames[type]}
+      trends.map((trend) => (
+        <Text key={trend} style={styles.trendText}>
+          {decodeTrend[trend]}
         </Text>
       ))
     );
@@ -81,6 +87,11 @@ const Chart = ({ homeChart }) => {
   const yAxis =
     homeChart || dataEmpty ? undefined : <VictoryAxis dependentAxis />;
 
+  /**
+   * Gets price data from AsyncStorage
+   * @function getData
+   * @returns {Promise<[string, string][]>}
+   */
   const getData = async () => {
     try {
       let keys = await AsyncStorage.getAllKeys();
@@ -93,6 +104,11 @@ const Chart = ({ homeChart }) => {
     }
   };
 
+  /**
+   * updates state data from AsyncStorage
+   * @function updatePrice
+   * @returns {Promise<void>}
+   */
   const updatePrice = async () => {
     const storeData = await getData();
     setDataEmpty(storeData.length == 0);
@@ -118,7 +134,6 @@ const Chart = ({ homeChart }) => {
           date: day,
           price: 0,
         });
-      } else {
       }
     });
 
@@ -126,13 +141,16 @@ const Chart = ({ homeChart }) => {
   };
 
   useEffect(() => {
+    // Every second, update state price and trends
     const interval = setInterval(() => {
       updatePrice();
       (async () => {
         let tree = JSON.parse(await AsyncStorage.getItem("tree"));
-        setTypes(tree != null ? tree.types : []);
+        setTrends(tree != null ? tree.trends : []);
       })();
     }, 1000);
+
+    // clear interval when component unmounts
     return () => clearInterval(interval);
   }, []);
 
@@ -163,20 +181,20 @@ const Chart = ({ homeChart }) => {
       {homeChart ? undefined : (
         <Text
           style={{
-            ...styles.typeText,
+            ...styles.trendText,
             fontSize: 20,
           }}
         >
           Likely Trends:
         </Text>
       )}
-      {homeChart ? undefined : listTypes}
+      {homeChart ? undefined : listTrends}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  typeText: {
+  trendText: {
     fontFamily: "acnh",
     color: primaryColors.darkgreen,
     paddingLeft: 10,

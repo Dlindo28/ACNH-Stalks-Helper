@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from "react";
+/**
+ * @file Builds price input area component for Home screen
+ * @author Daniel Lindo
+ */
+
+import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Dimensions } from "react-native";
 import TouchableButton from "./TouchableButton";
 
@@ -8,10 +13,16 @@ import { useSetPrice } from "../hooks";
 import { getDay, getMeridian } from "../models/Dates";
 import { primaryColors } from "../models/Styles";
 
-export default function PriceArea() {
+/**
+ * Home screen price input component
+ * @function PriceArea
+ * @returns {JSX.Element}
+ */
+const PriceArea = () => {
   const date = useSelector((state) => state.datetime.date);
   const [priceIn, setPriceIn] = useState();
   const setPrice = useSetPrice();
+
   return (
     <View style={styles.priceAreaContainer}>
       <TextInput
@@ -37,7 +48,7 @@ export default function PriceArea() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   priceAreaContainer: {
@@ -59,3 +70,5 @@ const styles = StyleSheet.create({
     color: primaryColors.darkgreen,
   },
 });
+
+export default PriceArea;

@@ -1,5 +1,10 @@
+/**
+ * @file Builds the base of the react app
+ * @author Daniel Lindo
+ */
+
 import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,17 +14,27 @@ import { Entypo } from "@expo/vector-icons";
 
 import { primaryColors } from "./models/Styles.js";
 
-import Home from "./screen/Home";
-import Settings from "./screen/Settings";
+import HomeScreen from "./screen/HomeScreen";
+import SettingsScreen from "./screen/SettingsScreen";
 import DataScreen from "./screen/DataScreen";
 
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./createStore";
 
+/** @const {JSX.Element} Tab - element used for creating Navbar */
 const Tab = createMaterialTopTabNavigator();
 
+/**
+ * Builds App screens and Nav Bar component
+ * @function AppBuilder
+ * @returns {JSX.Element} - Base App components
+ */
 const AppBuilder = () => {
-  let [fontsLoaded] = useFonts({
+  /**
+   * @const {boolean} fontsLoaded - imports ACNH font, returns true if load is complete
+   * @default
+   */
+  const [fontsLoaded] = useFonts({
     acnh: require("./assets/fonts/nintendoP_Humming-E_002pr.otf"),
   });
 
@@ -29,33 +44,22 @@ const AppBuilder = () => {
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused }) => {
-              let iconColor;
+              let iconColor = focused
+                ? primaryColors.islandgreen
+                : primaryColors.darkgreen;
               let iconName;
               switch (route.name) {
                 case "Home":
                   iconName = "home";
-                  iconColor = focused
-                    ? primaryColors.islandgreen
-                    : primaryColors.darkgreen;
                   break;
                 case "Settings":
                   iconName = "cog";
-                  iconColor = focused
-                    ? primaryColors.islandgreen
-                    : primaryColors.darkgreen;
                   break;
-
                 case "Data":
                   iconName = "bar-graph";
-                  iconColor = focused
-                    ? primaryColors.islandgreen
-                    : primaryColors.darkgreen;
                   break;
                 default:
                   iconName = "home";
-                  iconColor = focused
-                    ? primaryColors.islandgreen
-                    : primaryColors.darkgreen;
                   break;
               }
               return <Entypo name={iconName} color={iconColor} size={20} />;
@@ -73,9 +77,9 @@ const AppBuilder = () => {
           tabBarPosition="bottom"
           swipeEnabled={true}
         >
-          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Data" component={DataScreen} />
-          <Tab.Screen name="Settings" component={Settings} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );
@@ -84,6 +88,11 @@ const AppBuilder = () => {
   }
 };
 
+/**
+ * Wraps AppBuilder with redux store providers
+ * @function App
+ * @returns {*} - Redux Store Provider wrapping JSX
+ */
 const App = () => {
   return (
     <Provider store={store}>

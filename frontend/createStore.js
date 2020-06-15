@@ -1,3 +1,7 @@
+/**
+ * @file Creates redux store
+ * @author Daniel Lindo
+ */
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";

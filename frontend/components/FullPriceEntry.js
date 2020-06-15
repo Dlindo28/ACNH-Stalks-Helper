@@ -1,4 +1,9 @@
 /**
+ * @file Builds page for full-week price entry
+ * @author Daniel Lindo
+ */
+
+/**
  * TODO: might need to use onChangeText() for
  * when the user types in a price, then
  * touches another input field before submitting
@@ -17,11 +22,23 @@ import TouchableButton from "./TouchableButton";
 
 import { primaryColors } from "../models/Styles";
 
+/**
+ * Gets price from AsyncStorage given day
+ * @function getPrice
+ * @param {string} day - day interval to get price of
+ * @returns {string} - price at day
+ */
 const getPrice = async (day) => {
   const price = await AsyncStorage.getItem(day);
   return price != null ? price : "0";
 };
 
+/**
+ * Builds component for row input of each day
+ * @function PricedayRow
+ * @param {string} day
+ * @returns {JSX.Element} - given day's row for input
+ */
 const PricedayRow = ({ day }) => {
   const setPrice = useSetPrice();
   const [amPrice, setAmPrice] = useState();
@@ -66,7 +83,11 @@ const PricedayRow = ({ day }) => {
   );
 };
 
-const FullPriceday = ({ setModalVisible }) => {
+/**
+ * @function FullPriceEntry
+ * @param {function} setModalVisible - changes state of modal
+ */
+const FullPriceEntry = ({ setModalVisible }) => {
   const setPrice = useSetPrice();
   const [sunPrice, setSunPrice] = useState();
 
@@ -142,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FullPriceday;
+export default FullPriceEntry;

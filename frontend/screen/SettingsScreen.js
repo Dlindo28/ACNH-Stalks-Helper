@@ -1,19 +1,24 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+/**
+ * @file Builds settings screen
+ * @author Daniel Lindo
+ */
 
-// Notifications (switch)
-// Rate App
-// Reset (remove auth, reset time, reset prices)
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 import TouchableButton from "../components/TouchableButton";
-import { useNotifications } from "../hooks/useNotifications";
 
-import { primaryColors, secondaryColors } from "../models/Styles.js";
+import { primaryColors } from "../models/Styles.js";
 
+/**
+ * Provides the screen component for user settings
+ * @function Settings
+ * @returns {JSX.Element}
+ */
 const Settings = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Settings</Text>
+      <Text style={styles.headerText}>Settings</Text>
       <TouchableButton
         backgroundColor={primaryColors.white}
         color={primaryColors.darkgreen}
@@ -38,16 +43,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: primaryColors.islandgreen,
   },
-  header: {
+  headerText: {
     alignSelf: "center",
     marginTop: 50,
     fontSize: 30,
     fontFamily: "acnh",
-  },
-  line: {
-    height: 1,
-    backgroundColor: primaryColors.darkgreen,
-    marginBottom: 5,
   },
 });
 

@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+/**
+ * @file Builds container for main chart in Data Screen
+ * @author Daniel Lindo
+ */
+
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -16,15 +21,27 @@ import Chart from "./Chart";
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
 
-const ChartFull = () => {
+/**
+ * Container for Chart with yield, current price, and trends
+ * @function MainChartContainer
+ * @returns {JSX.Element}
+ */
+const MainChartContainer = () => {
+  /** @const {Dispatch<any>} dispatch - redux dipatcher for yield, curPrice */
   const dispatch = useDispatch();
+
   const curPrice = useSelector((store) => store.yield.curPrice);
-  const _yield = useSelector((store) => store.yield.yield);
+  const curYield = useSelector((store) => store.yield.yield);
   const isSufficient = useSelector(
     (store) => store.dataSufficiency.sufficiency
   );
 
-  const getYield = async () => {
+  /**
+   * Sets price change in price from Sunday to last input day
+   * @function updateYield
+   * @returns {Promise<void>}
+   */
+  const updateYield = async () => {
     const sundayPrice = await AsyncStorage.getItem("Sunday");
     for (let i = days.length - 1; i >= 0; i--) {
       const thisPrice = await AsyncStorage.getItem(days[i]);
@@ -40,11 +57,13 @@ const ChartFull = () => {
       }
     }
   };
+
   useEffect(() => {
     (async () => {
-      await getYield();
+      await updateYield();
     })();
   });
+
   return (
     <View>
       <TouchableWithoutFeedback>
@@ -53,11 +72,12 @@ const ChartFull = () => {
             Current Price: {curPrice.toString()}
             <Text
               style={{
-                color: _yield < 0 ? secondaryColors.red : secondaryColors.green,
+                color:
+                  curYield < 0 ? secondaryColors.red : secondaryColors.green,
               }}
             >
               {" "}
-              ({_yield.toString()}%)
+              ({curYield.toString()}%)
             </Text>
           </Text>
           <Chart />
@@ -87,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChartFull;
+export default MainChartContainer;

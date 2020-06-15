@@ -1,3 +1,7 @@
+/**
+ * @file Root Reducer - combines all other reducers
+ * @author Daniel Lindo
+ */
 import { combineReducers } from "redux";
 import datetimeReducer from "./datetimeReducer";
 import dataSufficiencyReducer from "./dataSufficiencyReducer";

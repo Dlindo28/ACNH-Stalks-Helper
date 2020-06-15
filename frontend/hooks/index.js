@@ -1,3 +1,7 @@
+/**
+ * @file Build custom hooks for this app
+ * @author Daniel Lindo
+ */
 import { useEffect } from "react";
 import { Keyboard, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -9,8 +13,13 @@ import { useNotifications } from "./useNotifications";
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
 import { days } from "../models/Dates";
 
+/**
+ * Hook for setting price
+ * @function useSetPrice
+ * @returns {function} setPrice
+ */
 export const useSetPrice = () => {
-  /* Setup redux dispatcher for dataSufficiency */
+  /** @const {Dispatch<any>} dispatch - redux dipatcher for data sufficiency */
   const dispatch = useDispatch();
   const sendNotification = useNotifications();
 
@@ -94,7 +103,7 @@ export const useSetPrice = () => {
     }
   };
 
-  /* Change to go through ALL days, not just Sun/MonAM */
+  // TODO: Change to go through ALL days, not just Sun/MonAM
   const checkSufficiency = async () => {
     try {
       const mon = await AsyncStorage.getItem("MondayAM");

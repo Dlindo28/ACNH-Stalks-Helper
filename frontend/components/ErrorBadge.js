@@ -1,3 +1,8 @@
+/**
+ * @file Builds component for Error/Warning badge components
+ * @author Daniel Lindo
+ */
+
 import React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { Entypo } from "@expo/vector-icons";
@@ -6,6 +11,11 @@ import { primaryColors, secondaryColors } from "../models/Styles";
 
 import { useSelector } from "react-redux";
 
+/**
+ * Error Badge component
+ * @function ErrorBadge
+ * @returns {JSX.Element}
+ */
 const ErrorBadge = () => {
   const dataSufficiency = useSelector(
     (state) => state.dataSufficiency.sufficiency
