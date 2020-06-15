@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { useSetPrice } from "../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import TouchableButton from "./TouchableButton";
 
-import { primaryColors, secondaryColors } from "../models/Styles";
-
-const buffer = {};
+import { primaryColors } from "../models/Styles";
+import { setPriceInput } from "../actions/priceInputActions";
 
 const getPrice = async (day) => {
   const price = await AsyncStorage.getItem(day);
@@ -16,13 +16,12 @@ const getPrice = async (day) => {
 
 const PricedayRow = ({ day }) => {
   const setPrice = useSetPrice();
-  const [amPrice, setAmPrice] = useState("0");
-  const [pmPrice, setPmPrice] = useState("0");
-
+  const [amPrice, setAmPrice] = useState();
+  const [pmPrice, setPmPrice] = useState();
   useEffect(() => {
     (async () => {
-      setAmPrice((await getPrice(day + "AM")).toString());
-      setPmPrice((await getPrice(day + "PM")).toString());
+      setAmPrice(await getPrice(`${day}AM`));
+      setPmPrice(await getPrice(`${day}PM`));
     })();
   }, []);
 
@@ -32,32 +31,25 @@ const PricedayRow = ({ day }) => {
       <View style={styles.rowContainer}>
         <TextInput
           style={styles.rowInput}
-          onSubmitEditing={(e) =>
-            e.nativeEvent.text != undefined
-              ? setPrice(e.nativeEvent.text, day + "AM")
-              : undefined
-          }
           keyboardType="numeric"
           returnKeyType="done"
-          onChangeText={(price) => {
-            buffer[day + "AM"] = price;
-            setAmPrice(price.toString());
-          }}
+          onSubmitEditing={(e) =>
+            e.nativeEvent.text != undefined
+              ? setPrice(e.nativeEvent.text, `${day}AM`)
+              : undefined
+          }
           placeholder={amPrice}
           placeholderTextColor={primaryColors.darkgreen}
         />
         <TextInput
           style={styles.rowInput}
-          onSubmitEditing={(e) =>
-            e.nativeEvent.text != undefined
-              ? setPrice(e.nativeEvent.text, day + "PM")
-              : undefined
-          }
           keyboardType="numeric"
           returnKeyType="done"
-          onChangeText={(price) => {
-            buffer[day + "PM"] = price;
-          }}
+          onSubmitEditing={(e) =>
+            e.nativeEvent.text != undefined
+              ? setPrice(e.nativeEvent.text, `${day}PM`)
+              : undefined
+          }
           placeholder={pmPrice}
           placeholderTextColor={primaryColors.darkgreen}
         />
@@ -68,21 +60,15 @@ const PricedayRow = ({ day }) => {
 
 const FullPriceday = ({ setModalVisible }) => {
   const setPrice = useSetPrice();
-  const [sundayPrice, setSundayPrice] = useState("0");
+  const [sunPrice, setSunPrice] = useState();
 
   const handleConfirm = () => {
-    for (let day in buffer) {
-      if (buffer[day] != "0") {
-        setPrice(buffer[day], day);
-      }
-      buffer[day] = "0";
-    }
     setModalVisible(false);
   };
 
   useEffect(() => {
     (async () => {
-      setSundayPrice((await getPrice("Sunday")).toString());
+      setSunPrice(await getPrice("Sunday"));
     })();
   }, []);
 
@@ -94,18 +80,15 @@ const FullPriceday = ({ setModalVisible }) => {
           ...styles.rowInput,
           marginBottom: 10,
         }}
-        placeholder={sundayPrice}
+        placeholder={sunPrice}
         placeholderTextColor={primaryColors.darkgreen}
+        keyboardType="numeric"
+        returnKeyType="done"
         onSubmitEditing={(e) =>
           e.nativeEvent.text != undefined
             ? setPrice(e.nativeEvent.text, "Sunday")
             : undefined
         }
-        keyboardType="numeric"
-        returnKeyType="done"
-        onChangeText={(price) => {
-          buffer["Sunday"] = price;
-        }}
       />
       <PricedayRow day="Monday" />
       <PricedayRow day="Tuesday" />

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Provides context for DataScreen screen
+ */
+
 import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, Modal, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -12,10 +16,18 @@ import ChartFull from "../components/ChartFull";
 import TouchableButton from "../components/TouchableButton";
 import FullPriceEntry from "../components/FullPriceEntry";
 
+/**
+ * DataScreen provides the screen for the full chart and data entry components
+ * @return {!JSX} Screen to be shown
+ */
 const DataScreen = () => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
 
+  /**
+   * Clears all prices and tree stored in AsyncStorage.
+   * Clears yield and currentPrice states in redux.
+   */
   const resetPrices = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();
@@ -35,6 +47,9 @@ const DataScreen = () => {
     }
   };
 
+  /**
+   * Logs everything stored in AsyncStorage
+   */
   const printStorage = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();

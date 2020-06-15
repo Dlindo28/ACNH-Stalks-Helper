@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Keyboard, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
+import { useNotifications } from "./useNotifications";
 
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
 import { days } from "../models/Dates";
@@ -11,6 +12,7 @@ import { days } from "../models/Dates";
 export const useSetPrice = () => {
   /* Setup redux dispatcher for dataSufficiency */
   const dispatch = useDispatch();
+  const sendNotification = useNotifications();
 
   /* setPrice()  */
   const setPrice = async (price, day) => {
@@ -23,10 +25,10 @@ export const useSetPrice = () => {
       } else if (day != "Sunday") {
         const isSufficient = await checkSufficiency();
         if (isSufficient) {
-          let lastPrice = await AsyncStorage.getItem(
+          let previousPrice = await AsyncStorage.getItem(
             days[days.indexOf(day) - 1]
           );
-          updateTree(lastPrice > price);
+          updateTree(parseInt(previousPrice, 10) < parseInt(price, 10));
         }
       }
       Keyboard.dismiss();
@@ -136,7 +138,8 @@ export const useSetPrice = () => {
         }
       }
       if (tree.notes) {
-        Alert.alert("Alert", tree.notes, [{ text: "OK" }]);
+        //Alert.alert("Alert", tree.notes, [{ text: "OK" }]);
+        sendNotification(tree.notes);
       }
       await AsyncStorage.setItem("tree", JSON.stringify(tree));
     } catch (e) {
