@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: Dimensions.get("window").height / 1.5,
     paddingTop: 15,
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
   },
   dataText: {
     fontFamily: "acnh",

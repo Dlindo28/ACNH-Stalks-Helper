@@ -14,16 +14,16 @@ export const useSetPrice = () => {
   const dispatch = useDispatch();
   const sendNotification = useNotifications();
 
-  /* setPrice()  */
   const setPrice = async (price, day) => {
     try {
       await AsyncStorage.setItem(day, price);
       console.log(day + " price set to " + price);
-
-      if (day == "MondayAM") {
-        initTree();
-      } else if (day != "Sunday") {
-        const isSufficient = await checkSufficiency();
+      const isSufficient = await checkSufficiency();
+      if (day == "Sunday" || day == "MondayAM") {
+        if (isSufficient) {
+          initTree();
+        }
+      } else {
         if (isSufficient) {
           let previousPrice = await AsyncStorage.getItem(
             days[days.indexOf(day) - 1]

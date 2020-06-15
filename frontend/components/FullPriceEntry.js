@@ -1,13 +1,21 @@
+/**
+ * TODO: might need to use onChangeText() for
+ * when the user types in a price, then
+ * touches another input field before submitting
+ *
+ * TODO: Change sunday price input to allow a ratio
+ * and/or tree init if the sunday input makes
+ * data sufficient
+ */
+
 import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import { useSetPrice } from "../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import TouchableButton from "./TouchableButton";
 
 import { primaryColors } from "../models/Styles";
-import { setPriceInput } from "../actions/priceInputActions";
 
 const getPrice = async (day) => {
   const price = await AsyncStorage.getItem(day);
@@ -34,9 +42,9 @@ const PricedayRow = ({ day }) => {
           keyboardType="numeric"
           returnKeyType="done"
           onSubmitEditing={(e) =>
-            e.nativeEvent.text != undefined
+            e.nativeEvent.text != ""
               ? setPrice(e.nativeEvent.text, `${day}AM`)
-              : undefined
+              : console.log("Tried to enter empty price")
           }
           placeholder={amPrice}
           placeholderTextColor={primaryColors.darkgreen}
@@ -46,9 +54,9 @@ const PricedayRow = ({ day }) => {
           keyboardType="numeric"
           returnKeyType="done"
           onSubmitEditing={(e) =>
-            e.nativeEvent.text != undefined
+            e.nativeEvent.text != ""
               ? setPrice(e.nativeEvent.text, `${day}PM`)
-              : undefined
+              : console.log("Tried to enter empty price")
           }
           placeholder={pmPrice}
           placeholderTextColor={primaryColors.darkgreen}
@@ -85,9 +93,9 @@ const FullPriceday = ({ setModalVisible }) => {
         keyboardType="numeric"
         returnKeyType="done"
         onSubmitEditing={(e) =>
-          e.nativeEvent.text != undefined
+          e.nativeEvent.text != ""
             ? setPrice(e.nativeEvent.text, "Sunday")
-            : undefined
+            : console.log("Tried to enter empty price")
         }
       />
       <PricedayRow day="Monday" />

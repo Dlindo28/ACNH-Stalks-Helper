@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width / 1.05,
     borderColor: primaryColors.darkgreen,
     borderBottomWidth: 3,
+    borderBottomEndRadius: 5,
+    borderBottomStartRadius: 15,
     padding: 5,
     paddingVertical: 10,
     marginBottom: 0,

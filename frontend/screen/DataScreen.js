@@ -46,6 +46,7 @@ const DataScreen = () => {
       console.log(e);
     }
   };
+  //resetPrices();
 
   /**
    * Logs everything stored in AsyncStorage
