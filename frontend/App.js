@@ -15,7 +15,6 @@ import { Entypo } from "@expo/vector-icons";
 import { primaryColors } from "./models/Styles.js";
 
 import HomeScreen from "./screen/HomeScreen";
-import SettingsScreen from "./screen/SettingsScreen";
 import DataScreen from "./screen/DataScreen";
 
 import { Provider } from "react-redux";
@@ -52,9 +51,6 @@ const AppBuilder = () => {
                 case "Home":
                   iconName = "home";
                   break;
-                case "Settings":
-                  iconName = "cog";
-                  break;
                 case "Data":
                   iconName = "bar-graph";
                   break;
@@ -79,7 +75,6 @@ const AppBuilder = () => {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Data" component={DataScreen} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

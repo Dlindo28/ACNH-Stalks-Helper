@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, Modal, Alert } from "react-native";
+import { StyleSheet, View, Dimensions, Modal, Text } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch } from "react-redux";
@@ -26,7 +26,8 @@ const DataScreen = () => {
   /** @const {Dispatch<any>} dispatch - redux dipatcher for yield, curPrice */
   const dispatch = useDispatch();
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [priceModalVisible, setPriceModalVisible] = useState(false);
+  const [resetModalVisible, setResetModalVisible] = useState(false);
 
   /**
    * Clears all prices and tree stored in AsyncStorage.
@@ -48,9 +49,7 @@ const DataScreen = () => {
       dispatch(clearYield());
       dispatch(setCurPrice(0));
 
-      Alert.alert("Prices Reset", "Prices reset successfully", [
-        { text: "OK" },
-      ]);
+      setResetModalVisible(false);
     } catch (e) {
       console.log(e);
     }
@@ -74,18 +73,63 @@ const DataScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Modal visible={modalVisible} animationType="slide" transparent={false}>
-        <FullPriceEntry setModalVisible={setModalVisible} />
+      <Modal
+        visible={priceModalVisible}
+        animationType="slide"
+        transparent={false}
+      >
+        <FullPriceEntry setPriceModalVisible={setPriceModalVisible} />
+      </Modal>
+      <Modal
+        visible={resetModalVisible}
+        animationType="slide"
+        transparent={true}
+      >
+        <View style={styles.resetModalContainer}>
+          <View style={styles.resetModalView}>
+            <Text
+              style={{
+                ...styles.buttonText,
+                color: primaryColors.cream,
+                alignSelf: "center",
+              }}
+            >
+              Are you sure?
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <TouchableButton
+                onPress={resetPrices}
+                color={primaryColors.darkgreen}
+                backgroundColor={secondaryColors.rose}
+                width={Dimensions.get("window").width / 1.05 / 2}
+                text="Yes, Reset Prices"
+                bottomLeftRadius
+              />
+              <TouchableButton
+                onPress={() => setResetModalVisible(false)}
+                color={primaryColors.darkgreen}
+                backgroundColor={primaryColors.islandgreen}
+                width={Dimensions.get("window").width / 1.05 / 2}
+                text="No, Keep Prices"
+                bottomRightRadius
+              />
+            </View>
+          </View>
+        </View>
       </Modal>
       <MainChartContainer />
       <TouchableButton
-        onPress={() => setModalVisible(true)}
+        onPress={() => setPriceModalVisible(true)}
         backgroundColor={primaryColors.darkgreen}
         color={primaryColors.cream}
         text="Edit Prices"
       />
       <TouchableButton
-        onPress={resetPrices}
+        onPress={() => setResetModalVisible(true)}
         color={primaryColors.darkgreen}
         backgroundColor={secondaryColors.rose}
         text="Reset Prices"
@@ -138,6 +182,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontFamily: "acnh",
     color: primaryColors.cream,
+  },
+  resetModalContainer: {
+    flex: 1,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  resetModalView: {
+    backgroundColor: primaryColors.darkgreen,
+    borderRadius: 10,
+
+    width: Dimensions.get("window").width / 1.05,
   },
 });
 

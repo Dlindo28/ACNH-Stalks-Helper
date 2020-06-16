@@ -36,10 +36,6 @@ export const useNotifications = () => {
       }
       const token = await Notifications.getExpoPushTokenAsync();
       setExpoPushToken(token);
-    } else {
-      Alert.alert("Alert", "Must use physical device for push notification!", [
-        { text: "OK" },
-      ]);
     }
 
     // Set notifications config for Android

@@ -85,14 +85,14 @@ const PricedayRow = ({ day }) => {
 
 /**
  * @function FullPriceEntry
- * @param {function} setModalVisible - changes state of modal
+ * @param {function} setPriceModalVisible - changes state of modal
  */
-const FullPriceEntry = ({ setModalVisible }) => {
+const FullPriceEntry = ({ setPriceModalVisible }) => {
   const setPrice = useSetPrice();
   const [sunPrice, setSunPrice] = useState();
 
   const handleConfirm = () => {
-    setModalVisible(false);
+    setPriceModalVisible(false);
   };
 
   useEffect(() => {

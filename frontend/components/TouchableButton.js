@@ -21,13 +21,34 @@ import {
  * @param {function} onPress - function to call when button is pressed
  * @returns {JSX.Element}
  */
-const TouchableButton = ({ color, backgroundColor, onPress, text }) => {
+const TouchableButton = ({
+  color,
+  backgroundColor,
+  onPress,
+  text,
+  width,
+  bottomLeftRadius,
+  bottomRightRadius,
+}) => {
+  const rad = bottomLeftRadius
+    ? {
+        borderBottomLeftRadius: 10,
+      }
+    : bottomRightRadius
+    ? {
+        borderBottomRightRadius: 10,
+      }
+    : {
+        borderRadius: 10,
+      };
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
       <View
         style={{
           ...styles.button,
           backgroundColor: backgroundColor,
+          width: width != null ? width : Dimensions.get("window").width / 1.05,
+          ...rad,
         }}
       >
         <Text
@@ -49,9 +70,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    width: Dimensions.get("window").width / 1.05,
     height: 40,
-    borderRadius: 10,
+
     marginTop: 5,
     shadowOpacity: 0.2,
     shadowRadius: 1,
