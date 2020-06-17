@@ -2,7 +2,12 @@
  * @file Actions available for yield dispatcher
  * @author Daniel Lindo
  */
-import { SET_YIELD, CLEAR_YIELD, SET_CURPRICE } from "./types";
+import {
+  SET_YIELD,
+  CLEAR_YIELD,
+  SET_CURPRICE,
+  SET_YIELD_CUTOFF,
+} from "./types";
 
 /**
  * Set new price yield
@@ -36,5 +41,16 @@ export const setCurPrice = (price) => {
   return {
     type: SET_CURPRICE,
     payload: price,
+  };
+};
+
+/**
+ * Sets new yield cutoff
+ * @param {number} cutoff
+ */
+export const setYieldCutoff = (cutoff) => {
+  return {
+    type: SET_YIELD_CUTOFF,
+    payload: cutoff,
   };
 };

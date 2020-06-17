@@ -29,6 +29,7 @@ const TouchableButton = ({
   width,
   bottomLeftRadius,
   bottomRightRadius,
+  style,
 }) => {
   const rad = bottomLeftRadius
     ? {
@@ -49,6 +50,7 @@ const TouchableButton = ({
           backgroundColor: backgroundColor,
           width: width != null ? width : Dimensions.get("window").width / 1.05,
           ...rad,
+          ...style,
         }}
       >
         <Text

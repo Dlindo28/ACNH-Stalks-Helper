@@ -32,6 +32,8 @@ const MainChartContainer = () => {
 
   const curPrice = useSelector((store) => store.yield.curPrice);
   const curYield = useSelector((store) => store.yield.yield);
+  const cutoff = useSelector((store) => store.yield.cutoff);
+
   const isSufficient = useSelector(
     (store) => store.dataSufficiency.sufficiency
   );
@@ -48,8 +50,10 @@ const MainChartContainer = () => {
       if (thisPrice != null) {
         dispatch(setCurPrice(thisPrice));
         if (isSufficient) {
-          const change = ((curPrice - sundayPrice) / sundayPrice) * 100;
-          dispatch(setYield(Math.round(change)));
+          const change = Math.round(
+            ((curPrice - sundayPrice) / sundayPrice) * 100
+          );
+          dispatch(setYield(change));
         } else {
           dispatch(clearYield());
         }
@@ -57,6 +61,8 @@ const MainChartContainer = () => {
       }
     }
   };
+
+  const yieldWarning = cutoff * -1 >= curYield ? " - below cutoff!" : "";
 
   useEffect(() => {
     (async () => {
@@ -79,6 +85,7 @@ const MainChartContainer = () => {
               {" "}
               ({curYield.toString()}%)
             </Text>
+            {" " + yieldWarning}
           </Text>
           <Chart />
         </View>
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
   chartContainer: {
     backgroundColor: primaryColors.cream,
     borderRadius: 10,
-    height: Dimensions.get("window").height / 1.5,
+    height: Dimensions.get("window").height / 1.6,
     paddingTop: 15,
     shadowOpacity: 0.2,
     shadowRadius: 1,

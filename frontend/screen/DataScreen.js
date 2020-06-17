@@ -4,11 +4,24 @@
  */
 
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, Modal, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Modal,
+  Text,
+  TextInput,
+} from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { useDispatch } from "react-redux";
-import { clearYield, setCurPrice } from "../actions/yieldActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearYield,
+  setCurPrice,
+  setYieldCutoff,
+} from "../actions/yieldActions";
+
+import { useNotifications } from "../hooks/useNotifications";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
@@ -26,8 +39,13 @@ const DataScreen = () => {
   /** @const {Dispatch<any>} dispatch - redux dipatcher for yield, curPrice */
   const dispatch = useDispatch();
 
+  const curCutoff = useSelector((store) => store.yield.cutoff);
+
   const [priceModalVisible, setPriceModalVisible] = useState(false);
   const [resetModalVisible, setResetModalVisible] = useState(false);
+  const [yieldModalVisible, setYieldModalVisible] = useState(false);
+
+  const sendNotification = useNotifications();
 
   /**
    * Clears all prices and tree stored in AsyncStorage.
@@ -69,6 +87,24 @@ const DataScreen = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  /**
+   * Sets yield percent cutoff state for alerts
+   * @function setYieldCutoff
+   * @returns {void}
+   */
+  const setCutoff = (cutoff) => {
+    if (cutoff != "") {
+      dispatch(setYieldCutoff(parseInt(cutoff, 10)));
+      /*
+      if (cutoff >= curCutoff) {
+        sendNotification("Current price under yield. Sell now.");
+        console.log("Current Price Under Yield. Sell now.");
+      }
+      */
+    }
+    setYieldModalVisible(false);
   };
 
   return (
@@ -121,6 +157,51 @@ const DataScreen = () => {
           </View>
         </View>
       </Modal>
+      <Modal
+        visible={yieldModalVisible}
+        animationType="slide"
+        transparent={true}
+      >
+        <View style={styles.resetModalContainer}>
+          <View
+            style={{
+              ...styles.resetModalView,
+              width: Dimensions.get("window").width / 1.2,
+            }}
+          >
+            <Text
+              style={{
+                ...styles.buttonText,
+                color: primaryColors.cream,
+                alignSelf: "center",
+              }}
+            >
+              Set % Loss Cutoff
+            </Text>
+            <TextInput
+              style={{
+                ...styles.input,
+                marginBottom: 3,
+                alignSelf: "center",
+              }}
+              placeholder={curCutoff ? curCutoff.toString() + "%" : " "}
+              placeholderTextColor={primaryColors.darkgreen}
+              keyboardType="numeric"
+              returnKeyType="done"
+              onSubmitEditing={(e) => setCutoff(e.nativeEvent.text)}
+            />
+            <TouchableButton
+              onPress={() => setYieldModalVisible(false)}
+              text="Close"
+              style={{
+                ...styles.touchButton,
+                marginBottom: 10,
+                width: Dimensions.get("window").width / 2,
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
       <MainChartContainer />
       <TouchableButton
         onPress={() => setPriceModalVisible(true)}
@@ -129,16 +210,16 @@ const DataScreen = () => {
         text="Edit Prices"
       />
       <TouchableButton
+        onPress={() => setYieldModalVisible(true)}
+        backgroundColor={primaryColors.darkgreen}
+        color={primaryColors.cream}
+        text="Edit Yield Cutoff"
+      />
+      <TouchableButton
         onPress={() => setResetModalVisible(true)}
         color={primaryColors.darkgreen}
         backgroundColor={secondaryColors.rose}
         text="Reset Prices"
-      />
-      <TouchableButton
-        onPress={printStorage}
-        backgroundColor={secondaryColors.purple}
-        color={primaryColors.cream}
-        text="Print Storage"
       />
     </View>
   );
@@ -194,6 +275,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
 
     width: Dimensions.get("window").width / 1.05,
+  },
+  input: {
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: primaryColors.darkgreen,
+    borderRadius: 5,
+    backgroundColor: primaryColors.white,
+    height: 30,
+    width: Dimensions.get("window").width / 2.5,
+    paddingLeft: 10,
+    alignSelf: "center",
+  },
+  touchButton: {
+    backgroundColor: primaryColors.islandgreen,
+    color: primaryColors.darkgreen,
   },
 });
 

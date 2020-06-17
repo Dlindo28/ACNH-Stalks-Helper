@@ -2,11 +2,17 @@
  * @file Builds reducer for yield state
  * @author Daniel Lindo
  */
-import { SET_YIELD, CLEAR_YIELD, SET_CURPRICE } from "../actions/types";
+import {
+  SET_YIELD,
+  CLEAR_YIELD,
+  SET_CURPRICE,
+  SET_YIELD_CUTOFF,
+} from "../actions/types";
 
 const initState = {
   yield: 0,
   curPrice: 0,
+  cutoff: null,
 };
 
 /**
@@ -32,6 +38,11 @@ const yieldReducer = (state = initState, action) => {
       return {
         ...state,
         curPrice: action.payload,
+      };
+    case SET_YIELD_CUTOFF:
+      return {
+        ...state,
+        cutoff: action.payload,
       };
     default:
       return state;

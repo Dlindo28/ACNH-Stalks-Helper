@@ -18,7 +18,8 @@ import HomeScreen from "./screen/HomeScreen";
 import DataScreen from "./screen/DataScreen";
 
 import { Provider } from "react-redux";
-import store from "./createStore";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./createStore";
 
 /** @const {JSX.Element} Tab - element used for creating Navbar */
 const Tab = createMaterialTopTabNavigator();
@@ -91,7 +92,9 @@ const AppBuilder = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <AppBuilder />
+      <PersistGate loading={null} persistor={persistor}>
+        <AppBuilder />
+      </PersistGate>
     </Provider>
   );
 };

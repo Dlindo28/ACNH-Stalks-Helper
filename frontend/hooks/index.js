@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { Keyboard, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
 import { useNotifications } from "./useNotifications";
 
