@@ -4,13 +4,19 @@
  */
 
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, Modal, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Modal,
+  Text,
+  TextInput,
+  Alert,
+} from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { clearYield, setCurPrice } from "../actions/yieldActions";
-
-import { useNotifications } from "../hooks/useNotifications";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
@@ -30,8 +36,9 @@ const DataScreen = () => {
 
   const [priceModalVisible, setPriceModalVisible] = useState(false);
   const [resetModalVisible, setResetModalVisible] = useState(false);
+  const [calculateModalVisible, setCalculateModalVisible] = useState(false);
 
-  const sendNotification = useNotifications();
+  const curPrice = useSelector((store) => store.yield.curPrice);
 
   /**
    * Clears all prices and tree stored in AsyncStorage.
@@ -75,6 +82,18 @@ const DataScreen = () => {
     }
   };
 
+  /**
+   * Logs everything stored in AsyncStorage
+   * @function printStorage
+   * @returns {Promise<void>}
+   */
+  const calculatePrice = (numTurnips) => {
+    const income = numTurnips * parseInt(curPrice, 10);
+    Alert.alert("Current Income", `${income.toString()} bells`, [
+      { text: "OK" },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -106,20 +125,60 @@ const DataScreen = () => {
               }}
             >
               <TouchableButton
-                onPress={resetPrices}
+                onPress={() => setResetModalVisible(false)}
                 color={primaryColors.darkgreen}
                 backgroundColor={secondaryColors.rose}
                 width={Dimensions.get("window").width / 1.05 / 2}
-                text="Yes, Reset Prices"
+                text="No, Return"
                 bottomLeftRadius
               />
               <TouchableButton
-                onPress={() => setResetModalVisible(false)}
+                onPress={resetPrices}
                 color={primaryColors.darkgreen}
                 backgroundColor={primaryColors.islandgreen}
                 width={Dimensions.get("window").width / 1.05 / 2}
-                text="No, Keep Prices"
+                text="Yes, Reset Prices"
                 bottomRightRadius
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        visible={calculateModalVisible}
+        animationType="slide"
+        transparent={true}
+      >
+        <View style={styles.resetModalContainer}>
+          <View style={styles.resetModalView}>
+            <Text
+              style={{
+                ...styles.buttonText,
+                color: primaryColors.cream,
+                alignSelf: "center",
+              }}
+            >
+              How many turnips did you purchase?
+            </Text>
+            <View>
+              <TextInput
+                style={styles.input}
+                keyboardType="numeric"
+                returnKeyType="done"
+                onEndEditing={(e) =>
+                  e.nativeEvent.text != ""
+                    ? calculatePrice(parseInt(e.nativeEvent.text, 10))
+                    : console.log("Tried to enter empty price")
+                }
+                placeholder={"0"}
+                placeholderTextColor={primaryColors.darkgreen}
+              />
+              <TouchableButton
+                onPress={() => setCalculateModalVisible(false)}
+                color={primaryColors.darkgreen}
+                backgroundColor={secondaryColors.rose}
+                width={Dimensions.get("window").width / 1.05 / 2}
+                text="Close"
               />
             </View>
           </View>
@@ -137,6 +196,12 @@ const DataScreen = () => {
         color={primaryColors.darkgreen}
         backgroundColor={secondaryColors.rose}
         text="Reset Prices"
+      />
+      <TouchableButton
+        onPress={() => setCalculateModalVisible(true)}
+        color={primaryColors.darkgreen}
+        backgroundColor={primaryColors.islandyellow}
+        text="Calculate Income"
       />
     </View>
   );

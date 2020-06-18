@@ -6,7 +6,7 @@
 /**
  * TODO: might need to use onChangeText() for
  * when the user types in a price, then
- * touches another input field before submitting
+ * touches another input field before Endting
  *
  * TODO: Change sunday price input to allow a ratio
  * and/or tree init if the sunday input makes
@@ -58,7 +58,7 @@ const PricedayRow = ({ day }) => {
           style={styles.rowInput}
           keyboardType="numeric"
           returnKeyType="done"
-          onSubmitEditing={(e) =>
+          onEndEditing={(e) =>
             e.nativeEvent.text != ""
               ? setPrice(e.nativeEvent.text, `${day}AM`)
               : console.log("Tried to enter empty price")
@@ -70,7 +70,7 @@ const PricedayRow = ({ day }) => {
           style={styles.rowInput}
           keyboardType="numeric"
           returnKeyType="done"
-          onSubmitEditing={(e) =>
+          onEndEditing={(e) =>
             e.nativeEvent.text != ""
               ? setPrice(e.nativeEvent.text, `${day}PM`)
               : console.log("Tried to enter empty price")
@@ -113,7 +113,7 @@ const FullPriceEntry = ({ setPriceModalVisible }) => {
         placeholderTextColor={primaryColors.darkgreen}
         keyboardType="numeric"
         returnKeyType="done"
-        onSubmitEditing={(e) =>
+        onEndEditing={(e) =>
           e.nativeEvent.text != ""
             ? setPrice(e.nativeEvent.text, "Sunday")
             : console.log("Tried to enter empty price")

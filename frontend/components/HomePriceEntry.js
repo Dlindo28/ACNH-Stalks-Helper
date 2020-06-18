@@ -4,7 +4,14 @@
  */
 
 import React, { useState } from "react";
-import { StyleSheet, View, TextInput, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import TouchableButton from "./TouchableButton";
 
 import { useSelector } from "react-redux";
@@ -31,16 +38,22 @@ const HomePriceEntry = () => {
         placeholderTextColor={primaryColors.darkgreen}
         keyboardType="numeric"
         onChangeText={(text) => setPriceIn(text)}
-        onSubmitEditing={() => {
-          if (priceIn != null)
-            setPrice(priceIn, getDay(date) + getMeridian(date));
+        onEndEditing={(e) => {
+          if (e.nativeEvent.text != "") {
+            setPrice(e.nativeEvent.text, getDay(date) + getMeridian(date));
+            setPriceIn(e.nativeEvent.text);
+          } else {
+            console.log("Tried to enter empty price");
+          }
         }}
         returnKeyType="done"
       />
       <TouchableButton
         onPress={() => {
-          if (priceIn != null)
+          if (priceIn != null) {
             setPrice(priceIn, getDay(date) + getMeridian(date));
+          }
+          Keyboard.dismiss();
         }}
         backgroundColor={primaryColors.darkgreen}
         color={primaryColors.cream}
