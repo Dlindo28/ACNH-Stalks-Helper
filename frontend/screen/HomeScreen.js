@@ -13,7 +13,7 @@ import {
 
 import { primaryColors } from "../models/Styles";
 
-import PriceArea from "../components/PriceArea";
+import HomePriceEntry from "../components/HomePriceEntry";
 import DateHeader from "../components/DateHeader";
 import ChartPanel from "../components/ChartPanel";
 import ErrorBadge from "../components/ErrorBadge";
@@ -42,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <DateHeader />
-          <PriceArea />
+          <HomePriceEntry />
           <ChartPanel navigation={navigation} />
           <ErrorBadge />
         </View>

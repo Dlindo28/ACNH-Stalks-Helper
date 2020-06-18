@@ -15,16 +15,16 @@ import { primaryColors } from "../models/Styles";
 
 /**
  * Home screen price input component
- * @function PriceArea
+ * @function HomePriceEntry
  * @returns {JSX.Element}
  */
-const PriceArea = () => {
+const HomePriceEntry = () => {
   const date = useSelector((state) => state.datetime.date);
   const [priceIn, setPriceIn] = useState();
   const setPrice = useSetPrice();
 
   return (
-    <View style={styles.priceAreaContainer}>
+    <View style={styles.HomePriceEntryContainer}>
       <TextInput
         style={styles.textInput}
         placeholder="Enter Current Price:"
@@ -51,7 +51,7 @@ const PriceArea = () => {
 };
 
 const styles = StyleSheet.create({
-  priceAreaContainer: {
+  HomePriceEntryContainer: {
     alignSelf: "stretch",
     marginTop: 10,
   },
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PriceArea;
+export default HomePriceEntry;
