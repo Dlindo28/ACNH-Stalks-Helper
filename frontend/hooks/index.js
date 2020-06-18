@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
+import { setCurPrice, setYield, clearYield } from "../actions/yieldActions";
 import { useNotifications } from "./useNotifications";
 
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
@@ -45,6 +46,7 @@ export const useSetPrice = () => {
           updateTree(parseInt(previousPrice, 10) < parseInt(price, 10));
         }
       }
+      updateYield();
       Keyboard.dismiss();
     } catch (e) {
       console.log(e);
@@ -158,6 +160,31 @@ export const useSetPrice = () => {
       await AsyncStorage.setItem("tree", JSON.stringify(tree));
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  /**
+   * Sets price change in price from Sunday to last input day
+   * @function updateYield
+   * @returns {Promise<void>}
+   */
+  const updateYield = async () => {
+    const isSufficient = await checkSufficiency();
+    const sundayPrice = await AsyncStorage.getItem("Sunday");
+    for (let i = days.length - 1; i >= 0; i--) {
+      const thisPrice = await AsyncStorage.getItem(days[i]);
+      if (thisPrice != null) {
+        dispatch(setCurPrice(thisPrice));
+        if (isSufficient) {
+          const change = Math.round(
+            ((thisPrice - sundayPrice) / sundayPrice) * 100
+          );
+          dispatch(setYield(change));
+        } else {
+          dispatch(clearYield());
+        }
+        break;
+      }
     }
   };
 

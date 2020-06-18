@@ -27,45 +27,8 @@ import { days } from "../models/Dates";
  * @returns {JSX.Element}
  */
 const MainChartContainer = () => {
-  /** @const {Dispatch<any>} dispatch - redux dipatcher for yield, curPrice */
-  const dispatch = useDispatch();
-
   const curPrice = useSelector((store) => store.yield.curPrice);
   const curYield = useSelector((store) => store.yield.yield);
-
-  const isSufficient = useSelector(
-    (store) => store.dataSufficiency.sufficiency
-  );
-
-  /**
-   * Sets price change in price from Sunday to last input day
-   * @function updateYield
-   * @returns {Promise<void>}
-   */
-  const updateYield = async () => {
-    const sundayPrice = await AsyncStorage.getItem("Sunday");
-    for (let i = days.length - 1; i >= 0; i--) {
-      const thisPrice = await AsyncStorage.getItem(days[i]);
-      if (thisPrice != null) {
-        dispatch(setCurPrice(thisPrice));
-        if (isSufficient) {
-          const change = Math.round(
-            ((curPrice - sundayPrice) / sundayPrice) * 100
-          );
-          dispatch(setYield(change));
-        } else {
-          dispatch(clearYield());
-        }
-        break;
-      }
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await updateYield();
-    })();
-  });
 
   return (
     <View>
