@@ -32,7 +32,6 @@ const MainChartContainer = () => {
 
   const curPrice = useSelector((store) => store.yield.curPrice);
   const curYield = useSelector((store) => store.yield.yield);
-  const cutoff = useSelector((store) => store.yield.cutoff);
 
   const isSufficient = useSelector(
     (store) => store.dataSufficiency.sufficiency
@@ -62,8 +61,6 @@ const MainChartContainer = () => {
     }
   };
 
-  const yieldWarning = cutoff * -1 >= curYield ? " - below cutoff!" : "";
-
   useEffect(() => {
     (async () => {
       await updateYield();
@@ -85,7 +82,6 @@ const MainChartContainer = () => {
               {" "}
               ({curYield.toString()}%)
             </Text>
-            {" " + yieldWarning}
           </Text>
           <Chart />
         </View>

@@ -4,22 +4,11 @@
  */
 
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Modal,
-  Text,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, Dimensions, Modal, Text } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearYield,
-  setCurPrice,
-  setYieldCutoff,
-} from "../actions/yieldActions";
+import { clearYield, setCurPrice } from "../actions/yieldActions";
 
 import { useNotifications } from "../hooks/useNotifications";
 
@@ -39,11 +28,8 @@ const DataScreen = () => {
   /** @const {Dispatch<any>} dispatch - redux dipatcher for yield, curPrice */
   const dispatch = useDispatch();
 
-  const curCutoff = useSelector((store) => store.yield.cutoff);
-
   const [priceModalVisible, setPriceModalVisible] = useState(false);
   const [resetModalVisible, setResetModalVisible] = useState(false);
-  const [yieldModalVisible, setYieldModalVisible] = useState(false);
 
   const sendNotification = useNotifications();
 
@@ -87,18 +73,6 @@ const DataScreen = () => {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  /**
-   * Sets yield percent cutoff state for alerts
-   * @function setYieldCutoff
-   * @returns {void}
-   */
-  const setCutoff = (cutoff) => {
-    if (cutoff != "") {
-      dispatch(setYieldCutoff(parseInt(cutoff, 10)));
-    }
-    setYieldModalVisible(false);
   };
 
   return (
@@ -151,63 +125,12 @@ const DataScreen = () => {
           </View>
         </View>
       </Modal>
-      <Modal
-        visible={yieldModalVisible}
-        animationType="slide"
-        transparent={true}
-      >
-        <View style={styles.resetModalContainer}>
-          <View
-            style={{
-              ...styles.resetModalView,
-              width: Dimensions.get("window").width / 1.2,
-            }}
-          >
-            <Text
-              style={{
-                ...styles.buttonText,
-                color: primaryColors.cream,
-                alignSelf: "center",
-              }}
-            >
-              Set % Loss Cutoff
-            </Text>
-            <TextInput
-              style={{
-                ...styles.input,
-                marginBottom: 3,
-                alignSelf: "center",
-              }}
-              placeholder={curCutoff ? curCutoff.toString() + "%" : " "}
-              placeholderTextColor={primaryColors.darkgreen}
-              keyboardType="numeric"
-              returnKeyType="done"
-              onSubmitEditing={(e) => setCutoff(e.nativeEvent.text)}
-            />
-            <TouchableButton
-              onPress={() => setYieldModalVisible(false)}
-              text="Close"
-              style={{
-                ...styles.touchButton,
-                marginBottom: 10,
-                width: Dimensions.get("window").width / 2,
-              }}
-            />
-          </View>
-        </View>
-      </Modal>
       <MainChartContainer />
       <TouchableButton
         onPress={() => setPriceModalVisible(true)}
         backgroundColor={primaryColors.darkgreen}
         color={primaryColors.cream}
         text="Edit Prices"
-      />
-      <TouchableButton
-        onPress={() => setYieldModalVisible(true)}
-        backgroundColor={primaryColors.islandyellow}
-        color={primaryColors.darkgreen}
-        text="Edit Yield Cutoff"
       />
       <TouchableButton
         onPress={() => setResetModalVisible(true)}
