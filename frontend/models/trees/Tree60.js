@@ -7,19 +7,19 @@ const mainTrends = ["R", "SS"];
 
 const spikeBranch = {
   trends: mainTrends,
-  notes: "sell in two intervals",
+  notes: "Sell in Two Intervals",
   lower: {
     trends: ["R"],
   },
   higher: {
     trends: mainTrends,
-    notes: "sell next interval",
+    notes: "Sell Next Interval!",
     lower: {
       trends: ["R"],
     },
     higher: {
       trends: ["SS"],
-      notes: "sell now",
+      notes: "Sell Now!",
     },
   },
 };

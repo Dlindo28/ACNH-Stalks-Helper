@@ -7,5 +7,12 @@
 export const Tree0 = {
   trends: ["SS"],
   lower: null,
-  higher: null,
+  higher: {
+    trends: ["SS"],
+    notes: "Sell in Two Intervals",
+    higher: {
+      trends: ["SS"],
+      notes: "Sell Next Interval!",
+    },
+  },
 };

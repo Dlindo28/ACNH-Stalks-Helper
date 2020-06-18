@@ -97,12 +97,6 @@ const DataScreen = () => {
   const setCutoff = (cutoff) => {
     if (cutoff != "") {
       dispatch(setYieldCutoff(parseInt(cutoff, 10)));
-      /*
-      if (cutoff >= curCutoff) {
-        sendNotification("Current price under yield. Sell now.");
-        console.log("Current Price Under Yield. Sell now.");
-      }
-      */
     }
     setYieldModalVisible(false);
   };
@@ -211,8 +205,8 @@ const DataScreen = () => {
       />
       <TouchableButton
         onPress={() => setYieldModalVisible(true)}
-        backgroundColor={primaryColors.darkgreen}
-        color={primaryColors.cream}
+        backgroundColor={primaryColors.islandyellow}
+        color={primaryColors.darkgreen}
         text="Edit Yield Cutoff"
       />
       <TouchableButton

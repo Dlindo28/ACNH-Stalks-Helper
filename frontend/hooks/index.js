@@ -14,6 +14,11 @@ import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
 import { days } from "../models/Dates";
 
 /**
+ * TODO: check when we have tree.notes, if notes == "sell next interval" set
+ *   timer for next interval datetime to send notification to sell
+ */
+
+/**
  * Hook for setting price
  * @function useSetPrice
  * @returns {function} setPrice
