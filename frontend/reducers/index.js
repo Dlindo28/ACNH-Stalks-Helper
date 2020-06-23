@@ -5,10 +5,10 @@
 import { combineReducers } from "redux";
 import datetimeReducer from "./datetimeReducer";
 import dataSufficiencyReducer from "./dataSufficiencyReducer";
-import yieldReducer from "./yieldReducer";
+import priceReducer from "./priceReducer";
 
 export default combineReducers({
   datetime: datetimeReducer,
   dataSufficiency: dataSufficiencyReducer,
-  yield: yieldReducer,
+  prices: priceReducer,
 });

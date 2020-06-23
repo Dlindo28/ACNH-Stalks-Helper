@@ -2,7 +2,12 @@
  * @file Actions available for yield dispatcher
  * @author Daniel Lindo
  */
-import { SET_YIELD, CLEAR_YIELD, SET_CURPRICE } from "./types";
+import {
+  SET_YIELD,
+  CLEAR_YIELD,
+  SET_CURPRICE,
+  SET_PRICES_MISSING,
+} from "./types";
 
 /**
  * Set new price yield
@@ -36,5 +41,17 @@ export const setCurPrice = (price) => {
   return {
     type: SET_CURPRICE,
     payload: price,
+  };
+};
+
+/**
+ * Sets state of misssing prices, in comparison to curPrice
+ * @param {*} isMissing - true if missing prices are found
+ * @returns {Object.<string, *>}
+ */
+export const setPricesMissing = (isMissing) => {
+  return {
+    type: SET_PRICES_MISSING,
+    payload: isMissing,
   };
 };

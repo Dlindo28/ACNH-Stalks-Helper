@@ -13,7 +13,7 @@ const middleware = [thunk];
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["yield", "dataSufficiency"],
+  whitelist: ["prices", "dataSufficiency"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

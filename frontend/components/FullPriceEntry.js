@@ -58,11 +58,11 @@ const PricedayRow = ({ day }) => {
           style={styles.rowInput}
           keyboardType="numeric"
           returnKeyType="done"
-          onEndEditing={(e) =>
-            e.nativeEvent.text != ""
-              ? setPrice(e.nativeEvent.text, `${day}AM`)
-              : console.log("Tried to enter empty price")
-          }
+          onEndEditing={(e) => {
+            if (e.nativeEvent.text != "") {
+              setPrice(e.nativeEvent.text, `${day}AM`);
+            }
+          }}
           placeholder={amPrice}
           placeholderTextColor={primaryColors.darkgreen}
         />
@@ -70,11 +70,11 @@ const PricedayRow = ({ day }) => {
           style={styles.rowInput}
           keyboardType="numeric"
           returnKeyType="done"
-          onEndEditing={(e) =>
-            e.nativeEvent.text != ""
-              ? setPrice(e.nativeEvent.text, `${day}PM`)
-              : console.log("Tried to enter empty price")
-          }
+          onEndEditing={(e) => {
+            if (e.nativeEvent.text != "") {
+              setPrice(e.nativeEvent.text, `${day}PM`);
+            }
+          }}
           placeholder={pmPrice}
           placeholderTextColor={primaryColors.darkgreen}
         />
@@ -113,11 +113,11 @@ const FullPriceEntry = ({ setPriceModalVisible }) => {
         placeholderTextColor={primaryColors.darkgreen}
         keyboardType="numeric"
         returnKeyType="done"
-        onEndEditing={(e) =>
-          e.nativeEvent.text != ""
-            ? setPrice(e.nativeEvent.text, "Sunday")
-            : console.log("Tried to enter empty price")
-        }
+        onEndEditing={(e) => {
+          if (e.nativeEvent.text != "") {
+            setPrice(e.nativeEvent.text, "Sunday");
+          }
+        }}
       />
       <PricedayRow day="Monday" />
       <PricedayRow day="Tuesday" />

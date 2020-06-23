@@ -13,8 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { useSelector, useDispatch } from "react-redux";
-import { setYield, setCurPrice, clearYield } from "../actions/yieldActions";
+import { useSelector } from "react-redux";
 
 import Chart from "./Chart";
 
@@ -27,8 +26,8 @@ import { days } from "../models/Dates";
  * @returns {JSX.Element}
  */
 const MainChartContainer = () => {
-  const curPrice = useSelector((store) => store.yield.curPrice);
-  const curYield = useSelector((store) => store.yield.yield);
+  const curPrice = useSelector((store) => store.prices.curPrice);
+  const curYield = useSelector((store) => store.prices.yield);
 
   return (
     <View>

@@ -42,8 +42,6 @@ const HomePriceEntry = () => {
           if (e.nativeEvent.text != "") {
             setPrice(e.nativeEvent.text, getDay(date) + getMeridian(date));
             setPriceIn(e.nativeEvent.text);
-          } else {
-            console.log("Tried to enter empty price");
           }
         }}
         returnKeyType="done"

@@ -26,7 +26,7 @@ export const days = [
  * @returns {string} - weekday
  */
 export const getDay = (date) => {
-  const day = [
+  const days = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -35,7 +35,7 @@ export const getDay = (date) => {
     "Friday",
     "Saturday",
   ];
-  return day[date.getDay()];
+  return days[date.getDay()];
 };
 
 /**
@@ -44,6 +44,9 @@ export const getDay = (date) => {
  * @returns {string} - "AM" or "PM" based on time
  */
 export const getMeridian = (date) => {
+  if (getDay(date) == "Sunday") {
+    return "";
+  }
   return date.getHours() < 12 ? "AM" : "PM";
 };
 

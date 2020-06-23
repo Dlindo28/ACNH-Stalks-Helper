@@ -16,7 +16,7 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { clearYield, setCurPrice } from "../actions/yieldActions";
+import { clearYield, setCurPrice } from "../actions/priceActions";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
@@ -38,22 +38,18 @@ const DataScreen = () => {
   const [resetModalVisible, setResetModalVisible] = useState(false);
   const [calculateModalVisible, setCalculateModalVisible] = useState(false);
 
-  const curPrice = useSelector((store) => store.yield.curPrice);
+  const curPrice = useSelector((store) => store.prices.curPrice);
 
   /**
-   * Clears all prices and tree stored in AsyncStorage.
+   * Sets all prices to zero and tree stored in AsyncStorage.
    *     Clears yield and currentPrice states in redux.
    * @function resetPrices
    * @returns {void}
    */
   const resetPrices = async () => {
     try {
-      const keys = await AsyncStorage.getAllKeys();
-
-      for (const key of keys) {
-        if (days.includes(key)) {
-          await AsyncStorage.removeItem(key);
-        }
+      for (const day of days) {
+        await AsyncStorage.setItem(day, "0");
       }
 
       await AsyncStorage.removeItem("tree");
@@ -68,24 +64,9 @@ const DataScreen = () => {
   //resetPrices();
 
   /**
-   * Logs everything stored in AsyncStorage
-   * @function printStorage
-   * @returns {Promise<void>}
-   */
-  const printStorage = async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      const storage = await AsyncStorage.multiGet(keys);
-      console.log(storage);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  /**
-   * Logs everything stored in AsyncStorage
-   * @function printStorage
-   * @returns {Promise<void>}
+   * Calculates total income after selling
+   * @function calculatePrice
+   * @returns {void}
    */
   const calculatePrice = (numTurnips) => {
     const income = numTurnips * parseInt(curPrice, 10);
@@ -168,7 +149,7 @@ const DataScreen = () => {
                 onEndEditing={(e) =>
                   e.nativeEvent.text != ""
                     ? calculatePrice(parseInt(e.nativeEvent.text, 10))
-                    : console.log("Tried to enter empty price")
+                    : undefined
                 }
                 placeholder={"0"}
                 placeholderTextColor={primaryColors.darkgreen}
