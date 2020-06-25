@@ -9,10 +9,10 @@ export const Tree0 = {
   lower: null,
   higher: {
     trends: ["SS"],
-    notes: "Sell in Two Intervals",
+    notes: 2,
     higher: {
       trends: ["SS"],
-      notes: "Sell Next Interval!",
+      notes: 1,
     },
   },
 };

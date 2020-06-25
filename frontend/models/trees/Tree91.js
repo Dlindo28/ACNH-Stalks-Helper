@@ -14,13 +14,13 @@ const spikeBranch = {
     },
     higher: {
       trends: mainTrends,
-      notes: "sell next interval",
+      notes: 1,
       lower: {
         trends: ["R"],
       },
       higher: {
         trends: ["BS"],
-        notes: "sell now",
+        notes: 0,
       },
     },
   },

@@ -13,8 +13,8 @@ import {
   setYield,
   clearYield,
   setPricesMissing,
+  setProjectedPeak,
 } from "../actions/priceActions";
-import { useNotifications } from "./useNotifications";
 
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
 import { days } from "../models/Dates";
@@ -32,9 +32,6 @@ import { days } from "../models/Dates";
 export const useSetPrice = () => {
   /** @const {Dispatch<any>} dispatch - redux dipatcher for data sufficiency */
   const dispatch = useDispatch();
-  const sendNotification = useNotifications();
-
-  const curPrice = useSelector((store) => store.prices.curPrice);
 
   /**
    * Updates price, tree, and yield of given day
@@ -59,7 +56,7 @@ export const useSetPrice = () => {
           let previousPrice = await AsyncStorage.getItem(
             days[days.indexOf(day) - 1]
           );
-          updateTree(parseInt(previousPrice, 10) < parseInt(price, 10));
+          updateTree(parseInt(previousPrice, 10) < parseInt(price, 10), day);
         }
       }
 
@@ -177,7 +174,7 @@ export const useSetPrice = () => {
    * @param {boolean} increase - true iff newest price is an increase
    * @returns {void}
    */
-  const updateTree = async (increase) => {
+  const updateTree = async (increase, day) => {
     try {
       let tree = await getTreeObject();
       if (increase) {
@@ -191,9 +188,10 @@ export const useSetPrice = () => {
           console.log("tree decreased");
         }
       }
-      if (tree.notes) {
-        //Alert.alert("Alert", tree.notes, [{ text: "OK" }]);
-        sendNotification(tree.notes);
+
+      const dayIndex = days.indexOf(day);
+      if (tree.notes != null) {
+        dispatch(setProjectedPeak(days[(dayIndex + tree.notes) % days.length]));
       }
       await AsyncStorage.setItem("tree", JSON.stringify(tree));
     } catch (e) {

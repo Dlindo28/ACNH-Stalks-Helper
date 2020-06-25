@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, Dimensions, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { VictoryChart, VictoryAxis, VictoryBar } from "victory-native";
+import { useSelector } from "react-redux";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
@@ -63,6 +64,8 @@ const Chart = ({ homeChart }) => {
   const [data, setData] = useState(tempdata);
   const [trends, setTrends] = useState([]);
   const [dataEmpty, setDataEmpty] = useState(true);
+
+  const projectedPeak = useSelector((store) => store.prices.projectedPeak);
 
   /** @const {JSX.Element} - text list of each trend */
   const listTrends =
@@ -189,6 +192,19 @@ const Chart = ({ homeChart }) => {
         </Text>
       )}
       {homeChart ? undefined : listTrends}
+
+      {homeChart ? undefined : (
+        <View>
+          <Text
+            style={{
+              ...styles.trendText,
+              fontSize: 20,
+            }}
+          >
+            Projected Peak: {projectedPeak}
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -196,6 +212,7 @@ const Chart = ({ homeChart }) => {
 const styles = StyleSheet.create({
   trendText: {
     fontFamily: "acnh",
+    fontSize: 13,
     color: primaryColors.darkgreen,
     paddingLeft: 10,
   },

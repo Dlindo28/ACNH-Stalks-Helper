@@ -9,11 +9,11 @@ const SpikeBranch = {
   trends: ["BS", "SS"],
   lower: {
     trends: ["BS"],
-    notes: "sell in 2 intervals",
+    notes: 2,
   },
   higher: {
     trends: ["SS"],
-    notes: "sell next",
+    notes: 1,
   },
 };
 

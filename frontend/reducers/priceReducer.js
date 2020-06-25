@@ -7,12 +7,13 @@ import {
   CLEAR_YIELD,
   SET_CURPRICE,
   SET_PRICES_MISSING,
+  SET_PROJECTED_PEAK,
 } from "../actions/types";
 
 const initState = {
   yield: 0,
   curPrice: 0,
-  pricesMissing: false,
+  projectedPeak: "None",
 };
 
 /**
@@ -43,6 +44,11 @@ const priceReducer = (state = initState, action) => {
       return {
         ...state,
         pricesMissing: action.payload,
+      };
+    case SET_PROJECTED_PEAK:
+      return {
+        ...state,
+        projectedPeak: action.payload,
       };
     default:
       return state;

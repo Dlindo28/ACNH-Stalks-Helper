@@ -20,6 +20,7 @@ import {
   clearYield,
   setCurPrice,
   setPricesMissing,
+  setProjectedPeak,
 } from "../actions/priceActions";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
@@ -60,6 +61,7 @@ const DataScreen = () => {
       dispatch(clearYield());
       dispatch(setCurPrice(0));
       dispatch(setPricesMissing(false));
+      dispatch(setProjectedPeak("None"));
 
       setResetModalVisible(false);
     } catch (e) {

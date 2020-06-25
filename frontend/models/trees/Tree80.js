@@ -8,9 +8,11 @@ const mainTrends = ["SS", "BS"];
 const spikeBranch = {
   trends: mainTrends,
   lower: {
+    notes: 2,
     trends: ["BS"],
   },
   higher: {
+    notes: 1,
     trends: ["SS"],
   },
 };
