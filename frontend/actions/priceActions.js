@@ -34,7 +34,7 @@ export const clearYield = () => {
 
 /**
  * Set new current price
- * @param {string} price - last input price
+ * @param {number} price - last input price
  * @returns {Object.<string, string>}
  */
 export const setCurPrice = (price) => {

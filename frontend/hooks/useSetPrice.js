@@ -8,7 +8,12 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
-import { setCurPrice, setYield, clearYield } from "../actions/priceActions";
+import {
+  setCurPrice,
+  setYield,
+  clearYield,
+  setPricesMissing,
+} from "../actions/priceActions";
 import { useNotifications } from "./useNotifications";
 
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
@@ -43,7 +48,7 @@ export const useSetPrice = () => {
       // Place new price into AsyncStorage
       await AsyncStorage.setItem(day, price);
 
-      await updateYield();
+      updateYield();
 
       // Initialize or Update tree if data is sufficient
       const isSufficient = await checkSufficiency();
@@ -55,8 +60,11 @@ export const useSetPrice = () => {
             days[days.indexOf(day) - 1]
           );
           updateTree(parseInt(previousPrice, 10) < parseInt(price, 10));
-          handleMissingPrices();
         }
+      }
+
+      if (day != "Sunday") {
+        handleMissingPrices();
       }
 
       Keyboard.dismiss();
@@ -95,24 +103,18 @@ export const useSetPrice = () => {
         let tree;
         if (ratio >= 0.91) {
           tree = Tree91;
-          console.log("Tree initialized to Tree91");
         } else if (ratio >= 0.85) {
           tree = Tree85;
-          console.log("Tree initialized to Tree85");
         } else if (ratio >= 0.8) {
           tree = Tree80;
-          console.log("Tree initialized to Tree80");
         } else if (ratio >= 0.6) {
           tree = Tree60;
-          console.log("Tree initialized to Tree60");
         } else {
           tree = Tree0;
-          console.log("Tree initialized to Tree0");
         }
 
         tree = JSON.stringify(tree);
         await AsyncStorage.setItem("tree", tree);
-        //getTreeObject();
       }
     } catch (e) {
       console.log(e);
@@ -207,10 +209,12 @@ export const useSetPrice = () => {
   const updateYield = async () => {
     const isSufficient = await checkSufficiency();
     const sundayPrice = await AsyncStorage.getItem("Sunday");
+
+    // Going backwards, find the first nonzero price input and update yield
     for (let i = days.length - 1; i >= 0; i--) {
       const thisPrice = await AsyncStorage.getItem(days[i]);
-      if (thisPrice != null) {
-        dispatch(setCurPrice(thisPrice));
+      if (thisPrice != "0") {
+        dispatch(setCurPrice(parseInt(thisPrice, 10)));
         if (isSufficient) {
           const change = Math.round(
             ((thisPrice - sundayPrice) / sundayPrice) * 100
@@ -230,30 +234,32 @@ export const useSetPrice = () => {
    * @returns {void}
    */
   const handleMissingPrices = async () => {
-    const tree = await getTreeObject();
+    let priceMissing = false;
+    let last = null;
 
     /**
-     * Steps:
-     *   1. Find if prices are missing, set boolean to true
-     *   2. If boolean true, alert user
-     *   3. For each missing price, traverse lower in tree
+     * TODO: Instead of doing const day of days, iterate through days in reverse
+     * Once first non-empty day is found, that's last day
+     * From last day until sunday, if anything is empty, then we set
+     * pricesMissing
      */
 
-    let missingPrices = [];
-    for (let i = 0; i < days.length; i++) {
-      const price = await AsyncStorage.getItem(days[i]);
-      if (price == "0") {
-        missingPrices.push(days[i]);
-      } else if (price == curPrice) {
-        console.log(`curPrice found on ${day}`);
+    for (let i = days.length - 1; i >= 0; i--) {
+      const day = days[i];
+      const price = await AsyncStorage.getItem(day);
+      if (day == "MondayAM") {
         break;
       }
+      if (price == "0") {
+        if (last) {
+          priceMissing = true;
+        }
+      } else {
+        last = last || true;
+      }
     }
-
-    if (missingPrices.length > 1) {
-      console.log("Missing Prices!");
-    }
-    console.log(missingPrices);
+    dispatch(setPricesMissing(priceMissing));
+    console.log(priceMissing);
   };
 
   /**

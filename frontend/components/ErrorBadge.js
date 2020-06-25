@@ -3,41 +3,80 @@
  * @author Daniel Lindo
  */
 
-import React from "react";
-import { StyleSheet, View, Text, Dimensions } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
 
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 
 /**
  * Error Badge component
  * @function ErrorBadge
  * @returns {JSX.Element}
  */
-const ErrorBadge = () => {
+const ErrorBadge = ({ navigation }) => {
   const dataSufficiency = useSelector(
-    (state) => state.dataSufficiency.sufficiency
+    (store) => store.dataSufficiency.sufficiency,
+    shallowEqual
+  );
+  const pricesMissing = useSelector(
+    (store) => store.prices.pricesMissing,
+    shallowEqual
   );
 
-  if (!dataSufficiency) {
+  const [warnings, setWarnings] = useState(
+    !dataSufficiency && pricesMissing
+      ? "2 Warnings"
+      : !dataSufficiency
+      ? "Insufficient Data"
+      : pricesMissing
+      ? "Missing Prices"
+      : ""
+  );
+
+  useLayoutEffect(() => {
+    setWarnings(
+      !dataSufficiency && pricesMissing
+        ? "2 Warnings"
+        : !dataSufficiency
+        ? "Insufficient Data"
+        : pricesMissing
+        ? "Missing Prices"
+        : ""
+    );
+  }, [dataSufficiency, pricesMissing]);
+
+  if (warnings != "") {
     return (
-      <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-          }}
-        >
-          <Entypo
-            name="warning"
-            color={primaryColors.darkgreen}
-            size={20}
-            style={{ justifyContent: "center", paddingTop: 5, marginRight: 5 }}
-          />
-          <Text style={styles.badgeText}>Insuffient Data</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Info")}>
+        <View style={styles.container}>
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <Entypo
+              name="warning"
+              color={primaryColors.darkgreen}
+              size={20}
+              style={{
+                justifyContent: "center",
+                paddingTop: 5,
+                marginRight: 5,
+              }}
+            />
+            <Text style={styles.badgeText}>{warnings}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   } else {
     return <View></View>;

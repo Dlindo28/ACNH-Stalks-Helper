@@ -44,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
           <DateHeader />
           <HomePriceEntry />
           <ChartPanel navigation={navigation} />
-          <ErrorBadge />
+          <ErrorBadge navigation={navigation} />
         </View>
       </View>
     </DismissKeyboard>

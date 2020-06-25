@@ -16,6 +16,7 @@ import { primaryColors } from "./models/Styles.js";
 
 import HomeScreen from "./screen/HomeScreen";
 import DataScreen from "./screen/DataScreen";
+import InfoScreen from "./screen/InfoScreen";
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -55,6 +56,9 @@ const AppBuilder = () => {
                 case "Data":
                   iconName = "bar-graph";
                   break;
+                case "Info":
+                  iconName = "info-with-circle";
+                  break;
                 default:
                   iconName = "home";
                   break;
@@ -76,6 +80,7 @@ const AppBuilder = () => {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Data" component={DataScreen} />
+          <Tab.Screen name="Info" component={InfoScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

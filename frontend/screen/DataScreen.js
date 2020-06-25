@@ -16,7 +16,11 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { clearYield, setCurPrice } from "../actions/priceActions";
+import {
+  clearYield,
+  setCurPrice,
+  setPricesMissing,
+} from "../actions/priceActions";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
@@ -55,6 +59,7 @@ const DataScreen = () => {
       await AsyncStorage.removeItem("tree");
       dispatch(clearYield());
       dispatch(setCurPrice(0));
+      dispatch(setPricesMissing(false));
 
       setResetModalVisible(false);
     } catch (e) {
