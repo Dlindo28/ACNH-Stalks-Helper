@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet, View, Dimensions, SectionList, Text } from "react-native";
-
+import Constants from "expo-constants";
 import { primaryColors } from "../models/Styles";
 
 import TouchableButton from "./TouchableButton";
@@ -30,15 +30,22 @@ const data = [
 
 const Instructions = ({ onClose }) => {
   return (
-    <View>
-      <SectionList
-        sections={data}
-        keyExtractor={(item, index) => index}
-        renderItem={({ item }) => <Text>{item}</Text>}
-        renderSectionHeader={({ section }) => (
-          <Text style={{ fontSize: 30 }}>{section.title}</Text>
-        )}
-      />
+    <View style={styles.container}>
+      <View style={styles.list}>
+        <SectionList
+          sections={data}
+          keyExtractor={(item, index) => index}
+          renderItem={({ item }) => (
+            <View style={styles.itemContainer}>
+              <Text style={styles.itemText}>{item}</Text>
+            </View>
+          )}
+          renderSectionHeader={({ section }) => (
+            <Text style={styles.headerText}>{section.title}</Text>
+          )}
+        />
+      </View>
+
       <TouchableButton
         onPress={onClose}
         color={primaryColors.cream}
@@ -48,5 +55,39 @@ const Instructions = ({ onClose }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Constants.statusBarHeight,
+    height: Dimensions.get("window").height,
+    backgroundColor: primaryColors.cream,
+  },
+  list: {
+    height: Dimensions.get("window").height / 1.5,
+    alignSelf: "center",
+    width: Dimensions.get("window").width / 1.1,
+  },
+  itemText: {
+    fontFamily: "acnh",
+    color: primaryColors.darkgreen,
+  },
+  headerText: {
+    fontFamily: "acnh",
+    color: primaryColors.darkgreen,
+    fontSize: 25,
+  },
+  itemContainer: {
+    backgroundColor: primaryColors.islandgreen,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
+  },
+});
 
 export default Instructions;
