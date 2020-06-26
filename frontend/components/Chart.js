@@ -63,7 +63,6 @@ const decodeTrend = {
 const Chart = ({ homeChart }) => {
   const [data, setData] = useState(tempdata);
   const [trends, setTrends] = useState([]);
-  const [dataEmpty, setDataEmpty] = useState(true);
 
   const projectedPeak = useSelector((store) => store.prices.projectedPeak);
 
@@ -87,8 +86,7 @@ const Chart = ({ homeChart }) => {
       ))
     );
 
-  const yAxis =
-    homeChart || dataEmpty ? undefined : <VictoryAxis dependentAxis />;
+  const yAxis = homeChart ? undefined : <VictoryAxis dependentAxis />;
 
   /**
    * Gets price data from AsyncStorage
@@ -114,7 +112,6 @@ const Chart = ({ homeChart }) => {
    */
   const updatePrice = async () => {
     const storeData = await getData();
-    setDataEmpty(storeData.length == 0);
 
     let temp = [];
 
