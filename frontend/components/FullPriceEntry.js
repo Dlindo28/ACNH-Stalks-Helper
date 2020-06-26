@@ -13,7 +13,7 @@
  * data sufficient
  */
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
 import { useSetPrice } from "../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
