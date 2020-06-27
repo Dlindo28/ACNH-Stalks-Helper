@@ -30,6 +30,7 @@ const TouchableButton = ({
   bottomLeftRadius,
   bottomRightRadius,
   style,
+  icon,
 }) => {
   const rad = bottomLeftRadius
     ? {
@@ -53,14 +54,21 @@ const TouchableButton = ({
           ...style,
         }}
       >
-        <Text
+        <View
           style={{
-            ...styles.buttonText,
-            color: color,
+            flexDirection: "row",
           }}
         >
-          {text}
-        </Text>
+          {icon || undefined}
+          <Text
+            style={{
+              ...styles.buttonText,
+              color: color,
+            }}
+          >
+            {text}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

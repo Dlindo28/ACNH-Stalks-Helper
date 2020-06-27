@@ -10,7 +10,7 @@ const data = [
     title: "Buying Turnips",
     data: [
       "Each Sunday, Daisy Mae will visit your island to sell turnips. " +
-        "Buy from her and you may win big on bells later in the week!\n" +
+        "Buy from her and you may win big on bells later in the week!\n\n" +
         "Turnip prices change twice every day, once at 4 am and again at 12 pm.",
     ],
   },
@@ -18,13 +18,18 @@ const data = [
     title: "Entering Prices",
     data: [
       "You can enter current prices on the home screen, or edit prices for " +
-        "the whole week on the chart screen.\nSunday and Monday AM prices are " +
-        "mandatory for an accurate estimation",
+        "the whole week on the chart screen.\n\nSunday and Monday AM prices are " +
+        "mandatory for an accurate estimation.",
     ],
   },
   {
     title: "Price Trends",
-    data: ["Change Later..."],
+    data: [
+      "Random: Prices rise and drop randomly.",
+      "Falling: Prices constantly fall. Worst Case.",
+      "Small Spike: Prices peak once then continuously fall.",
+      "Big Spike: Prices peak twice. Second peak is the max price. Best Case",
+    ],
   },
 ];
 
@@ -43,6 +48,7 @@ const Instructions = ({ onClose }) => {
           renderSectionHeader={({ section }) => (
             <Text style={styles.headerText}>{section.title}</Text>
           )}
+          stickySectionHeadersEnabled={false}
         />
       </View>
 
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColors.cream,
   },
   list: {
-    height: Dimensions.get("window").height / 1.5,
+    height: Dimensions.get("window").height / 1.1,
     alignSelf: "center",
     width: Dimensions.get("window").width / 1.1,
   },

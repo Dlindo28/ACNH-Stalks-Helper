@@ -57,7 +57,7 @@ const AppBuilder = () => {
                   iconName = "bar-graph";
                   break;
                 case "Info":
-                  iconName = "info-with-circle";
+                  iconName = "help-with-circle";
                   break;
                 default:
                   iconName = "home";

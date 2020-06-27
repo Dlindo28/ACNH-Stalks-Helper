@@ -12,10 +12,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { useSelector, shallowEqual } from "react-redux";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
 
-import { useSelector, shallowEqual } from "react-redux";
+import TouchableButton from "./TouchableButton";
+
+const warningIcon = (
+  <Entypo
+    name="warning"
+    color={primaryColors.darkgreen}
+    size={20}
+    style={{
+      justifyContent: "center",
+      paddingTop: 5,
+      marginRight: 5,
+    }}
+  />
+);
 
 /**
  * Error Badge component
@@ -56,27 +70,13 @@ const ErrorBadge = ({ navigation }) => {
 
   if (warnings != "") {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Info")}>
-        <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <Entypo
-              name="warning"
-              color={primaryColors.darkgreen}
-              size={20}
-              style={{
-                justifyContent: "center",
-                paddingTop: 5,
-                marginRight: 5,
-              }}
-            />
-            <Text style={styles.badgeText}>{warnings}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <TouchableButton
+        onPress={() => navigation.navigate("Info")}
+        color={primaryColors.darkgreen}
+        backgroundColor={secondaryColors.rose}
+        text={warnings}
+        icon={warningIcon}
+      />
     );
   } else {
     return <View></View>;

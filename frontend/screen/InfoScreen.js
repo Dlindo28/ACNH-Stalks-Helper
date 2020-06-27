@@ -13,12 +13,26 @@ import {
   Text,
   Modal,
 } from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
 
 import TouchableButton from "../components/TouchableButton";
 import Instructions from "../components/Instructions";
 import Warnings from "../components/Warnings";
+
+const warningIcon = (
+  <Entypo
+    name="warning"
+    color={primaryColors.darkgreen}
+    size={20}
+    style={{
+      justifyContent: "center",
+      paddingTop: 5,
+      marginRight: 5,
+    }}
+  />
+);
 
 /**
  * Builds Info Screen component
@@ -49,18 +63,22 @@ const InfoScreen = ({ navigation }) => {
       </Modal>
 
       <View style={styles.container}>
-        <Text>Info</Text>
+        <Text style={styles.headerText}>Help</Text>
         <TouchableButton
           onPress={() => setInfoModalVisible(true)}
           color={primaryColors.cream}
           backgroundColor={primaryColors.darkgreen}
           text="How It Works"
+          style={{
+            marginBottom: 10,
+          }}
         />
         <TouchableButton
           onPress={() => setWarningModalVisible(true)}
           color={primaryColors.darkgreen}
           backgroundColor={secondaryColors.rose}
           text="Warnings"
+          icon={warningIcon}
         />
       </View>
     </View>
@@ -73,6 +91,10 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColors.islandgreen,
     alignItems: "center",
     paddingTop: 50,
+  },
+  headerText: {
+    fontFamily: "acnh",
+    fontSize: 20,
   },
 });
 

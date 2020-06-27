@@ -9,15 +9,17 @@ import TouchableButton from "./TouchableButton";
 const data = [
   {
     title: "Insufficient Data",
-    data: ["Data is insufficient..."],
+    data: [
+      "Your Sunday and/or Monday AM prices are missing. These two prices " +
+        "are necessary for determining price trends.",
+    ],
   },
   {
     title: "Missing Prices",
-    data: ["Missing Peices..."],
-  },
-  {
-    title: "Price Trends",
-    data: ["Change Later..."],
+    data: [
+      "You are missing prices since your last input. Estimations may be " +
+        "incorrect.",
+    ],
   },
 ];
 
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColors.cream,
   },
   list: {
-    height: Dimensions.get("window").height / 1.5,
+    height: Dimensions.get("window").height / 1.1,
     alignSelf: "center",
     width: Dimensions.get("window").width / 1.1,
   },
