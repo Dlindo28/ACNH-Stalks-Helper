@@ -172,7 +172,7 @@ const Chart = ({ homeChart }) => {
           style={{
             data: {
               color: primaryColors.darkgreen,
-              fill: secondaryColors.rose,
+              fill: primaryColors.darkgreen,
             },
           }}
         />

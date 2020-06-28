@@ -51,20 +51,12 @@ export const useSetPrice = () => {
       const isSufficient = await checkSufficiency();
       if (isSufficient) {
         if (day == "Sunday" || day == "MondayAM") {
+          // Ratio changes, so we need to re-initialze tree
           initTree();
         } else {
-          let previousPrice = await AsyncStorage.getItem(
-            days[days.indexOf(day) - 1]
-          );
-          updateTree(parseInt(previousPrice, 10) < parseInt(price, 10), day);
+          await handleMissingPrices();
         }
       }
-
-      if (day != "Sunday") {
-        handleMissingPrices();
-      }
-
-      Keyboard.dismiss();
     } catch (e) {
       console.log(e);
     }
@@ -234,30 +226,34 @@ export const useSetPrice = () => {
   const handleMissingPrices = async () => {
     let priceMissing = false;
     let last = null;
-
-    /**
-     * TODO: Instead of doing const day of days, iterate through days in reverse
-     * Once first non-empty day is found, that's last day
-     * From last day until sunday, if anything is empty, then we set
-     * pricesMissing
-     */
+    let newPrice, lastPrice;
+    let newDay;
 
     for (let i = days.length - 1; i >= 0; i--) {
       const day = days[i];
       const price = await AsyncStorage.getItem(day);
       if (day == "MondayAM") {
+        lastPrice = price;
         break;
       }
       if (price == "0") {
         if (last) {
           priceMissing = true;
+          await updateTree(false, day);
         }
       } else {
-        last = last || true;
+        if (last) {
+          lastPrice = price;
+        } else {
+          newDay = day;
+          newPrice = price;
+          last = true;
+        }
       }
     }
+    console.log(`Prev: ${lastPrice}, New: ${newPrice}`);
+    await updateTree(parseInt(lastPrice, 10) < parseInt(newPrice, 10), newDay);
     dispatch(setPricesMissing(priceMissing));
-    console.log(priceMissing);
   };
 
   /**
