@@ -51,8 +51,7 @@ export const useSetPrice = () => {
       const isSufficient = await checkSufficiency();
       if (isSufficient) {
         if (day == "Sunday" || day == "MondayAM") {
-          // Ratio changes, so we need to re-initialze tree
-          initTree();
+          await initTree();
         } else {
           await handleMissingPrices();
         }
