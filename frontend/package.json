@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest",
+    "test": "jest --verbose",
     "test:watch": "npm test -- --watch"
   },
   "dependencies": {
@@ -50,6 +50,7 @@
     "babel-jest": "^26.1.0",
     "babel-preset-expo": "~8.1.0",
     "jest": "^26.1.0",
+    "mockdate": "^3.0.2",
     "react-test-renderer": "^16.13.1"
   },
   "jest": {

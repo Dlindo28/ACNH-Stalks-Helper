@@ -42,14 +42,14 @@ describe("Price Actions", () => {
     };
     expect(setCurPrice(price)).toEqual(expectedAction);
   });
-  it.each([true, false])("Can set prices missing", (isMissing) => {
+  it.each([true, false])("Can set prices missing to %p", (isMissing) => {
     const expectedAction = {
       type: "SET_PRICES_MISSING",
       payload: isMissing,
     };
     expect(setPricesMissing(isMissing)).toEqual(expectedAction);
   });
-  it.each(days)("Can set projected peak", (day) => {
+  it.each(days)("Can set projected peak to %p", (day) => {
     const expectedAction = {
       type: "SET_PROJECTED_PEAK",
       payload: day,
