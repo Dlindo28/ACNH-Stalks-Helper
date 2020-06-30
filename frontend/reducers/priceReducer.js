@@ -14,6 +14,7 @@ const initState = {
   yield: 0,
   curPrice: 0,
   projectedPeak: "None",
+  pricesMissing: false,
 };
 
 /**
