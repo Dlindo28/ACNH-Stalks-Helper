@@ -10,6 +10,9 @@ export const Tree0 = {
   higher: {
     trends: ["SS"],
     notes: 2,
+    lower: {
+      trends: ["R"],
+    },
     higher: {
       trends: ["SS"],
       notes: 1,

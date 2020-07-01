@@ -4,4 +4,3 @@
  */
 
 export { useSetPrice } from "./useSetPrice";
-export { useNotifications } from "./useNotifications";

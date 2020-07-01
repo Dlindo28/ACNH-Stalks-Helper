@@ -183,8 +183,11 @@ export const useSetPrice = () => {
       const dayIndex = days.indexOf(day);
       if (tree.notes != null) {
         dispatch(setProjectedPeak(days[(dayIndex + tree.notes) % days.length]));
+      } else if (tree.trends == ["R"]) {
+        dispatch(setProjectedPeak("None"));
       }
       await AsyncStorage.setItem("tree", JSON.stringify(tree));
+      console.log(tree);
     } catch (e) {
       console.log(e);
     }
@@ -224,7 +227,7 @@ export const useSetPrice = () => {
    */
   const handleMissingPrices = async () => {
     let priceMissing = false;
-    let last = null;
+    let foundLast = null;
     let newPrice, lastPrice;
     let newDay;
 
@@ -236,17 +239,18 @@ export const useSetPrice = () => {
         break;
       }
       if (price == "0") {
-        if (last) {
+        if (foundLast) {
           priceMissing = true;
           await updateTree(false, day);
         }
       } else {
-        if (last) {
+        if (foundLast) {
           lastPrice = price;
+          break;
         } else {
           newDay = day;
           newPrice = price;
-          last = true;
+          foundLast = true;
         }
       }
     }
