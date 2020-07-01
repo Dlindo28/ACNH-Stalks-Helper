@@ -1,2 +1,0 @@
-Tree0: 
-    If we go up, then down the projected peak moves up, we want it to go to None
