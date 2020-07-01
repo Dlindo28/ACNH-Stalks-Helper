@@ -4,10 +4,8 @@
  */
 import { SET_DATE } from "../actions/types";
 
-let date = new Date();
-
 const initState = {
-  date: date,
+  date: new Date(Date.now()),
 };
 
 /**

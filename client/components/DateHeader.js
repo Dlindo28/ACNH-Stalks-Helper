@@ -25,7 +25,7 @@ const DateHeader = () => {
   useEffect(() => {
     // Every second, dispatch new date object to redux state
     const interval = setInterval(() => {
-      dispatch(setDate(new Date()));
+      dispatch(setDate(new Date(Date.now())));
       setUpdate(!update);
     }, 1000);
     return () => clearInterval(interval);
