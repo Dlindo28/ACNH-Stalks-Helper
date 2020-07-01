@@ -18,33 +18,37 @@ const SpikeBranch = {
 };
 
 /** @const {Object.<string, *>} - ratio .85+ Tree */
+// export const Tree85 = {
+//   trends: mainTrends,
+//   lower: {
+//     trends: mainTrends,
+//     lower: {
+//       trends: mainTrends,
+//       lower: {
+//         trends: mainTrends,
+//         lower: {
+//           trends: mainTrends,
+//           lower: {
+//             trends: mainTrends,
+//             lower: {
+//               trends: mainTrends,
+//               lower: {
+//                 trends: ["D"],
+//               },
+//               higher: SpikeBranch,
+//             },
+//             higher: SpikeBranch,
+//           },
+//           higher: SpikeBranch,
+//         },
+//         higher: SpikeBranch,
+//       },
+//       higher: SpikeBranch,
+//     },
+//     higher: SpikeBranch,
+//   },
+// };
 export const Tree85 = {
   trends: mainTrends,
-  lower: {
-    trends: mainTrends,
-    lower: {
-      trends: mainTrends,
-      lower: {
-        trends: mainTrends,
-        lower: {
-          trends: mainTrends,
-          lower: {
-            trends: mainTrends,
-            lower: {
-              trends: mainTrends,
-              lower: {
-                trends: ["D"],
-              },
-              higher: SpikeBranch,
-            },
-            higher: SpikeBranch,
-          },
-          higher: SpikeBranch,
-        },
-        higher: SpikeBranch,
-      },
-      higher: SpikeBranch,
-    },
-    higher: SpikeBranch,
-  },
+  higher: SpikeBranch,
 };

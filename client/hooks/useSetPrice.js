@@ -3,7 +3,6 @@
  * @author Daniel Lindo
  */
 import { useEffect } from "react";
-import { Keyboard } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,11 +17,6 @@ import {
 
 import { Tree0, Tree60, Tree80, Tree85, Tree91 } from "../models/trees";
 import { days } from "../models/Dates";
-
-/**
- * TODO: check when we have tree.notes, if notes == "sell next interval" set
- *   timer for next interval datetime to send notification to sell
- */
 
 /**
  * Hook for setting price
@@ -168,24 +162,32 @@ export const useSetPrice = () => {
   const updateTree = async (increase, day) => {
     try {
       let tree = await getTreeObject();
+
+      const updateProjectedPeak = (tree, day) => {
+        const dayIndex = days.indexOf(day);
+        if (tree.notes != null) {
+          dispatch(
+            setProjectedPeak(days[(dayIndex + tree.notes) % days.length])
+          );
+        } else if (tree.trends == ["R"]) {
+          dispatch(setProjectedPeak("None"));
+        }
+      };
+
       if (increase) {
         if (tree.higher) {
           tree = tree.higher;
           console.log("tree increased");
+          updateProjectedPeak(tree, day);
         }
       } else {
         if (tree.lower) {
           tree = tree.lower;
           console.log("tree decreased");
+          updateProjectedPeak(tree, day);
         }
       }
 
-      const dayIndex = days.indexOf(day);
-      if (tree.notes != null) {
-        dispatch(setProjectedPeak(days[(dayIndex + tree.notes) % days.length]));
-      } else if (tree.trends == ["R"]) {
-        dispatch(setProjectedPeak("None"));
-      }
       await AsyncStorage.setItem("tree", JSON.stringify(tree));
       console.log(tree);
     } catch (e) {
@@ -276,7 +278,6 @@ export const useSetPrice = () => {
 
   useEffect(() => {
     checkSufficiency();
-    //printStorage();
   });
 
   return setPrice;
