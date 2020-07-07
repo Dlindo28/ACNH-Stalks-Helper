@@ -5,7 +5,7 @@
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setDataSufficiency } from "../actions/dataSufficiencyActions";
 import {
   setCurPrice,

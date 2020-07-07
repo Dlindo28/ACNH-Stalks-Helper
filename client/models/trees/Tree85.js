@@ -5,6 +5,7 @@
 
 const mainTrends = ["D", "BS", "SS"];
 
+/** @const {Object.<string, *>} - ratio .85+ Tree */
 const SpikeBranch = {
   trends: ["BS", "SS"],
   lower: {
@@ -17,7 +18,6 @@ const SpikeBranch = {
   },
 };
 
-/** @const {Object.<string, *>} - ratio .85+ Tree */
 // export const Tree85 = {
 //   trends: mainTrends,
 //   lower: {

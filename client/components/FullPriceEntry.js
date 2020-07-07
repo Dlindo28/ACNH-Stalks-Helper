@@ -118,6 +118,7 @@ const FullPriceEntry = ({ setPriceModalVisible }) => {
             setPrice(e.nativeEvent.text, "Sunday");
           }
         }}
+        testID="sundayInput"
       />
       <PricedayRow day="Monday" />
       <PricedayRow day="Tuesday" />
