@@ -13,6 +13,8 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import Constants from "expo-constants";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -148,7 +150,7 @@ const DataScreen = () => {
             >
               How many turnips did you purchase?
             </Text>
-            <View>
+            <View style={{ paddingBottom: 10 }}>
               <TextInput
                 style={styles.input}
                 keyboardType="numeric"
@@ -163,9 +165,11 @@ const DataScreen = () => {
               />
               <TouchableButton
                 onPress={() => setCalculateModalVisible(false)}
-                color={primaryColors.darkgreen}
-                backgroundColor={secondaryColors.rose}
-                width={Dimensions.get("window").width / 1.05 / 2}
+                style={{
+                  color: primaryColors.darkgreen,
+                  backgroundColor: secondaryColors.rose,
+                  width: Dimensions.get("window").width / 1.05 / 2,
+                }}
                 text="Close"
               />
             </View>
@@ -199,35 +203,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: primaryColors.islandgreen,
-    paddingTop: 50,
+    paddingTop: Constants.statusBarHeight + hp("3%"),
     alignItems: "center",
-  },
-  header: {
-    alignSelf: "center",
-    marginTop: 50,
-    fontSize: 30,
-  },
-  line: {
-    height: 1,
-    backgroundColor: primaryColors.darkgreen,
-    marginBottom: 5,
-  },
-  button: {
-    backgroundColor: secondaryColors.rose,
-    fontFamily: "acnh",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    width: Dimensions.get("window").width / 1.05,
-    height: 40,
-    borderRadius: 10,
-    marginTop: 5,
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    shadowOffset: {
-      height: 2,
-      width: 2,
-    },
   },
   buttonText: {
     paddingTop: 10,
@@ -252,14 +229,10 @@ const styles = StyleSheet.create({
     borderColor: primaryColors.darkgreen,
     borderRadius: 5,
     backgroundColor: primaryColors.white,
-    height: 30,
+    height: hp("5%"),
     width: Dimensions.get("window").width / 2.5,
     paddingLeft: 10,
     alignSelf: "center",
-  },
-  touchButton: {
-    backgroundColor: primaryColors.islandgreen,
-    color: primaryColors.darkgreen,
   },
 });
 

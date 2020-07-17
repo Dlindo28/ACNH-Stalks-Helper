@@ -10,6 +10,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import Constants from "expo-constants";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 import { primaryColors } from "../models/Styles";
 
@@ -56,26 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: primaryColors.islandgreen,
     alignItems: "center",
-    paddingTop: 50,
-  },
-  blurredImage: {
-    width: 192,
-    height: 192,
-  },
-  EGcontainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  nonBlurredContent: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  pageButtons: {
-    flex: 1,
-    marginTop: 2,
-    width: "100%",
-    flexDirection: "row",
+    paddingTop: Constants.statusBarHeight + hp("3%"),
   },
 });
 

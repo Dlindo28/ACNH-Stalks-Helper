@@ -14,6 +14,11 @@ import {
   Modal,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import Constants from "expo-constants";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
 
@@ -90,11 +95,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: primaryColors.islandgreen,
     alignItems: "center",
-    paddingTop: 50,
+    paddingTop: Constants.statusBarHeight + hp("3%"),
   },
   headerText: {
     fontFamily: "acnh",
-    fontSize: 20,
+    fontSize: wp("4.75%"),
   },
 });
 
