@@ -11,6 +11,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 /**
  * Button component with editable colors, onPress function
@@ -32,7 +36,7 @@ const TouchableButton = ({
   style,
   icon,
 }) => {
-  const rad = bottomLeftRadius
+  const radius = bottomLeftRadius
     ? {
         borderBottomLeftRadius: 10,
       }
@@ -50,7 +54,7 @@ const TouchableButton = ({
           ...styles.button,
           backgroundColor: backgroundColor,
           width: width != null ? width : Dimensions.get("window").width / 1.05,
-          ...rad,
+          ...radius,
           ...style,
         }}
       >
@@ -80,19 +84,22 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    height: 40,
+    height: hp("6%"),
 
-    marginTop: 5,
+    marginTop: hp(".5%"),
     shadowOpacity: 0.2,
     shadowRadius: 1,
     shadowOffset: {
-      height: 2,
-      width: 2,
+      height: hp(".5%"),
+      width: wp(".5%"),
     },
   },
   buttonText: {
-    paddingTop: 10,
     fontFamily: "acnh",
+    fontSize: wp("3.75"),
+    borderColor: "white",
+    height: wp("4.55%"),
+    alignSelf: "center",
   },
 });
 

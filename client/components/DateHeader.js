@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import Constants from "expo-constants";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "../actions/datetimeActions";
@@ -46,16 +48,16 @@ const DateHeader = () => {
 
 const styles = StyleSheet.create({
   dateContainer: {
-    marginTop: 50,
+    marginTop: Constants.stausBarHeight,
   },
   dateText: {
     fontFamily: "acnh",
-    fontSize: 20,
+    fontSize: wp("4.75%"),
     alignSelf: "center",
   },
   timeText: {
     fontFamily: "acnh",
-    fontSize: 15,
+    fontSize: wp("3.75%"),
     alignSelf: "center",
   },
 });

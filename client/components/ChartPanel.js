@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 import Chart from "./Chart";
 import { primaryColors } from "../models/Styles.js";
@@ -38,7 +39,7 @@ const ChartPanel = ({ navigation }) => {
 const styles = StyleSheet.create({
   closedPanel: {
     backgroundColor: primaryColors.cream,
-    height: 380,
+    height: hp("50%"),
     width: Dimensions.get("window").width / 1.05,
     borderRadius: 10,
     marginTop: 5,

@@ -8,6 +8,7 @@ import { Text, View, Dimensions, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { VictoryChart, VictoryAxis, VictoryBar } from "victory-native";
 import { useSelector } from "react-redux";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
 import { days } from "../models/Dates";
@@ -182,7 +183,7 @@ const Chart = ({ homeChart }) => {
         <Text
           style={{
             ...styles.trendText,
-            fontSize: 20,
+            fontSize: wp("4.75%"),
           }}
         >
           Likely Trends:
@@ -195,10 +196,19 @@ const Chart = ({ homeChart }) => {
           <Text
             style={{
               ...styles.trendText,
-              fontSize: 20,
+              fontSize: wp("4.75%"),
             }}
           >
-            Projected Peak: {projectedPeak}
+            Projected Peak:
+            <Text
+              style={{
+                ...styles.trendText,
+                fontSize: wp("4.75%"),
+                color: secondaryColors.red,
+              }}
+            >
+              {" " + projectedPeak}
+            </Text>
           </Text>
         </View>
       )}
@@ -209,7 +219,7 @@ const Chart = ({ homeChart }) => {
 const styles = StyleSheet.create({
   trendText: {
     fontFamily: "acnh",
-    fontSize: 13,
+    fontSize: wp("3.75%"),
     color: primaryColors.darkgreen,
     paddingLeft: 10,
   },

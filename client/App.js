@@ -9,6 +9,7 @@ import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { StatusBar } from "expo-status-bar";
 
 import { Entypo } from "@expo/vector-icons";
 
@@ -82,6 +83,7 @@ const AppBuilder = () => {
           <Tab.Screen name="Data" component={DataScreen} />
           <Tab.Screen name="Info" component={InfoScreen} />
         </Tab.Navigator>
+        <StatusBar style="dark" />
       </NavigationContainer>
     );
   } else {

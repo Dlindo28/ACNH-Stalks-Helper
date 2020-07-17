@@ -13,6 +13,10 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useSelector, shallowEqual } from "react-redux";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
 
@@ -22,10 +26,9 @@ const warningIcon = (
   <Entypo
     name="warning"
     color={primaryColors.darkgreen}
-    size={20}
+    size={hp("2.4%")}
     style={{
       justifyContent: "center",
-      paddingTop: 5,
       marginRight: 5,
     }}
   />
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: Dimensions.get("window").width / 1.05,
-    height: 40,
+    height: hp("6%"),
     borderRadius: 10,
     marginTop: 5,
     shadowOpacity: 0.2,

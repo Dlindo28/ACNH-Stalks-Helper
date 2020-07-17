@@ -1,6 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, SectionList, Text } from "react-native";
 import Constants from "expo-constants";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 import { primaryColors } from "../models/Styles";
 
 import TouchableButton from "./TouchableButton";
@@ -36,20 +41,27 @@ const data = [
 const Instructions = ({ onClose }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.list}>
-        <SectionList
-          sections={data}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item }) => (
-            <View style={styles.itemContainer}>
-              <Text style={styles.itemText}>{item}</Text>
-            </View>
-          )}
-          renderSectionHeader={({ section }) => (
-            <Text style={styles.headerText}>{section.title}</Text>
-          )}
-          stickySectionHeadersEnabled={false}
-        />
+      <View
+        style={{
+          borderBottomWidth: 2,
+          borderBottomColor: primaryColors.darkgreen,
+        }}
+      >
+        <View style={styles.list}>
+          <SectionList
+            sections={data}
+            keyExtractor={(item, index) => index}
+            renderItem={({ item }) => (
+              <View style={styles.itemContainer}>
+                <Text style={styles.itemText}>{item}</Text>
+              </View>
+            )}
+            renderSectionHeader={({ section }) => (
+              <Text style={styles.headerText}>{section.title}</Text>
+            )}
+            stickySectionHeadersEnabled={false}
+          />
+        </View>
       </View>
 
       <TouchableButton
@@ -64,23 +76,24 @@ const Instructions = ({ onClose }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight + hp("3%"),
     height: Dimensions.get("window").height,
     backgroundColor: primaryColors.cream,
   },
   list: {
-    height: Dimensions.get("window").height / 1.1,
+    height: Dimensions.get("window").height / 1.15,
     alignSelf: "center",
     width: Dimensions.get("window").width / 1.1,
   },
   itemText: {
     fontFamily: "acnh",
     color: primaryColors.darkgreen,
+    fontSize: wp("3.5%"),
   },
   headerText: {
     fontFamily: "acnh",
     color: primaryColors.darkgreen,
-    fontSize: 25,
+    fontSize: wp("4.75%"),
   },
   itemContainer: {
     backgroundColor: primaryColors.islandgreen,

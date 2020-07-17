@@ -17,10 +17,12 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
 import { useSetPrice } from "../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
+import Constants from "expo-constants";
 
 import TouchableButton from "./TouchableButton";
 
 import { primaryColors } from "../models/Styles";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 /**
  * Gets price from AsyncStorage given day
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: primaryColors.islandgreen,
-    paddingTop: 50,
+    paddingTop: Constants.statusBarHeight + hp("3%"),
     alignItems: "center",
   },
   rowInput: {
@@ -148,16 +150,16 @@ const styles = StyleSheet.create({
     borderColor: primaryColors.darkgreen,
     borderRadius: 5,
     backgroundColor: primaryColors.white,
-    height: 30,
+    height: hp("4.5%"),
     width: Dimensions.get("window").width / 2.5,
     paddingLeft: 10,
   },
   rowContainer: {
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: hp("2%"),
   },
   rowHeader: {
-    fontSize: 13,
+    fontSize: hp("2%"),
     fontFamily: "acnh",
     alignSelf: "center",
     marginBottom: 10,
