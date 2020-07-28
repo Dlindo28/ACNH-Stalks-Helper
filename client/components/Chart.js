@@ -63,6 +63,7 @@ const decodeTrend = {
  */
 const Chart = ({ homeChart }) => {
   const [data, setData] = useState(tempdata);
+  const [yAxis, setAxis] = useState(false);
   const [trends, setTrends] = useState([]);
 
   const projectedPeak = useSelector((store) => store.prices.projectedPeak);
@@ -86,8 +87,6 @@ const Chart = ({ homeChart }) => {
         </Text>
       ))
     );
-
-  const yAxis = homeChart ? undefined : <VictoryAxis dependentAxis />;
 
   /**
    * Gets price data from AsyncStorage
@@ -139,6 +138,7 @@ const Chart = ({ homeChart }) => {
     });
 
     setData(temp);
+    setAxis(temp.filter((data) => data.price !== 0).length > 0);
   };
 
   useEffect(() => {
@@ -164,7 +164,7 @@ const Chart = ({ homeChart }) => {
         domainPadding={{ y: 10 }}
       >
         <VictoryAxis tickValues={days} tickFormat={tickFormat} />
-        {yAxis}
+        {yAxis ? <VictoryAxis dependentAxis /> : undefined}
         <VictoryBar
           data={data}
           x="date"
