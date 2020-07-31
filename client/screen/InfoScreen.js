@@ -13,7 +13,6 @@ import {
   Text,
   Modal,
 } from "react-native";
-import { Entypo } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -25,19 +24,6 @@ import { primaryColors, secondaryColors } from "../models/Styles";
 import TouchableButton from "../components/TouchableButton";
 import Instructions from "../components/Instructions";
 import Warnings from "../components/Warnings";
-
-const warningIcon = (
-  <Entypo
-    name="warning"
-    color={primaryColors.darkgreen}
-    size={20}
-    style={{
-      justifyContent: "center",
-      paddingTop: 5,
-      marginRight: 5,
-    }}
-  />
-);
 
 /**
  * Builds Info Screen component
@@ -83,7 +69,6 @@ const InfoScreen = ({ navigation }) => {
           color={primaryColors.darkgreen}
           backgroundColor={secondaryColors.rose}
           text="Warnings"
-          icon={warningIcon}
         />
       </View>
     </View>
