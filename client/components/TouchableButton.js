@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: hp("6%"),
-
     marginTop: hp(".5%"),
     shadowOpacity: 0.2,
     shadowRadius: 1,
@@ -93,12 +92,14 @@ const styles = StyleSheet.create({
       height: hp(".5%"),
       width: wp(".5%"),
     },
+    elevation: 3,
+    backgroundColor: "#0000",
   },
   buttonText: {
     fontFamily: "acnh",
     fontSize: wp("3.75"),
     borderColor: "white",
-    height: wp("4.55%"),
+    height: wp("5.5%"),
     alignSelf: "center",
   },
 });

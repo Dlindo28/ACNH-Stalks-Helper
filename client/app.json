@@ -2,7 +2,7 @@
   "expo": {
     "name": "ACNH Stalks Helper",
     "slug": "acnh-stalks-helper",
-    "platforms": ["ios", "android", "web"],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,8 +16,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "bundlename",
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dlindo28.acnhstalkshelper",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets."
       },
@@ -28,8 +28,10 @@
       }
     },
     "android": {
-      "package": "host.exp.exponent",
+      "package": "com.dlindo28.acnhstalkshelper",
       "versionCode": 15
-    }
+    },
+    "description": "Animal Crossing New Horizons turnip stalks market tracker and calculator",
+    "githubUrl": "https://github.com/Dlindo28"
   }
 }

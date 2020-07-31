@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
       height: 2,
       width: 2,
     },
+    elevation: 3,
   },
   badgeText: {
     color: primaryColors.darkgreen,
