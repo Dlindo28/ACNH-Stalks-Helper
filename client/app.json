@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "ACNH Stalks Helper",
+    "slug": "acnh-stalks-helper",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/images/plash-test.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#8ddac1"
     },
