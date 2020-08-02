@@ -1,6 +1,6 @@
 # ACNH-Stalks-Helper
 
-Animal Crossing New Horizons turnip stalks market tracker and calculator for ios and android devices.
+Animal Crossing New Horizons turnip market price tracker and calculator for ios and android devices.
 
 ## Installation
 
@@ -23,6 +23,7 @@ How to install
 ### Warnings
 (Insert Images)
 Missing Prices:
+
 Insufficient Data:
 
 ## Contributing
