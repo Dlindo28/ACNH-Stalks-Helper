@@ -4,19 +4,10 @@
  */
 
 import React, { useLayoutEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useSelector, shallowEqual } from "react-redux";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 import { primaryColors, secondaryColors } from "../models/Styles";
 

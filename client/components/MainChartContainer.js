@@ -3,7 +3,7 @@
  * @author Daniel Lindo
  */
 
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -11,14 +11,12 @@ import {
   Dimensions,
   Text,
 } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
 
 import { useSelector } from "react-redux";
 
 import Chart from "./Chart";
 
 import { primaryColors, secondaryColors } from "../models/Styles.js";
-import { days } from "../models/Dates";
 
 /**
  * Container for Chart with yield, current price, and trends

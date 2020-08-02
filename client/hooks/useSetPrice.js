@@ -177,19 +177,16 @@ export const useSetPrice = () => {
       if (increase) {
         if (tree.higher) {
           tree = tree.higher;
-          console.log("tree increased");
           updateProjectedPeak(tree, day);
         }
       } else {
         if (tree.lower) {
           tree = tree.lower;
-          console.log("tree decreased");
           updateProjectedPeak(tree, day);
         }
       }
 
       await AsyncStorage.setItem("tree", JSON.stringify(tree));
-      console.log(tree);
     } catch (e) {
       console.log(e);
     }
@@ -256,7 +253,6 @@ export const useSetPrice = () => {
         }
       }
     }
-    console.log(`Prev: ${lastPrice}, New: ${newPrice}`);
     await updateTree(parseInt(lastPrice, 10) < parseInt(newPrice, 10), newDay);
     dispatch(setPricesMissing(priceMissing));
   };

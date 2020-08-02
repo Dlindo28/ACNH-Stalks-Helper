@@ -10,7 +10,6 @@ import {
   TextInput,
   Dimensions,
   Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 import TouchableButton from "./TouchableButton";
 
