@@ -10,6 +10,7 @@ import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { StatusBar } from "expo-status-bar";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 import { Entypo } from "@expo/vector-icons";
 
@@ -71,7 +72,7 @@ const AppBuilder = () => {
             showLabel: false,
             tabStyle: {
               backgroundColor: primaryColors.cream,
-              height: 70,
+              height: hp("8%"),
             },
             showIcon: true,
             pressOpacity: 1,
