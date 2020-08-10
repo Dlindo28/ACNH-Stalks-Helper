@@ -9,19 +9,20 @@ How to install
 ## Usage
 
 ### Entering Prices
-(Insert Gif)
+Home Entry
 
-### Resetting Prices
-(Insert Gif)
+![Image](https://media.giphy.com/media/kGhobi1Cnjlpzk3mqP/giphy.gif)
 
-### Calculating Income
-(Insert Gif)
+Full Week Entry
 
-### Price Trends
-(Insert Images of Patterns)
+![Image](https://media.giphy.com/media/YP2aTDsx7A1QailS5t/giphy.gif)
 
-### Warnings
-(Insert Images)
+### Resetting Prices and Calculating Income
+![Image](https://media2.giphy.com/media/W3BiZZKPwYhZryaBCr/giphy.gif)
+
+### Price Trends and Warnings
+![Image](https://im6.ezgif.com/tmp/ezgif-6-b08b0b401cd7.gif)
+
 Missing Prices:
 
 Insufficient Data:
