@@ -22,7 +22,7 @@ Full Week Entry
 
 ![Image](/client/assets/calc_a.png)
 
-![Image](/client/assets/calc_b.png)
+![Image](/client/assets/calc_a.png)
 
 ### Price Trends and Warnings
 
