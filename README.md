@@ -22,8 +22,6 @@ Full Week Entry
 
 ![Image](/client/assets/calc_a_resize.png)
 
-![Image](/client/assets/calc_a.PNG)
-
 ### Price Trends and Warnings
 
 ![Image](https://im6.ezgif.com/tmp/ezgif-6-b08b0b401cd7.gif)
