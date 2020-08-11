@@ -20,9 +20,9 @@ Full Week Entry
 
 ### Resetting Prices and Calculating Income
 
-![Image](/client/assets/calc_a.png)
+![Image](/client/assets/calc_a.PNG)
 
-![Image](/client/assets/calc_a.png)
+![Image](/client/assets/calc_b.PNG)
 
 ### Price Trends and Warnings
 
