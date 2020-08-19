@@ -10,6 +10,10 @@ How to install
 
 ### Entering Prices
 
+Each Sunday, Daisy Mae will visit your island to sell turnips. Buy from her and you may win big on bells later in the week! Turnip prices change twice every day, once at 4 am and again at 12 pm.
+
+You can enter current prices on the home screen, or edit prices for the whole week on the chart screen.\n\nSunday and Monday AM prices are mandatory for an accurate estimation.
+
 Home Entry
 
 ![Image](https://media.giphy.com/media/kGhobi1Cnjlpzk3mqP/giphy.gif)
