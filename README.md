@@ -22,13 +22,24 @@ Full Week Entry
 
 ![Image](/client/assets/calc.png)
 
-### Price Trends and Warnings
+### Price Trends
 
-![Image](https://im6.ezgif.com/tmp/ezgif-6-b08b0b401cd7.gif)
+There are 4 different ways in which prices can trend each week.
 
-Missing Prices:
+Random: Prices rise and drop randomly.
 
-Insufficient Data:
+Falling: Prices constantly fall. Worst Case.
+      
+Small Spike: Prices peak once then continuously fall.
+      
+Big Spike: Prices peak twice. Second peak is the max price. Best Case
+### Warnings
+
+There are various scenarios that could pose for issues with the helper.
+
+Missing Prices: You are missing prices since your last input. Estimations may be incorrect.
+
+Insufficient Data: Your Sunday and/or Monday AM prices are missing. These two prices are necessary for determining price trends.
 
 ## Contributing
 
